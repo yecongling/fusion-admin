@@ -45,6 +45,10 @@ export default defineConfig({
       "@services": path.resolve(__dirname, "./src/services"),
     },
   },
+  dev: {
+    // 按需编译
+    lazyCompilation: true
+  },
   // 服务相关
   server: {
     port: 8000,
