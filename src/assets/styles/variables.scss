@@ -1,0 +1,15 @@
+// 定义变量
+$text-font-size: 16px;
+
+// 定义宏
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// 使用宏、示例
+// .button {
+//     @include flex-center
+// }

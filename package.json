@@ -1,0 +1,36 @@
+{
+  "name": "FusionAdmin",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "rsbuild dev --open",
+    "build": "rsbuild build",
+    "preview": "rsbuild preview"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^5.5.1",
+    "@reduxjs/toolkit": "^2.3.0",
+    "antd": "^5.21.5",
+    "axios": "^1.7.7",
+    "crypto-js": "^4.2.0",
+    "jsencrypt": "^3.3.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-redux": "^9.1.2",
+    "react-router-dom": "^6.27.0",
+    "redux": "^5.0.1",
+    "redux-persist": "^6.0.0"
+  },
+  "devDependencies": {
+    "@rsbuild/core": "^1.0.13",
+    "@rsbuild/plugin-react": "^1.0.3",
+    "@rsbuild/plugin-sass": "^1.0.4",
+    "@types/crypto-js": "^4.2.2",
+    "@types/node": "^22.7.8",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.1",
+    "mockjs": "^1.1.0",
+    "rspack-plugin-mock": "^0.4.1",
+    "typescript": "^5.6.3"
+  }
+}
