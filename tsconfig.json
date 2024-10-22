@@ -21,10 +21,11 @@
       "@enums/*": ["src/enums/*"],
       "@context/*": ["src/context/*"],
       "@stores/*": ["src/stores/*"],
-      "@types/*": ["src/types/*"],
+      "@type/*": ["src/types/*"],
       "@assets/*": ["src/assets/*"],
       "@utils/*": ["src/utils/*"],
-      "@service/*": ["src/services/*"]
+      "@service/*": ["src/services/*"],
+      "@router/*": ["src/router/*"]
     }
   },
   "include": ["src"]
