@@ -9,6 +9,7 @@ import { RouteObject } from "@type/route";
 import { ErrorBoundary } from "./ErrorBoundary";
 import { useSelector } from "react-redux";
 
+// 默认的错误路由
 const errorRoutes: RouteObject[] = [
   {
     path: "*",
@@ -21,6 +22,10 @@ const errorRoutes: RouteObject[] = [
   {
     path: "/404",
     component: LazyLoad("404.tsx").type,
+  },
+  {
+    path: "/403",
+    component: LazyLoad("403.tsx").type,
   },
 ];
 

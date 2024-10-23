@@ -8,7 +8,7 @@ const App: React.FC = () => {
     <Result
       status="500"
       title="500"
-      subTitle="Sorry, something went wrong."
+      subTitle="抱歉，可能发生了一些内部服务错误"
       extra={<Button type="primary" onClick={() => navigate("/home")}>回到首页</Button>}
     />
   </>
