@@ -1,8 +1,7 @@
 import * as Icons from "@ant-design/icons";
 import { isObject } from "./is";
 import React from "react";
-import { RouteItem } from "@type/route";
-import { RouteObject } from "react-router-dom";
+import { RouteItem, RouteObject } from "@type/route";
 import { LazyLoad } from "@router/lazyLoad";
 
 /**
@@ -19,7 +18,7 @@ export function handleRouter(
     const menu: RouteObject = {};
     if (typeof item === "object" && item.path && item.route == "1") {
       menu["path"] = item.path;
-      menu["element"] = LazyLoad(item.component).type;
+      menu["component"] = LazyLoad(item.component).type;
       newArr.push(menu);
     }
     if (item.children && item.children.length) {

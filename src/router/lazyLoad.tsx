@@ -3,7 +3,7 @@ import React from "react";
 /**
  * 路由懒加载
  * @param param0 模块名
- * @returns 
+ * @returns
  */
 export const LazyLoad = (moduleName: string) => {
   // 文件直接来自 views 目录，匹配的文件名以 `.tsx` 结尾。
@@ -11,8 +11,7 @@ export const LazyLoad = (moduleName: string) => {
     // 是否搜索子目录
     recursive: true,
     // 匹配文件
-    regExp: /\.tsx$/,
-    mode: "lazy",
+    regExp: /\.tsx$/
   });
   //页面地址
   let URL = "";
@@ -21,16 +20,7 @@ export const LazyLoad = (moduleName: string) => {
   } else {
     URL = `./${moduleName}/index.tsx`;
   }
-
-  for (const path of viewModule.keys()) {
-    const mod = viewModule(path);
-    console.log(path, mod);
-  }
-  
-  
-  
-  const Module = React.lazy(
-    (viewModule(`${URL}`) as any) ?? (() => import("@views/404"))
-  );
+  const Module =
+    (viewModule(`${URL}`) as any).default || (() => import("@views/404"));
   return <Module />;
 };

@@ -31,21 +31,21 @@ const App: React.FC = () => {
     // 组件挂载完成后加载用户菜单
     useEffect(() => {
         // 去后台查询菜单，也需要判定当前是否登录，未登录的话就跳转登录页面
-        const isLogin = sessionStorage.getItem("isLogin");
-        if (isLogin === "false" || !isLogin || location.pathname === '/login') {
-            navigate("/login");
-        } else {
-            setLoading(true);
-            try {
-                // 模拟从后台获取数据
-                getMenuData().then((menu) => {
-                    if (!menu) return;
-                    dispatch(setMenus(menu));
-                });
-            } finally {
-                setLoading(false);
-            }
-        }
+        // const isLogin = sessionStorage.getItem("isLogin");
+        // if (isLogin === "false" || !isLogin || location.pathname === '/login') {
+        //     navigate("/login");
+        // } else {
+        //     setLoading(true);
+        //     try {
+        //         // 模拟从后台获取数据
+        //         getMenuData().then((menu) => {
+        //             if (!menu) return;
+        //             dispatch(setMenus(menu));
+        //         });
+        //     } finally {
+        //         setLoading(false);
+        //     }
+        // }
     }, []);
 
 
