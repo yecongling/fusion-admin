@@ -6,8 +6,9 @@ import { antdUtils } from "@utils/antdUtil";
 import { RootState } from "@stores/store";
 import { handleRouter } from "@utils/utils";
 import { RouteObject } from "@type/route";
-import { ErrorBoundary } from "./ErrorBoundary";
 import { useSelector } from "react-redux";
+import { ErrorBoundary } from "react-error-boundary";
+import { ErrorFallback } from "./ErrorBoundary";
 
 // 默认的错误路由
 const errorRoutes: RouteObject[] = [
@@ -51,7 +52,10 @@ const generateRouter = (routers: RouteObject[]) => {
       return item;
     }
     item.element = (
-      <ErrorBoundary>
+      /**
+       * 错误边界组件（用于单个页面渲染错误的时候显示，单个模块渲染失败不应该影响整个系统的渲染失败）
+       */
+      <ErrorBoundary fallback={<ErrorFallback />}>
         <Suspense fallback={<Skeleton />}>
           <item.component />
         </Suspense>
