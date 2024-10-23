@@ -1,12 +1,13 @@
 import { Navigate, useRoutes } from "react-router-dom";
 import { LazyLoad } from "./lazyLoad";
-import React, { memo, ReactNode, Suspense, useEffect, useState } from "react";
+import React, { ReactNode, Suspense, useEffect, useState } from "react";
 import { App, Skeleton } from "antd";
 import { antdUtils } from "@utils/antdUtil";
-import { useSelector } from "react-redux";
 import { RootState } from "@stores/store";
 import { handleRouter } from "@utils/utils";
 import { RouteObject } from "@type/route";
+import { ErrorBoundary } from "./ErrorBoundary";
+import { useSelector } from "react-redux";
 
 const errorRoutes: RouteObject[] = [
   {
@@ -27,7 +28,9 @@ const errorRoutes: RouteObject[] = [
 export const dynamicRoutes: RouteObject[] = [
   {
     path: "/",
-    component: (React.lazy(() => import("@layouts/index.tsx")) as unknown as ReactNode),
+    component: React.lazy(
+      () => import("@layouts/index.tsx")
+    ) as unknown as ReactNode,
     children: [],
   },
   {
@@ -43,9 +46,11 @@ const generateRouter = (routers: RouteObject[]) => {
       return item;
     }
     item.element = (
-      <Suspense fallback={<Skeleton />}>
-        <item.component />
-      </Suspense>
+      <ErrorBoundary>
+        <Suspense fallback={<Skeleton />}>
+          <item.component />
+        </Suspense>
+      </ErrorBoundary>
     );
     if (item.children) {
       item.children = generateRouter(item.children);
