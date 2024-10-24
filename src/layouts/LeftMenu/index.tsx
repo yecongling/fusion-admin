@@ -16,7 +16,8 @@ type MenuItem = Required<MenuProps>["items"][number];
 const LeftMenu: React.FC = memo(() => {
   // 从状态库中获取状态
   const globalState = useSelector((state: RootState) => state.global);
-  const { menus, theme, collapse } = globalState;
+  const { menus, theme, collapse, menuWidth } = globalState;
+  console.log(menuWidth, theme, collapse);
   const dispatch = useDispatch();
 
   const { pathname } = useLocation();
@@ -36,9 +37,10 @@ const LeftMenu: React.FC = memo(() => {
       style={{
         overflowX: "hidden",
         zIndex: 999,
-        borderRight: "1px solid #e9edf0",
+        boxShadow: "0 2px 5px 0 rgba(0, 0, 0, 0.08)",
       }}
       collapsible
+      width={menuWidth}
       theme={theme}
       collapsed={collapse}
     >
@@ -89,23 +91,20 @@ const LeftMenu: React.FC = memo(() => {
             cursor: "pointer",
             fontSize: "16px",
           }}
-          onClick={() => dispatch(setCollapse(!collapse))}
-          className="btnbor"
-        >
-          {collapse ? (
-            <Tooltip title="展开">
+          icon={
+            collapse ? (
               <MenuUnfoldOutlined
                 style={{ color: theme === "dark" ? "white" : "black" }}
               />
-            </Tooltip>
-          ) : (
-            <Tooltip title="收起">
+            ) : (
               <MenuFoldOutlined
                 style={{ color: theme === "dark" ? "white" : "black" }}
               />
-            </Tooltip>
-          )}
-        </Button>
+            )
+          }
+          onClick={() => dispatch(setCollapse(!collapse))}
+          className="btnbor"
+        />
       </div>
     </Layout.Sider>
   );

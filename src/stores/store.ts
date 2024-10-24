@@ -29,6 +29,10 @@ const globalSlice = createSlice({
     setMenus(state: GlobalState, action: PayloadAction<any[]>) {
       state.menus = action.payload;
     },
+    // 设置未收缩菜单栏宽度
+    setMenuWidth(state: GlobalState, action: PayloadAction<number | string>) {
+      state.menuWidth = action.payload;
+    },
 
     // 清空缓存
     clearCache(state: GlobalState) {
@@ -65,5 +69,5 @@ export const store = configureStore({
 export type RootState = ReturnType<typeof rootReducer>;
 
 export const persistor = persistStore(store);
-export const { setTheme, setCollapse, setColorPrimary, setMenus, clearCache } =
+export const { setTheme, setCollapse, setColorPrimary, setMenus, clearCache, setMenuWidth } =
   globalSlice.actions;
