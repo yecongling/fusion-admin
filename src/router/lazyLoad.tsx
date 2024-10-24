@@ -11,7 +11,7 @@ export const LazyLoad = (moduleName: string) => {
     // 是否搜索子目录
     recursive: true,
     // 匹配文件
-    regExp: /\.tsx$/
+    regExp: /\.tsx$/,
   });
   //页面地址
   let URL = "";
@@ -20,7 +20,17 @@ export const LazyLoad = (moduleName: string) => {
   } else {
     URL = `./${moduleName}/index.tsx`;
   }
-  const Module =
-    (viewModule(`${URL}`) as any).default || (() => import("@views/error/404"));
+  let Module: any;
+  try {
+    // 检查模块是否存在并动态加载
+    if (viewModule.keys().includes(URL)) {
+      Module = (viewModule(`${URL}`) as any).default;
+    } else {
+      Module = React.lazy(() => import("@views/error/404"));
+    }
+  } catch (error) {
+    // 如果动态加载错误就是认定为模块不存在
+    Module = React.lazy(() => import("@views/error/404"));
+  }
   return <Module />;
 };

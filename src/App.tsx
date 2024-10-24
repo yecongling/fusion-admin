@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import zhCN from "antd/locale/zh_CN";
 import "dayjs/locale/zh-cn";
 import { Router } from "@router/router";
+import { getMenuListByRoleId } from "@service/system/menu/menuApi";
 
 /**
  * 主应用
@@ -25,27 +26,28 @@ const App: React.FC = () => {
    * 查询用户的菜单信息
    */
   const getMenuData = async () => {
-    return [];
+    const roleId = sessionStorage.getItem("roleId") || "admin";
+    return await getMenuListByRoleId({roleId})
   };
 
   // 组件挂载完成后加载用户菜单
   useEffect(() => {
     // 去后台查询菜单，也需要判定当前是否登录，未登录的话就跳转登录页面
-    // const isLogin = sessionStorage.getItem("isLogin");
-    // if (isLogin === "false" || !isLogin || location.pathname === '/login') {
-    //     navigate("/login");
-    // } else {
-    //     setLoading(true);
-    //     try {
-    //         // 模拟从后台获取数据
-    //         getMenuData().then((menu) => {
-    //             if (!menu) return;
-    //             dispatch(setMenus(menu));
-    //         });
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // }
+    const isLogin = sessionStorage.getItem("isLogin");
+    if (isLogin === "false" || !isLogin || location.pathname === '/login') {
+        navigate("/login");
+    } else {
+        setLoading(true);
+        try {
+            // 模拟从后台获取数据
+            getMenuData().then((menu) => {
+                if (!menu) return;
+                dispatch(setMenus(menu));
+            });
+        } finally {
+            setLoading(false);
+        }
+    }
   }, []);
 
   return (
