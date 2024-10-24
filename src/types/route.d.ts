@@ -17,7 +17,7 @@ export interface RouteObject {
   meta?: MetaProps;
   isLink?: string;
   auth?: boolean;
-  title?: string
+  title?: string;
 }
 
 /**

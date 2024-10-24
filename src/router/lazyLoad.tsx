@@ -21,6 +21,6 @@ export const LazyLoad = (moduleName: string) => {
     URL = `./${moduleName}/index.tsx`;
   }
   const Module =
-    (viewModule(`${URL}`) as any).default || (() => import("@views/404"));
+    (viewModule(`${URL}`) as any).default || (() => import("@views/error/404"));
   return <Module />;
 };

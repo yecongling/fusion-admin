@@ -18,15 +18,15 @@ const errorRoutes: RouteObject[] = [
   },
   {
     path: "/500",
-    component: LazyLoad("500.tsx").type,
+    component: LazyLoad("error/500.tsx").type,
   },
   {
     path: "/404",
-    component: LazyLoad("404.tsx").type,
+    component: LazyLoad("error/404.tsx").type,
   },
   {
     path: "/403",
-    component: LazyLoad("403.tsx").type,
+    component: LazyLoad("error/403.tsx").type,
   },
 ];
 
@@ -37,7 +37,7 @@ export const dynamicRoutes: RouteObject[] = [
     component: React.lazy(
       () => import("@layouts/index.tsx")
     ) as unknown as ReactNode,
-    children: [],
+    children: errorRoutes,
   },
   {
     path: "/login",
@@ -48,18 +48,17 @@ export const dynamicRoutes: RouteObject[] = [
 // 路由处理方式
 const generateRouter = (routers: RouteObject[]) => {
   return routers.map((item: any) => {
+    /**
+     * 错误边界组件（用于单个页面渲染错误的时候显示，单个模块渲染失败不应该影响整个系统的渲染失败）
+     */
+    item.ErrorBoundary = <ErrorBoundary fallback={<ErrorFallback />} />;
     if (item.index) {
       return item;
     }
     item.element = (
-      /**
-       * 错误边界组件（用于单个页面渲染错误的时候显示，单个模块渲染失败不应该影响整个系统的渲染失败）
-       */
-      <ErrorBoundary fallback={<ErrorFallback />}>
-        <Suspense fallback={<Skeleton />}>
-          <item.component />
-        </Suspense>
-      </ErrorBoundary>
+      <Suspense fallback={<Skeleton />}>
+        <item.component />
+      </Suspense>
     );
     if (item.children) {
       item.children = generateRouter(item.children);
