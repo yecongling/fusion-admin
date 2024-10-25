@@ -1,1 +1,0 @@
-console.log("一个暂时的站位js")

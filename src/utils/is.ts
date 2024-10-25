@@ -5,13 +5,13 @@ export function is(val: unknown, type: string) {
 }
 
 export function isObject(val: any): val is Record<any, any> {
-  return val !== null && is(val, "Object");
+  return val !== null && is(val, 'Object');
 }
 
 export function isFunction(val: unknown): boolean {
-  return typeof val === "function";
+  return typeof val === 'function';
 }
 
 export function isString(val: unknown): val is string {
-  return is(val, "String");
+  return is(val, 'String');
 }

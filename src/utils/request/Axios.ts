@@ -6,12 +6,12 @@ import axios, {
   AxiosRequestConfig,
   AxiosResponse,
   InternalAxiosRequestConfig,
-} from "axios";
-import { cloneDeep } from "lodash-es";
-import { RequestOptions } from "@type/axios";
-import { isFunction } from "@utils/is";
-import { CreateAxiosOptions } from "./transform";
-import { Result } from "@type/global";
+} from 'axios';
+import { cloneDeep } from 'lodash-es';
+import { RequestOptions } from '@type/axios';
+import { isFunction } from '@utils/is';
+import { CreateAxiosOptions } from './transform';
+import { Result } from '@type/global';
 
 export class RAxios {
   private axiosInstance: AxiosInstance;
@@ -52,14 +52,14 @@ export class RAxios {
         }
         return config;
       },
-      undefined
+      undefined,
     );
     // 请求拦截器错误捕获
     requestInterceptorsCatch &&
       isFunction(requestInterceptorsCatch) &&
       this.axiosInstance.interceptors.request.use(
         undefined,
-        requestInterceptorsCatch
+        requestInterceptorsCatch,
       );
     // 响应结果拦截器处理
     this.axiosInstance.interceptors.response.use((res: AxiosResponse<any>) => {
@@ -73,7 +73,7 @@ export class RAxios {
       isFunction(responseInterceptorsCatch) &&
       this.axiosInstance.interceptors.response.use(
         undefined,
-        responseInterceptorsCatch
+        responseInterceptorsCatch,
       );
   }
 
@@ -84,7 +84,7 @@ export class RAxios {
    */
   request<T = any>(
     config: AxiosRequestConfig,
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<T> {
     let conf: CreateAxiosOptions = cloneDeep(config);
     const transform = this.getTransform();
@@ -107,7 +107,7 @@ export class RAxios {
               const ret = transformResponseHook(res, opt);
               resolve(ret);
             } catch (err) {
-              reject(err || new Error("请求错误！"));
+              reject(err || new Error('请求错误！'));
             }
             return;
           }
@@ -130,9 +130,9 @@ export class RAxios {
    */
   get<T = any>(
     config: AxiosRequestConfig,
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<T> {
-    return this.request({ ...config, method: "GET" }, options);
+    return this.request({ ...config, method: 'GET' }, options);
   }
 
   /**
@@ -143,9 +143,9 @@ export class RAxios {
    */
   post<T = any>(
     config: AxiosRequestConfig,
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<T> {
-    return this.request({ ...config, method: "POST" }, options);
+    return this.request({ ...config, method: 'POST' }, options);
   }
 
   /**
@@ -155,8 +155,8 @@ export class RAxios {
    */
   delete<T = any>(
     config: AxiosRequestConfig,
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<T> {
-    return this.request({ ...config, method: "DELETE" }, options);
+    return this.request({ ...config, method: 'DELETE' }, options);
   }
 }

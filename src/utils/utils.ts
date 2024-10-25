@@ -1,8 +1,8 @@
-import * as Icons from "@ant-design/icons";
-import { isObject } from "./is";
-import React from "react";
-import { RouteItem, RouteObject } from "@type/route";
-import { LazyLoad } from "@router/lazyLoad";
+import * as Icons from '@ant-design/icons';
+import { isObject } from './is';
+import React from 'react';
+import { RouteItem, RouteObject } from '@type/route';
+import { LazyLoad } from '@router/lazyLoad';
 
 /**
  * @description 使用递归处理路由菜单，生成一维数组，做菜单权限判断
@@ -12,13 +12,13 @@ import { LazyLoad } from "@router/lazyLoad";
  */
 export function handleRouter(
   routerList: RouteItem[],
-  newArr: RouteObject[] = []
+  newArr: RouteObject[] = [],
 ) {
   routerList.forEach((item: RouteItem) => {
     const menu: RouteObject = {};
-    if (typeof item === "object" && item.path && item.route == "1") {
-      menu["path"] = item.path;
-      menu["component"] = LazyLoad(item.component).type;
+    if (typeof item === 'object' && item.path && item.route == '1') {
+      menu['path'] = item.path;
+      menu['component'] = LazyLoad(item.component).type;
       newArr.push(menu);
     }
     if (item.children && item.children.length) {
@@ -44,17 +44,17 @@ export function handleRouter(
  *  ==>www.baidu.com?a=3&b=4
  */
 export function setObjToUrlParams(baseUrl: string, obj: any): string {
-  let parameters = "";
+  let parameters = '';
   for (const key in obj) {
-    parameters += key + "=" + encodeURIComponent(obj[key]) + "&";
+    parameters += key + '=' + encodeURIComponent(obj[key]) + '&';
   }
-  parameters = parameters.replace(/&$/, "");
+  parameters = parameters.replace(/&$/, '');
   return /\?$/.test(baseUrl)
     ? baseUrl + parameters
-    : baseUrl.replace(/\/?$/, "?") + parameters;
+    : baseUrl.replace(/\/?$/, '?') + parameters;
 }
 
-export function deepMerge<T = object>(src: any = {}, target: any = {}): T {
+export function deepMerge<T = object>(src: Record<string, any> = {}, target: any = {}): T {
   let key: string;
   for (key in target) {
     src[key] = isObject(src[key])
@@ -72,11 +72,11 @@ export function deepMerge<T = object>(src: any = {}, target: any = {}): T {
  */
 export const searchRoute = (
   path: string,
-  routes: RouteItem[] = []
+  routes: RouteItem[] = [],
 ): RouteItem => {
   let result: RouteItem = {
-    component: "",
-    path: "",
+    component: '',
+    path: '',
   };
   for (const item of routes) {
     if (item.path === path) return item;
@@ -103,9 +103,9 @@ export const addIcon = (name: string | undefined) => {
  * @returns array
  */
 export const getOpenKeys = (path: string) => {
-  let newStr: string = "";
-  const newArr: any[] = [];
-  const arr = path.split("/").map((i) => "/" + i);
+  let newStr: string = '';
+  const newArr: string[] = [];
+  const arr = path.split('/').map((i) => '/' + i);
   for (let i = 1; i < arr.length - 1; i++) {
     newStr += arr[i];
     newArr.push(newStr);

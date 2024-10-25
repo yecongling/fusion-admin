@@ -6,15 +6,15 @@ import {
   AxiosRequestConfig,
   AxiosResponse,
   InternalAxiosRequestConfig,
-} from "axios";
-import { RequestOptions } from "@type/axios";
-import { Result } from "@type/global";
-import { antdUtils } from "../antdUtil";
-import { joinTimestamp } from "./helper";
-import { RequestEnum, ResultEnum } from "@enums/httpEnum";
-import { setObjToUrlParams } from "../utils";
-import { isString } from "../is";
-import { encrypt } from "../encrypt";
+} from 'axios';
+import { RequestOptions } from '@type/axios';
+import { Result } from '@type/global';
+import { antdUtils } from '../antdUtil';
+import { joinTimestamp } from './helper';
+import { RequestEnum, ResultEnum } from '@enums/httpEnum';
+import { setObjToUrlParams } from '../utils';
+import { isString } from '../is';
+import { encrypt } from '../encrypt';
 
 export interface CreateAxiosOptions extends AxiosRequestConfig {
   authenticationScheme?: string;
@@ -31,7 +31,7 @@ export abstract class AxiosTransform {
    */
   beforeRequestHook?: (
     config: AxiosRequestConfig,
-    options: RequestOptions
+    options: RequestOptions,
   ) => AxiosRequestConfig;
 
   /**
@@ -39,7 +39,7 @@ export abstract class AxiosTransform {
    */
   transformResponseHook?: (
     res: AxiosResponse<Result<any>>,
-    options: RequestOptions
+    options: RequestOptions,
   ) => any;
 
   /**
@@ -52,7 +52,7 @@ export abstract class AxiosTransform {
    */
   requestInterceptors?: (
     config: InternalAxiosRequestConfig,
-    options: CreateAxiosOptions
+    options: CreateAxiosOptions,
   ) => InternalAxiosRequestConfig;
 
   /**
@@ -82,7 +82,7 @@ export const transform: AxiosTransform = {
    */
   transformResponseHook: (
     res: AxiosResponse<Result<any>>,
-    options: RequestOptions
+    options: RequestOptions,
   ) => {
     const { isTransformResponse, isReturnNativeResponse } = options;
     // 是否返回原生响应头
@@ -96,25 +96,25 @@ export const transform: AxiosTransform = {
     // 错误的时候返回
     const { data } = res;
     if (!data) {
-      throw new Error("api接口请求失败，没有返回数据");
+      throw new Error('api接口请求失败，没有返回数据');
     }
     const { code, data: rtn, message: msg } = data;
     // 系统默认200状态码为正常成功请求，可在枚举中配置自己的
     const hasSuccess =
       data &&
-      Reflect.has(data, "code") &&
+      Reflect.has(data, 'code') &&
       (code === ResultEnum.SUCCESS || code === 200);
     if (hasSuccess) {
-      if (msg && options.successMessageMode === "success") {
+      if (msg && options.successMessageMode === 'success') {
         // 信息成功提示
         antdUtils.message?.success(msg);
       }
       return rtn;
     }
-    let timeoutMsg = "";
+    let timeoutMsg = '';
     switch (code) {
       case ResultEnum.TIMEOUT:
-        timeoutMsg = "接口请求超时";
+        timeoutMsg = '接口请求超时';
         // setToken("");
         // window.location.href = "/login";
         break;
@@ -123,26 +123,26 @@ export const transform: AxiosTransform = {
           timeoutMsg = msg;
         }
     }
-    if (options.errorMessageMode === "modal") {
+    if (options.errorMessageMode === 'modal') {
       if (code === 403) {
         antdUtils.modal?.confirm({
-          title: "会话过期",
-          content: "当前会话已失效，请重新登录！",
+          title: '会话过期',
+          content: '当前会话已失效，请重新登录！',
           onOk() {
             // 登录失效后需要将本地token清除
-            sessionStorage.removeItem("token");
-            sessionStorage.removeItem("isLogin");
-            sessionStorage.removeItem("roleId");
-            window.location.href = "/login";
+            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('isLogin');
+            sessionStorage.removeItem('roleId');
+            window.location.href = '/login';
           },
         });
       } else {
-        antdUtils.modal?.error({ title: "错误提示", content: timeoutMsg });
+        antdUtils.modal?.error({ title: '错误提示', content: timeoutMsg });
       }
-    } else if (options.errorMessageMode === "message") {
+    } else if (options.errorMessageMode === 'message') {
       antdUtils.message?.error(timeoutMsg);
     }
-    throw new Error(timeoutMsg || "接口请求失败");
+    throw new Error(timeoutMsg || '接口请求失败');
   },
 
   // 请求之前处理config
@@ -170,7 +170,7 @@ export const transform: AxiosTransform = {
         // 给get请求加上事件戳参数，避免从缓存中拿数据
         config.params = Object.assign(
           params || {},
-          joinTimestamp(joinTime, false)
+          joinTimestamp(joinTime, false),
         );
       } else {
         // 兼容restful风格
@@ -180,7 +180,7 @@ export const transform: AxiosTransform = {
     } else {
       if (!isString(params)) {
         if (
-          Reflect.has(config, "data") &&
+          Reflect.has(config, 'data') &&
           config.data &&
           Object.keys(config.data).length > 0
         ) {
@@ -194,7 +194,7 @@ export const transform: AxiosTransform = {
         if (joinParamsToUrl) {
           config.url = setObjToUrlParams(
             config.url as string,
-            Object.assign({}, config.params, config.data)
+            Object.assign({}, config.params, config.data),
           );
         }
       } else {
@@ -213,18 +213,18 @@ export const transform: AxiosTransform = {
    */
   requestInterceptors: (config, options) => {
     // 请求之前处理token
-    const token = sessionStorage.getItem("token");
+    const token = sessionStorage.getItem('token');
     if (token && options?.requestOptions?.withToken !== false) {
-      config.headers["token"] = token;
+      config.headers['token'] = token;
     }
     const cpt = options?.requestOptions?.encrypt || 1;
     // 进行数据加密
     if (config.data && cpt === 1) {
       // 判定json数据需要转为json字符串才能加密
       if (
-        typeof config.data === "object" &&
-        (config.headers["Content-Type"] === "application/json" ||
-          config.headers["Content-Type"] === "application/json;charset=UTF-8")
+        typeof config.data === 'object' &&
+        (config.headers['Content-Type'] === 'application/json' ||
+          config.headers['Content-Type'] === 'application/json;charset=UTF-8')
       ) {
         config.data = JSON.stringify(config.data);
         // 并且修改axios内部的transformRequest(不然如果传的json，加密后axios会默认转json字符串，后台接收到的会多双引号)
@@ -233,10 +233,10 @@ export const transform: AxiosTransform = {
       const result = encrypt(config.data);
       config.data = result.data;
       // 将秘钥放到请求头里面
-      config.headers["encryptKey"] = result.key;
+      config.headers['encryptKey'] = result.key;
     }
     // 将加密配置放到请求头里面
-    config.headers["encrypt"] = cpt;
+    config.headers['encrypt'] = cpt;
     return config;
   },
 
@@ -253,14 +253,14 @@ export const transform: AxiosTransform = {
    * @param error
    */
   responseInterceptorsCatch: (error: any) => {
-    const err: string = error?.toString?.() ?? "";
+    const err: string = error?.toString?.() ?? '';
     const { code, message } = error || {};
-    let errMessage = "接口请求错误";
-    if (code === "ECONNABORTED" && message.indexOf("timeout") !== -1) {
-      errMessage = "接口请求超时";
+    let errMessage = '接口请求错误';
+    if (code === 'ECONNABORTED' && message.indexOf('timeout') !== -1) {
+      errMessage = '接口请求超时';
     }
-    if (err?.includes("Network Error")) {
-      errMessage = "网络异常";
+    if (err?.includes('Network Error')) {
+      errMessage = '网络异常';
     }
     if (errMessage) {
       antdUtils.message?.error(errMessage);

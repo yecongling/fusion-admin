@@ -1,15 +1,15 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
+import React from 'react';
+import { Outlet } from 'react-router-dom';
 
 /**
  * 中间主内容区域
- * @returns 
+ * @returns
  */
 const Content: React.FC = () => {
-    return (
-        <>
-            <Outlet/>
-        </>
-    )
-}
+  return (
+    <>
+      <Outlet />
+    </>
+  );
+};
 export default Content;

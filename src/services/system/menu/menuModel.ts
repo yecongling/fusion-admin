@@ -1,4 +1,4 @@
-import { RouteItem } from "@type/route";
+import { RouteItem } from '@type/route';
 
 /**
  * 菜单

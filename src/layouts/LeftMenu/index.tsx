@@ -1,16 +1,16 @@
-import React, { memo, useCallback, useEffect, useState } from "react";
-import { Layout, Image, Spin, Menu, MenuProps, Button, Tooltip } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState, setCollapse } from "@stores/store.ts";
-import favicon from "@assets/svg/vite.svg";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import React, { memo, useCallback, useEffect, useState } from 'react';
+import { Layout, Image, Spin, Menu, MenuProps, Button, Tooltip } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, setCollapse } from '@stores/store.ts';
+import favicon from '@assets/svg/vite.svg';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-import "./leftMenu.scss";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { RouteItem } from "@type/route";
-import { addIcon, getOpenKeys, searchRoute } from "@utils/utils";
+import './leftMenu.scss';
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import { RouteItem } from '@type/route';
+import { addIcon, getOpenKeys, searchRoute } from '@utils/utils';
 
-type MenuItem = Required<MenuProps>["items"][number];
+type MenuItem = Required<MenuProps>['items'][number];
 
 /**
  * 左边的菜单栏
@@ -30,14 +30,14 @@ const LeftMenu: React.FC = memo(() => {
   const [selectedKeys, setSelectedKeys] = useState<string[]>([pathname]);
   const [openKeys, setOpenKeys] = useState<string[]>([]);
 
-  const titleColor = theme === "dark" ? "#fff" : "#1890ff";
+  const titleColor = theme === 'dark' ? '#fff' : '#1890ff';
 
   const getItem = (
     label: React.ReactNode,
     key?: React.Key | null,
     icon?: React.ReactNode,
     children?: MenuItem[],
-    type?: "group"
+    type?: 'group',
   ): MenuItem => {
     return {
       key,
@@ -58,7 +58,7 @@ const LeftMenu: React.FC = memo(() => {
       // 下面判断代码解释 *** !item?.children?.length   ==>   (!item.children || item.children.length === 0)
       if (!item?.children?.length) {
         return newArr.push(
-          getItem(item.meta?.title, item.path, addIcon(item.meta?.icon))
+          getItem(item.meta?.title, item.path, addIcon(item.meta?.icon)),
         );
       }
       newArr.push(
@@ -66,8 +66,8 @@ const LeftMenu: React.FC = memo(() => {
           item.meta?.title,
           item.path,
           addIcon(item.meta?.icon),
-          deepLoopFloat(item.children)
-        )
+          deepLoopFloat(item.children),
+        ),
       );
     });
     return newArr;
@@ -76,7 +76,7 @@ const LeftMenu: React.FC = memo(() => {
   /**
    * 菜单点击跳转
    */
-  const clickMenu: MenuProps["onClick"] = useCallback(
+  const clickMenu: MenuProps['onClick'] = useCallback(
     ({ key }: { key: string }) => {
       // 配置外置跳转路由
       // if (route.meta.isLink) window.open(route.meta.isLink, "_blank");
@@ -88,7 +88,7 @@ const LeftMenu: React.FC = memo(() => {
       //   document.title = title + "-integration";
       // }
     },
-    []
+    [],
   );
 
   // 刷新页面菜单保持高亮
@@ -101,7 +101,7 @@ const LeftMenu: React.FC = memo(() => {
     }
     const title = route.meta?.title;
     if (title) {
-      document.title = title + "-integration";
+      document.title = title + '-integration';
     }
     !collapse && setOpenKeys(openKey);
     setSelectedKeys(openKey.concat([pathname]));
@@ -130,9 +130,9 @@ const LeftMenu: React.FC = memo(() => {
       collapsedWidth={48}
       className="scroll ant-menu"
       style={{
-        overflowX: "hidden",
+        overflowX: 'hidden',
         zIndex: 999,
-        boxShadow: "0 2px 5px 0 rgba(0, 0, 0, 0.08)",
+        boxShadow: '0 2px 5px 0 rgba(0, 0, 0, 0.08)',
       }}
       collapsible
       width={menuWidth}
@@ -140,20 +140,20 @@ const LeftMenu: React.FC = memo(() => {
       collapsed={collapse}
     >
       <div className="dis-fl jc-sb ai-ct toolbox">
-        <Link to="/" style={{ width: "100%" }}>
+        <Link to="/" style={{ width: '100%' }}>
           <div
             className="hd-64 mgr-01 dis-fl ai-ct jc-ct"
-            style={{ justifyContent: "space-around" }}
+            style={{ justifyContent: 'space-around' }}
           >
             <Image width={25} src={favicon} preview={false} />
             {collapse ? (
-              ""
+              ''
             ) : (
               <p
                 style={{
-                  fontWeight: "bold",
-                  margin: "0 12px",
-                  fontSize: "20px",
+                  fontWeight: 'bold',
+                  margin: '0 12px',
+                  fontSize: '20px',
                   color: titleColor,
                 }}
               >
@@ -177,25 +177,25 @@ const LeftMenu: React.FC = memo(() => {
       <div
         className="collapse"
         style={{
-          display: "flex",
-          justifyContent: collapse ? "center" : "end",
+          display: 'flex',
+          justifyContent: collapse ? 'center' : 'end',
         }}
       >
         <Button
           type="text"
           size="small"
           style={{
-            cursor: "pointer",
-            fontSize: "16px",
+            cursor: 'pointer',
+            fontSize: '16px',
           }}
           icon={
             collapse ? (
               <MenuUnfoldOutlined
-                style={{ color: theme === "dark" ? "white" : "black" }}
+                style={{ color: theme === 'dark' ? 'white' : 'black' }}
               />
             ) : (
               <MenuFoldOutlined
-                style={{ color: theme === "dark" ? "white" : "black" }}
+                style={{ color: theme === 'dark' ? 'white' : 'black' }}
               />
             )
           }

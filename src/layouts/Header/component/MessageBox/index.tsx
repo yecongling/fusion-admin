@@ -1,13 +1,13 @@
-import { Button, Card, Spin, Tabs, TabsProps } from "antd";
-import React, { useEffect, useState } from "react";
-import "./message-box.scss";
-import MessageList, { MessageListType } from "./MessageList";
-import { groupBy } from "lodash-es";
+import { Button, Card, Spin, Tabs, TabsProps } from 'antd';
+import React, { useEffect, useState } from 'react';
+import './message-box.scss';
+import MessageList, { MessageListType } from './MessageList';
+import { groupBy } from 'lodash-es';
 import {
   MessageOutlined,
   NotificationOutlined,
   ReconciliationOutlined,
-} from "@ant-design/icons";
+} from '@ant-design/icons';
 /**
  * 通知模块
  */
@@ -31,18 +31,18 @@ const Notify: React.FC = () => {
       // 模拟从后台取数据
       setDatasource([
         {
-          id: "1",
-          title: "您有新的待办",
-          content: "您有新的待办",
-          type: "message",
-          time: "2023-01-01 12:00:00",
+          id: '1',
+          title: '您有新的待办',
+          content: '您有新的待办',
+          type: 'message',
+          time: '2023-01-01 12:00:00',
           status: 0,
         },
         {
-          id: "2",
-          title: "您有新的待办",
-          content: "您有新的待办",
-          type: "todo",
+          id: '2',
+          title: '您有新的待办',
+          content: '您有新的待办',
+          type: 'todo',
           status: 1,
         },
       ]);
@@ -55,7 +55,7 @@ const Notify: React.FC = () => {
     // 数据加载完成后将数据进行分组
     const groupData: { [key: string]: MessageListType } = groupBy(
       dataSource,
-      "type"
+      'type',
     );
     setGroupData(groupData);
   }, [dataSource]);
@@ -65,20 +65,20 @@ const Notify: React.FC = () => {
    * @param data 消息数据
    */
   const readMessage = (data: MessageListType) => {
-    console.log("标记消息已读", data);
+    console.log('标记消息已读', data);
   };
 
   // tab列表
-  const tabList: TabsProps["items"] = [
+  const tabList: TabsProps['items'] = [
     {
-      key: "message",
-      label: "消息(2)",
+      key: 'message',
+      label: '消息(2)',
       icon: <MessageOutlined />,
       children: (
         <MessageList
-          data={groupData["message"]}
-          unReadData={(groupData["message"] || []).filter(
-            (item) => !item.status
+          data={groupData['message']}
+          unReadData={(groupData['message'] || []).filter(
+            (item) => !item.status,
           )}
           onItemClick={(item) => readMessage([item])}
           onAllBtnClick={(unReadData) => readMessage(unReadData)}
@@ -86,14 +86,14 @@ const Notify: React.FC = () => {
       ),
     },
     {
-      key: "notify",
-      label: "通知(3)",
+      key: 'notify',
+      label: '通知(3)',
       icon: <NotificationOutlined />,
       children: (
         <MessageList
-          data={groupData["notify"]}
-          unReadData={(groupData["notify"] || []).filter(
-            (item) => !item.status
+          data={groupData['notify']}
+          unReadData={(groupData['notify'] || []).filter(
+            (item) => !item.status,
           )}
           onItemClick={(item) => readMessage([item])}
           onAllBtnClick={(unReadData) => readMessage(unReadData)}
@@ -101,13 +101,13 @@ const Notify: React.FC = () => {
       ),
     },
     {
-      key: "todo",
-      label: "待办(5)",
+      key: 'todo',
+      label: '待办(5)',
       icon: <ReconciliationOutlined />,
       children: (
         <MessageList
-          data={groupData["todo"]}
-          unReadData={(groupData["todo"] || []).filter((item) => !item.status)}
+          data={groupData['todo']}
+          unReadData={(groupData['todo'] || []).filter((item) => !item.status)}
           onItemClick={(item) => readMessage([item])}
           onAllBtnClick={(unReadData) => readMessage(unReadData)}
         />
@@ -118,19 +118,19 @@ const Notify: React.FC = () => {
   return (
     <Card
       className="message-box"
-      styles={{ body: { height: "100%", padding: "12px" } }}
+      styles={{ body: { height: '100%', padding: '12px' } }}
     >
-      <Spin spinning={loading} style={{ display: "block" }}>
+      <Spin spinning={loading} style={{ display: 'block' }}>
         <Tabs
           items={tabList}
           defaultActiveKey="message"
           size="small"
-          style={{ height: "100%" }}
+          style={{ height: '100%' }}
           tabBarExtraContent={
             <Button
               type="link"
               onClick={() => {
-                console.log("清除");
+                console.log('清除');
               }}
             >
               清空

@@ -1,47 +1,47 @@
-import { Navigate, useRoutes } from "react-router-dom";
-import { LazyLoad } from "./lazyLoad";
-import React, { ReactNode, Suspense, useEffect, useState } from "react";
-import { App, Skeleton } from "antd";
-import { antdUtils } from "@utils/antdUtil";
-import { RootState } from "@stores/store";
-import { handleRouter } from "@utils/utils";
-import { RouteObject } from "@type/route";
-import { useSelector } from "react-redux";
-import { ErrorBoundary } from "react-error-boundary";
-import { ErrorFallback } from "./ErrorBoundary";
+import { Navigate, useRoutes } from 'react-router-dom';
+import { LazyLoad } from './lazyLoad';
+import React, { ReactNode, Suspense, useEffect, useState } from 'react';
+import { App, Skeleton } from 'antd';
+import { antdUtils } from '@utils/antdUtil';
+import { RootState } from '@stores/store';
+import { handleRouter } from '@utils/utils';
+import { RouteObject } from '@type/route';
+import { useSelector } from 'react-redux';
+import { ErrorBoundary } from 'react-error-boundary';
+import { ErrorFallback } from './ErrorBoundary';
 
 // 默认的错误路由
 const errorRoutes: RouteObject[] = [
   {
-    path: "*",
+    path: '*',
     component: () => <Navigate replace to="/404" />,
   },
   {
-    path: "/500",
-    component: LazyLoad("error/500.tsx").type,
+    path: '/500',
+    component: LazyLoad('error/500.tsx').type,
   },
   {
-    path: "/404",
-    component: LazyLoad("error/404.tsx").type,
+    path: '/404',
+    component: LazyLoad('error/404.tsx').type,
   },
   {
-    path: "/403",
-    component: LazyLoad("error/403.tsx").type,
+    path: '/403',
+    component: LazyLoad('error/403.tsx').type,
   },
 ];
 
 // 动态路由
 export const dynamicRoutes: RouteObject[] = [
   {
-    path: "/",
+    path: '/',
     component: React.lazy(
-      () => import("@layouts/index.tsx")
+      () => import('@layouts/index.tsx'),
     ) as unknown as ReactNode,
     children: errorRoutes,
   },
   {
-    path: "/login",
-    component: LazyLoad("Login").type,
+    path: '/login',
+    component: LazyLoad('Login').type,
   },
 ];
 

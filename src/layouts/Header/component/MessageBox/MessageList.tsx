@@ -1,6 +1,6 @@
-import { Avatar, Button, Empty, List, Space, Tag, Typography } from "antd";
-import React, { ReactNode } from "react";
-import "./message-box.scss";
+import { Avatar, Button, Empty, List, Space, Tag, Typography } from 'antd';
+import React, { ReactNode } from 'react';
+import './message-box.scss';
 const MessageList: React.FC<MessageListProps> = (props) => {
   const { data, unReadData } = props;
 
@@ -31,7 +31,7 @@ const MessageList: React.FC<MessageListProps> = (props) => {
     return (
       <List.Item key={item.id} style={{ opacity: item.status ? 0.5 : 1 }}>
         <div
-          style={{ cursor: "pointer", flex: 1 }}
+          style={{ cursor: 'pointer', flex: 1 }}
           onClick={() => onItemClick(item, index)}
         >
           <List.Item.Meta
@@ -71,7 +71,7 @@ const MessageList: React.FC<MessageListProps> = (props) => {
     );
   };
 
-  return (!data || data.length === 0) ? (
+  return !data || data.length === 0 ? (
     <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="暂无消息" />
   ) : (
     <List
@@ -130,6 +130,6 @@ interface MessageListProps {
   // 全部已读
   onAllBtnClick?: (
     unReadData: MessageItemData[],
-    data: MessageItemData[]
+    data: MessageItemData[],
   ) => void;
 }

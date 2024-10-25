@@ -1,7 +1,7 @@
-import { ContentTypeEnum } from "@enums/httpEnum";
-import { deepMerge } from "../utils";
-import { RAxios } from "./Axios";
-import { CreateAxiosOptions, transform } from "./transform";
+import { ContentTypeEnum } from '@enums/httpEnum';
+import { deepMerge } from '../utils';
+import { RAxios } from './Axios';
+import { CreateAxiosOptions, transform } from './transform';
 
 /**
  * 封装axios
@@ -10,9 +10,9 @@ function createAxios(opts?: Partial<CreateAxiosOptions>) {
   return new RAxios(
     deepMerge(
       {
-        authenticationScheme: "",
+        authenticationScheme: '',
         timeout: 10 * 1000,
-        headers: { "Content-Type": ContentTypeEnum.JSON },
+        headers: { 'Content-Type': ContentTypeEnum.JSON },
         // 数据处理方式
         transform,
         // 配置项，下面的选项都可以在独立的接口请求中覆盖
@@ -28,13 +28,13 @@ function createAxios(opts?: Partial<CreateAxiosOptions>) {
           // 格式化提交参数时间
           formatDate: true,
           // 异常消息提示类型
-          errorMessageMode: "modal",
+          errorMessageMode: 'modal',
           // 成功消息提示类型
-          successMessageMode: "success",
+          successMessageMode: 'success',
           // 接口地址（默认前缀）
-          apiUrl: "/api",
+          apiUrl: '/api',
           // 接口拼接地址前缀
-          urlPrefix: "",
+          urlPrefix: '',
           //  是否加入时间戳 默认不添加时间戳
           joinTime: false,
           // 忽略重复请求
@@ -45,8 +45,8 @@ function createAxios(opts?: Partial<CreateAxiosOptions>) {
           encrypt: 1,
         },
       },
-      opts || {}
-    )
+      opts || {},
+    ),
   );
 }
 

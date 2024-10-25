@@ -1,5 +1,5 @@
-import { Button, Result } from "antd";
-import { useErrorBoundary } from "react-error-boundary";
+import { Button, Result } from 'antd';
+import { useErrorBoundary } from 'react-error-boundary';
 
 /**
  * 错误边界的响应
@@ -16,7 +16,7 @@ export function ErrorFallback({ error }: any) {
       subTitle={
         <>
           <p>组件渲染出现异常，错误:</p>
-          <pre style={{ color: "red" }}>{error.message}</pre>
+          <pre style={{ color: 'red' }}>{error.message}</pre>
         </>
       }
       extra={

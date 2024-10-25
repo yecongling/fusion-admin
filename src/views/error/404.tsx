@@ -1,6 +1,6 @@
 import React from 'react';
-import {Button, Result} from 'antd';
-import {useNavigate} from "react-router-dom";
+import { Button, Result } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 const App: React.FC = () => {
   const navigate = useNavigate();
@@ -10,9 +10,13 @@ const App: React.FC = () => {
         status="404"
         title="404"
         subTitle="抱歉，您访问的页面不存在。"
-        extra={<Button type="primary" onClick={() => navigate("/home")}>回到首页</Button>}
+        extra={
+          <Button type="primary" onClick={() => navigate('/home')}>
+            回到首页
+          </Button>
+        }
       />
     </>
   );
-}
+};
 export default App;
