@@ -363,7 +363,7 @@
     estree-walker "^2.0.2"
     picomatch "^2.3.1"
 
-"@rsbuild/core@^1.0.16":
+"@rsbuild/core@^1.0.17":
   version "1.0.17"
   resolved "https://registry.npmmirror.com/@rsbuild/core/-/core-1.0.17.tgz#6d5ca927ce22ecfab7db7f93a4a242cf76ef312c"
   integrity sha512-XbRrFsX5YiYrArD2f27a+WGhRWvoYgogaTMX/kiL7xcZOFuV+PbPBdU0e2o00NROGLRyVn7cTfkIkyMSr1B9Vg==
