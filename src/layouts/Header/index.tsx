@@ -22,7 +22,7 @@ import {
   Space,
   Tooltip,
 } from 'antd';
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { clearCache } from '@stores/store';
@@ -30,6 +30,8 @@ import avatar from '@assets/images/avatar.png';
 import MessageBox from './component/MessageBox';
 import FullScreen from './component/FullScreen';
 import { logout } from '@services/login/loginApi';
+import Setting from './component/Setting';
+import BreadcrumbNav from './component/BreadcrumbNav';
 /**
  * 顶部布局内容
  */
@@ -38,6 +40,7 @@ const Header: React.FC = memo(() => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [openSetting, setOpenSetting] = useState<boolean>(false);
   // 菜单栏
   const items: MenuProps['items'] = [
     {
@@ -102,77 +105,83 @@ const Header: React.FC = memo(() => {
   };
 
   return (
-    <Layout.Header
-      className="ant-layout-header dis-fl jc-sb"
-      style={{
-        borderBottom: ' 1px solid #e9edf0'
-      }}
-    >
-      <div className="dis-fl js-sb ai-ct" style={{ marginLeft: '10px' }}>
-        {/* 面包屑 */}
-        {/* <BreadcrumbNav /> */}
-      </div>
-      <div className="dis-fl js-sb ai-ct toolbox">
-        <Space size="large">
-          <Input
-            variant="filled"
-            placeholder="输入内容查询"
-            suffix={
-              <SearchOutlined style={{ cursor: 'pointer', fontSize: '18px' }} />
-            }
-          />
-          <Tooltip placement="bottom" title="github">
-            <GithubOutlined
-              style={{ cursor: 'pointer', fontSize: '18px' }}
-              onClick={routeGitHub}
+    <>
+      <Layout.Header
+        className="ant-layout-header dis-fl jc-sb"
+        style={{
+          borderBottom: ' 1px solid #e9edf0',
+        }}
+      >
+        <div className="dis-fl js-sb ai-ct" style={{ marginLeft: '10px' }}>
+          {/* 面包屑 */}
+          <BreadcrumbNav />
+        </div>
+        <div className="dis-fl js-sb ai-ct toolbox">
+          <Space size="large">
+            <Input
+              variant="filled"
+              placeholder="输入内容查询"
+              suffix={
+                <SearchOutlined
+                  style={{ cursor: 'pointer', fontSize: '18px' }}
+                />
+              }
             />
-          </Tooltip>
-          <Tooltip placement="bottom" title="锁屏">
-            <LockOutlined
-              style={{ cursor: 'pointer', fontSize: '18px' }}
-              onClick={() => {
-                alert('进行锁屏操作');
-              }}
-            />
-          </Tooltip>
-          {/* 邮件 */}
-          <Badge count={5}>
-            <MailOutlined style={{ cursor: 'pointer', fontSize: '18px' }} />
-          </Badge>
-          <Dropdown
-            placement="bottomRight"
-            dropdownRender={() => <MessageBox />}
-          >
+            <Tooltip placement="bottom" title="github">
+              <GithubOutlined
+                style={{ cursor: 'pointer', fontSize: '18px' }}
+                onClick={routeGitHub}
+              />
+            </Tooltip>
+            <Tooltip placement="bottom" title="锁屏">
+              <LockOutlined
+                style={{ cursor: 'pointer', fontSize: '18px' }}
+                onClick={() => {
+                  alert('进行锁屏操作');
+                }}
+              />
+            </Tooltip>
+            {/* 邮件 */}
             <Badge count={5}>
-              <BellOutlined style={{ cursor: 'pointer', fontSize: '18px' }} />
+              <MailOutlined style={{ cursor: 'pointer', fontSize: '18px' }} />
             </Badge>
-          </Dropdown>
-          <Tooltip placement="bottomRight" title="系统设置">
-            <SettingOutlined
-              style={{ cursor: 'pointer', fontSize: '18px' }}
-            // onClick={() => setOpenSetting(true)}
-            />
-          </Tooltip>
-          <FullScreen />
-          <Dropdown menu={{ items }} placement="bottom">
-            <div
-              className="login-user"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: 'pointer',
-                height: 50,
-                transition: 'all 0.3s',
-              }}
+            <Dropdown
+              placement="bottomRight"
+              dropdownRender={() => <MessageBox />}
             >
-              <Avatar size="default" src={avatar} />
-              <span style={{ margin: '0 0 0 6px' }}>叶丛林</span>
-            </div>
-          </Dropdown>
-        </Space>
-      </div>
-    </Layout.Header>
+              <Badge count={5}>
+                <BellOutlined style={{ cursor: 'pointer', fontSize: '18px' }} />
+              </Badge>
+            </Dropdown>
+            <Tooltip placement="bottomRight" title="系统设置">
+              <SettingOutlined
+                style={{ cursor: 'pointer', fontSize: '18px' }}
+                onClick={() => setOpenSetting(true)}
+              />
+            </Tooltip>
+            <FullScreen />
+            <Dropdown menu={{ items }} placement="bottom">
+              <div
+                className="login-user"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  height: 50,
+                  transition: 'all 0.3s',
+                }}
+              >
+                <Avatar size="default" src={avatar} />
+                <span style={{ margin: '0 0 0 6px' }}>叶丛林</span>
+              </div>
+            </Dropdown>
+          </Space>
+        </div>
+      </Layout.Header>
+      {/* 系统设置界面 */}
+      <Setting open={openSetting} setOpen={setOpenSetting} />
+    </>
   );
 });
 export default Header;
