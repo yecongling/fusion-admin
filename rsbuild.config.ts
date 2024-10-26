@@ -28,9 +28,10 @@ export default defineConfig({
     // 启动图片压缩
     pluginImageCompress()
   ],
-  // 配置使用html模板
+  // 配置html模板
   html: {
-    template: path.resolve(__dirname, './public/index.html'),
+    favicon: path.resolve(__dirname, './src/assets/svg/vite.svg'),
+    title: 'fusionAdmin'
   },
   // 配置路径别名
   source: {
