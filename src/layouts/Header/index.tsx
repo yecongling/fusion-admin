@@ -28,6 +28,8 @@ import { useNavigate } from 'react-router-dom';
 import { clearCache } from '@stores/store';
 import avatar from '@assets/images/avatar.png';
 import MessageBox from './component/MessageBox';
+import FullScreen from './component/FullScreen';
+import { logout } from '@services/login/loginApi';
 /**
  * 顶部布局内容
  */
@@ -78,7 +80,7 @@ const Header: React.FC = memo(() => {
             const token = sessionStorage.getItem('token');
 
             // 清除后端的信息
-            // logout(token as string);
+            logout(token as string);
             // 清空token
             sessionStorage.removeItem('token');
             sessionStorage.removeItem('roleId');
@@ -148,10 +150,10 @@ const Header: React.FC = memo(() => {
           <Tooltip placement="bottomRight" title="系统设置">
             <SettingOutlined
               style={{ cursor: 'pointer', fontSize: '18px' }}
-              // onClick={() => setOpenSetting(true)}
+            // onClick={() => setOpenSetting(true)}
             />
           </Tooltip>
-          {/* <FullScreen /> */}
+          <FullScreen />
           <Dropdown menu={{ items }} placement="bottom">
             <div
               className="login-user"
