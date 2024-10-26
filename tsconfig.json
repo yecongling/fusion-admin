@@ -20,7 +20,7 @@
     "noUnusedParameters": true,
     "baseUrl": "./", // 项目根目录
     "paths": {
-      "@/*": ["src/*"],
+      // "@/*": ["src/*"],
       "@views/*": ["src/views/*"],
       "@components/*": ["src/components/*"],
       "@layouts/*": ["src/layouts/*"],
@@ -31,7 +31,7 @@
       "@type/*": ["src/types/*"],
       "@assets/*": ["src/assets/*"],
       "@utils/*": ["src/utils/*"],
-      "@service/*": ["src/services/*"],
+      "@services/*": ["src/services/*"],
       "@router/*": ["src/router/*"]
     }
   },

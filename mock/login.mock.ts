@@ -6,7 +6,15 @@ export default defineMock([
     url: "/api/login",
     method: "POST",
     body(request) {
-      return {};
+      return {
+        code: 200,
+        msg: "",
+        data: {
+          token: "wefewfwe",
+          roleId: "admin",
+          homePath: "/home",
+        },
+      };
     },
   },
 ]);

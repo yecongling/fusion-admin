@@ -12,6 +12,10 @@ import {
 import styles from './login.module.scss';
 import filing from '@assets/images/filing.png';
 import { useNavigate } from 'react-router-dom';
+import { login } from '@services/login/loginApi';
+import { getMenuListByRoleId } from '@services/system/menu/menuApi';
+import { useDispatch } from 'react-redux';
+import { setMenus } from '@stores/store';
 
 /**
  * 登录模块
@@ -21,6 +25,7 @@ const Login: React.FC = () => {
   const [form] = Form.useForm();
   const inputRef = useRef(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   // 加载状态
   const [loading, setLoading] = useState<boolean>(false);
   // 验证码
@@ -36,6 +41,15 @@ const Login: React.FC = () => {
     setLoading(true);
     // 这里考虑返回的内容不仅包括token，还包括用户登录的角色（需要存储在本地，用于刷新页面时重新根据角色获取菜单）、配置的首页地址（供登录后进行跳转）
     try {
+      const {token, roleId, homePath = '/home'} = await login(values);
+      sessionStorage.setItem("token", token);
+      sessionStorage.setItem("isLogin", "true");
+      sessionStorage.setItem("roleId", roleId);
+      // 登录成功根据角色获取菜单（这里暂时不判定登录失败的情况，后续添加）
+      const menu = await getMenuListByRoleId({roleId});
+      dispatch(setMenus(menu));
+      // 跳转到首页，这里的跳转需要后续调整为从finally中去判定，登录成功后才考虑
+      navigate(homePath);
     } finally {
       setLoading(false);
     }

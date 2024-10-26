@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useEffect, useState } from 'react';
-import { Layout, Image, Spin, Menu, MenuProps, Button, Tooltip } from 'antd';
+import { Layout, Image, Spin, Menu, MenuProps, Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, setCollapse } from '@stores/store.ts';
 import favicon from '@assets/svg/vite.svg';
@@ -101,7 +101,7 @@ const LeftMenu: React.FC = memo(() => {
     }
     const title = route.meta?.title;
     if (title) {
-      document.title = title + '-integration';
+      document.title = 'Fusion Admin -' + title;
     }
     !collapse && setOpenKeys(openKey);
     setSelectedKeys(openKey.concat([pathname]));

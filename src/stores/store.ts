@@ -36,7 +36,7 @@ const globalSlice = createSlice({
 
     // 清空缓存
     clearCache(state: GlobalState) {
-      state.theme = 'dark';
+      state.theme = 'light';
       state.collapse = false;
       state.colorPrimary = '#1677ff';
       state.menus = [];

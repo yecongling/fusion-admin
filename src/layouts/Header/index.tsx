@@ -103,11 +103,7 @@ const Header: React.FC = memo(() => {
     <Layout.Header
       className="ant-layout-header dis-fl jc-sb"
       style={{
-        padding: '0 16px 0 0',
-        height: '50px',
-        minHeight: '50px',
-        borderBottom: ' 1px solid #e9edf0',
-        backgroundColor: '#fff',
+        borderBottom: ' 1px solid #e9edf0'
       }}
     >
       <div className="dis-fl js-sb ai-ct" style={{ marginLeft: '10px' }}>

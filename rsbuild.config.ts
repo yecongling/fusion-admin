@@ -36,7 +36,7 @@ export default defineConfig({
   // 配置路径别名
   source: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
+      // '@': path.resolve(__dirname, './src'),
       '@views': path.resolve(__dirname, './src/views'),
       '@components': path.resolve(__dirname, './src/components'),
       '@layouts': path.resolve(__dirname, './src/layouts'),

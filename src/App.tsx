@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import zhCN from 'antd/locale/zh_CN';
 import 'dayjs/locale/zh-cn';
 import { Router } from '@router/router';
-import { getMenuListByRoleId } from '@service/system/menu/menuApi';
+import { getMenuListByRoleId } from '@services/system/menu/menuApi';
 
 /**
  * 主应用
@@ -52,7 +52,13 @@ const App: React.FC = () => {
 
   return (
     <ConfigProvider
-      theme={{ token: { colorPrimary: global.colorPrimary } }}
+      theme={{ token: { colorPrimary: global.colorPrimary }, components: {
+        Layout: {
+          headerPadding: '0 16px 0 0',
+          headerHeight: '50px',
+          headerBg: '#fff'
+        }
+      } }}
       locale={zhCN}
     >
       <AntdApp style={{ height: '100%' }}>
