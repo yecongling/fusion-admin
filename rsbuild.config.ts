@@ -2,6 +2,7 @@ import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginMockServer } from 'rspack-plugin-mock/rsbuild';
+import { pluginImageCompress } from '@rsbuild/plugin-image-compress';
 import path from 'path';
 
 export default defineConfig({
@@ -24,6 +25,8 @@ export default defineConfig({
       // 表示拦截以路径/api开头的
       prefix: '/api',
     }),
+    // 启动图片压缩
+    pluginImageCompress()
   ],
   // 配置使用html模板
   html: {
@@ -32,6 +35,7 @@ export default defineConfig({
   // 配置路径别名
   source: {
     alias: {
+      '@': path.resolve(__dirname, './src'),
       '@views': path.resolve(__dirname, './src/views'),
       '@components': path.resolve(__dirname, './src/components'),
       '@layouts': path.resolve(__dirname, './src/layouts'),
@@ -49,6 +53,16 @@ export default defineConfig({
   dev: {
     // 按需编译
     lazyCompilation: true,
+  },
+  // 构建产物相关配置
+  output: {
+
+  },
+  // 构建优化相关
+  performance: {
+    chunkSplit: {
+      
+    }
   },
   // 服务相关
   server: {

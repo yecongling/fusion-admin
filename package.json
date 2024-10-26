@@ -29,6 +29,7 @@
     "@eslint/compat": "^1.2.0",
     "@eslint/js": "^9.12.0",
     "@rsbuild/core": "^1.0.17",
+    "@rsbuild/plugin-image-compress": "^1.0.2",
     "@rsbuild/plugin-react": "^1.0.5",
     "@rsbuild/plugin-sass": "^1.0.4",
     "@types/crypto-js": "^4.2.2",
@@ -39,10 +40,10 @@
     "eslint": "^9.12.0",
     "eslint-plugin-react": "^7.37.1",
     "eslint-plugin-react-hooks": "^5.0.0",
-    "mockjs": "^1.1.0",
-    "rspack-plugin-mock": "^0.4.1",
     "globals": "^15.11.0",
+    "mockjs": "^1.1.0",
     "prettier": "^3.3.3",
+    "rspack-plugin-mock": "^0.4.1",
     "typescript": "^5.6.3",
     "typescript-eslint": "^8.8.1"
   }
