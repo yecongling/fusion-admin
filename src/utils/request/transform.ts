@@ -217,7 +217,7 @@ export const transform: AxiosTransform = {
     if (token && options?.requestOptions?.withToken !== false) {
       config.headers['token'] = token;
     }
-    const cpt = options?.requestOptions?.encrypt || 1;
+    const cpt = options?.requestOptions?.encrypt;
     // 进行数据加密
     if (config.data && cpt === 1) {
       // 判定json数据需要转为json字符串才能加密

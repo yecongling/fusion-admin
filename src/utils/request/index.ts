@@ -41,8 +41,8 @@ function createAxios(opts?: Partial<CreateAxiosOptions>) {
           ignoreCancelToken: true,
           // 是否携带token
           withToken: true,
-          // 是否加密数据 1：加密 0：不加密
-          encrypt: 1,
+          // 是否加密数据 1：加密 0：不加密(如果是开发环境下默认不加密，处理mock)
+          encrypt: import.meta.env.MODE === 'development' ? 0 : 1,
         },
       },
       opts || {},
