@@ -1,6 +1,6 @@
 import { Avatar, Button, Empty, List, Space, Tag, Typography } from 'antd';
 import React, { ReactNode } from 'react';
-import './message-box.scss';
+import styles from './message-box.module.scss';
 const MessageList: React.FC<MessageListProps> = (props) => {
   const { data, unReadData } = props;
 
@@ -43,7 +43,7 @@ const MessageList: React.FC<MessageListProps> = (props) => {
               )
             }
             title={
-              <div className="message-title">
+              <div className={styles['message-title']}>
                 <Space size={4}>
                   <span>{item.title}</span>
                   <Typography.Text type="secondary">
@@ -76,13 +76,13 @@ const MessageList: React.FC<MessageListProps> = (props) => {
   ) : (
     <List
       footer={
-        <div className="footer">
-          <div className="footer-item">
+        <div className={styles.footer}>
+          <div className={styles['footer-item']}>
             <Button type="text" size="small" onClick={onAllBtnClick}>
               全部已读
             </Button>
           </div>
-          <div className="footer-item">
+          <div className={styles['footer-item']}>
             <Button type="text" size="small">
               查看更多
             </Button>

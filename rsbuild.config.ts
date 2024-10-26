@@ -17,7 +17,7 @@ export default defineConfig({
     pluginSass({
       // sass文件默认注入全局的变量文件
       sassLoaderOptions(config) {
-        config.additionalData = `@use "@assets/styles/variables.scss";`;
+        config.additionalData = `@use "${path.resolve(__dirname, 'src/assets/styles/variables.scss')}" as *;`;
       },
     }),
     // mock 插件
@@ -26,12 +26,12 @@ export default defineConfig({
       prefix: '/api',
     }),
     // 启动图片压缩
-    pluginImageCompress()
+    pluginImageCompress(),
   ],
   // 配置html模板
   html: {
     favicon: path.resolve(__dirname, './src/assets/svg/vite.svg'),
-    title: 'fusionAdmin'
+    title: 'fusionAdmin',
   },
   // 配置路径别名
   source: {
@@ -56,14 +56,10 @@ export default defineConfig({
     lazyCompilation: true,
   },
   // 构建产物相关配置
-  output: {
-
-  },
+  output: {},
   // 构建优化相关
   performance: {
-    chunkSplit: {
-      
-    }
+    chunkSplit: {},
   },
   // 服务相关
   server: {

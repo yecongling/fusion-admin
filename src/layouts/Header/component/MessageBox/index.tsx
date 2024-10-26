@@ -1,6 +1,6 @@
 import { Button, Card, Spin, Tabs, TabsProps } from 'antd';
 import React, { useEffect, useState } from 'react';
-import './message-box.scss';
+import styles from './message-box.module.scss';
 import MessageList, { MessageListType } from './MessageList';
 import { groupBy } from 'lodash-es';
 import {
@@ -117,7 +117,7 @@ const Notify: React.FC = () => {
 
   return (
     <Card
-      className="message-box"
+      className={styles['message-box']}
       styles={{ body: { height: '100%', padding: '12px' } }}
     >
       <Spin spinning={loading} style={{ display: 'block' }}>
