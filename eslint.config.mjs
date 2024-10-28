@@ -25,7 +25,9 @@ export default [
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
-      'react/display-name': false,
+      'react/display-name': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+      'react/prop-types': 'off',
     },
   },
   { ignores: ['dist/'] },

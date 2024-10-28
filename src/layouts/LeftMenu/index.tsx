@@ -103,9 +103,11 @@ const LeftMenu: React.FC = memo(() => {
     if (title) {
       document.title = 'Fusion Admin -' + title;
     }
-    !collapse && setOpenKeys(openKey);
+    if (!collapse) {
+      setOpenKeys(openKey);
+    }
     setSelectedKeys(openKey.concat([pathname]));
-  }, [pathname, collapse]);
+  }, [pathname, collapse, menus]);
 
   // 设置当前展开的 subMenu
   const onOpenChange = (openKeys: string[]) => {

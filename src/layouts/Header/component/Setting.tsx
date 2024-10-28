@@ -15,18 +15,17 @@ import { RootState, setColorPrimary, setTheme } from '@stores/store';
 /**
  * 系统设置界面组件的属性配置
  */
-export type SettingProps = {
+export interface SettingProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-};
+}
 
 /* 系统配置界面 */
-const Setting: React.FC<SettingProps> = memo((props) => {
+const Setting: React.FC<SettingProps> = memo(({ open, setOpen }) => {
   // 从全局状态库中获取数据
   const globalState = useSelector((state: RootState) => state.global);
   const dispatch = useDispatch();
   const { theme, colorPrimary } = globalState;
-  const { open, setOpen } = props;
   const [value, setValue] = useState<ColorPickerProps['value']>(colorPrimary);
 
   /**
@@ -106,4 +105,5 @@ const Setting: React.FC<SettingProps> = memo((props) => {
   );
 });
 
+Setting.propTypes = {};
 export default Setting;
