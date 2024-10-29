@@ -12,7 +12,7 @@
   "dependencies": {
     "@ant-design/icons": "^5.5.1",
     "@reduxjs/toolkit": "^2.3.0",
-    "antd": "^5.21.5",
+    "antd": "^5.21.6",
     "axios": "^1.7.7",
     "crypto-js": "^4.2.0",
     "echarts": "^5.5.1",
@@ -30,7 +30,7 @@
   "devDependencies": {
     "@eslint/compat": "^1.2.0",
     "@eslint/js": "^9.12.0",
-    "@rsbuild/core": "^1.0.17",
+    "@rsbuild/core": "^1.0.18",
     "@rsbuild/plugin-image-compress": "^1.0.2",
     "@rsbuild/plugin-react": "^1.0.5",
     "@rsbuild/plugin-sass": "^1.0.4",
