@@ -59,7 +59,19 @@ export default defineConfig({
   output: {},
   // 构建优化相关
   performance: {
-    chunkSplit: {},
+    chunkSplit: {
+      strategy: 'split-by-experience',
+      // 下面的部分单独分饱
+      forceSplitting: {
+        axios: /node_modules[\\/]axios/,
+        react: /node_modules[\\/]react/,
+        antd: /node_modules[\\/]antd/,
+        redux: /node_modules[\\/]redux/,
+        lodash: /node_modules[\\/]lodash/,
+        echarts: /node_modules[\\/]echarts/,
+        antdIcons: /node_modules[\\/]@ant-design\/icons/
+      }
+    },
   },
   // 服务相关
   server: {
