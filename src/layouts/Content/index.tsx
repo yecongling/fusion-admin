@@ -1,6 +1,6 @@
+import RouterBeforeEach from '@router/RouterBeforeEach';
 import { Layout, Spin } from 'antd';
 import React, { Suspense } from 'react';
-import { Outlet } from 'react-router-dom';
 
 /**
  * 中间主内容区域
@@ -23,7 +23,7 @@ const Content: React.FC = () => {
           </div>
         }
       >
-        <Outlet />
+        <RouterBeforeEach />
       </Suspense>
     </Layout.Content>
   );

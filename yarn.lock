@@ -474,10 +474,10 @@
     estree-walker "^2.0.2"
     picomatch "^2.3.1"
 
-"@rsbuild/core@^1.0.18":
-  version "1.0.18"
-  resolved "https://registry.npmmirror.com/@rsbuild/core/-/core-1.0.18.tgz#2d23454aa2c129e8709f83f237ac3ac83952d92d"
-  integrity sha512-NRdcGCAuBpzAIIdv+gVZxpgd9Cu9JSbaOC13nTbWRKXrHPpr+1iwYFBbM01KtX0Fe2TBLgmSaJfdDJAfEeZ3Dg==
+"@rsbuild/core@^1.0.19":
+  version "1.0.19"
+  resolved "https://registry.npmmirror.com/@rsbuild/core/-/core-1.0.19.tgz#5641036d2d803645575cf4178d18eecb04056f95"
+  integrity sha512-63DAPvYfRBoUrb51BUPb4Xoqx48MHQ0yLcmnCiqZGpMeKYtTWzD+lyx5va4cr9qvdnIFTAX2BMuYC/j5iSrtTA==
   dependencies:
     "@rspack/core" "~1.0.14"
     "@rspack/lite-tapable" "~1.0.1"
