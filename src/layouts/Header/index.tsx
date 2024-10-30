@@ -49,7 +49,7 @@ const Header: React.FC = memo(() => {
       icon: <UserOutlined />,
       disabled: false,
       onClick: () => {
-        navigate('system/personal');
+        // 个人中心做成一个弹窗，内部可以修改
       },
     },
     {
@@ -88,6 +88,7 @@ const Header: React.FC = memo(() => {
             sessionStorage.removeItem('token');
             sessionStorage.removeItem('roleId');
             sessionStorage.removeItem('isLogin');
+            sessionStorage.removeItem('loginUser');
             // 退出到登录页面
             navigate('/login');
           },
@@ -173,7 +174,9 @@ const Header: React.FC = memo(() => {
                 }}
               >
                 <Avatar size="default" src={avatar} />
-                <span style={{ margin: '0 0 0 6px' }}>叶丛林</span>
+                <span style={{ margin: '0 0 0 6px' }}>
+                  {sessionStorage.getItem('loginUser') || 'username'}
+                </span>
               </div>
             </Dropdown>
           </Space>

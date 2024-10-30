@@ -41,12 +41,19 @@ const Login: React.FC = () => {
     setLoading(true);
     // 这里考虑返回的内容不仅包括token，还包括用户登录的角色（需要存储在本地，用于刷新页面时重新根据角色获取菜单）、配置的首页地址（供登录后进行跳转）
     try {
-      const {token, roleId, homePath = '/home'} = await login(values);
-      sessionStorage.setItem("token", token);
-      sessionStorage.setItem("isLogin", "true");
-      sessionStorage.setItem("roleId", roleId);
+      const {
+        token,
+        roleId,
+        homePath = '/home',
+        username,
+      } = await login(values);
+      sessionStorage.setItem('token', token);
+      sessionStorage.setItem('isLogin', 'true');
+      sessionStorage.setItem('roleId', roleId);
+      // 存储登录的用户名
+      sessionStorage.setItem('loginUser', username);
       // 登录成功根据角色获取菜单（这里暂时不判定登录失败的情况，后续添加）
-      const menu = await getMenuListByRoleId({roleId});
+      const menu = await getMenuListByRoleId({ roleId });
       dispatch(setMenus(menu));
       // 跳转到首页，这里的跳转需要后续调整为从finally中去判定，登录成功后才考虑
       navigate(homePath);
@@ -119,7 +126,7 @@ const Login: React.FC = () => {
                 labelCol={{ span: 5 }}
                 initialValues={{
                   username: 'admin',
-                  password: '12345678',
+                  password: '123456qwe,.',
                   captcha: code,
                   remember: true,
                 }}
@@ -148,7 +155,7 @@ const Login: React.FC = () => {
                     size="large"
                     allowClear
                     autoComplete="new-password"
-                    placeholder="密码：12345678"
+                    placeholder="密码：123456qwe,."
                     prefix={<LockOutlined />}
                   />
                 </Form.Item>
@@ -202,7 +209,7 @@ const Login: React.FC = () => {
       <div style={{ width: '440px', margin: '0 auto', padding: '20px 0' }}>
         <a
           target="_blank"
-          rel='noreferrer'
+          rel="noreferrer"
           href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=51012202001603"
           style={{
             display: 'inline-block',
@@ -227,7 +234,7 @@ const Login: React.FC = () => {
         <a
           href="https://beian.miit.gov.cn/"
           target="_blank"
-          rel='noreferrer'
+          rel="noreferrer"
           style={{
             position: 'absolute',
             display: 'inline-block',

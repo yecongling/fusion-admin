@@ -11,13 +11,13 @@ export default defineMock([
       if (roleId !== 'admin') {
         return {
           code: 200,
-          msg: 'success',
+          message: 'success',
           data: [],
         };
       }
       return {
         code: 200,
-        msg: 'success',
+        message: 'success',
         data: [
           {
             id: '11231',

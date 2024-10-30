@@ -11,13 +11,13 @@ export default defineMock([
       if (username !== 'admin' || password !== '123456qwe,.') {
         return {
           code: 500,
-          msg: '用户名或密码输入错误',
+          message: '用户名或密码输入错误',
           data: {},
         };
       }
       return {
         code: 200,
-        msg: '',
+        message: '',
         data: {
           token: 'wefewfwe',
           roleId: 'admin',
@@ -35,7 +35,7 @@ export default defineMock([
       const { username } = body;
       return {
         code: 200,
-        msg: '',
+        message: '',
         data: { username },
       };
     },
