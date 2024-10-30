@@ -202,6 +202,7 @@ const Login: React.FC = () => {
       <div style={{ width: '440px', margin: '0 auto', padding: '20px 0' }}>
         <a
           target="_blank"
+          rel='noreferrer'
           href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=51012202001603"
           style={{
             display: 'inline-block',
@@ -226,6 +227,7 @@ const Login: React.FC = () => {
         <a
           href="https://beian.miit.gov.cn/"
           target="_blank"
+          rel='noreferrer'
           style={{
             position: 'absolute',
             display: 'inline-block',
