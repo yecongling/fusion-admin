@@ -1,4 +1,9 @@
-import { RedoOutlined, SearchOutlined } from '@ant-design/icons';
+import {
+  DeleteOutlined,
+  PlusOutlined,
+  RedoOutlined,
+  SearchOutlined,
+} from '@ant-design/icons';
 import {
   Button,
   Card,
@@ -10,8 +15,9 @@ import {
   Row,
   Select,
   Space,
+  TableProps,
 } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 
 /**
  * 系统菜单维护
@@ -19,6 +25,11 @@ import React from 'react';
  */
 const Menu: React.FC = () => {
   const [form] = Form.useForm();
+  // 编辑弹窗窗口打开关闭
+  const [openEditModal, setOpenEditorModal] = useState<boolean>(false);
+
+  // 定义表格列
+  const columns: TableProps['columns'] = [];
 
   /**
    * 检索表单提交
@@ -100,7 +111,20 @@ const Menu: React.FC = () => {
         </Card>
       </ConfigProvider>
       {/* 查询表格 */}
-      <Card style={{ flex: 1, marginTop: '8px' }}>查询表格</Card>
+      <Card style={{ flex: 1, marginTop: '8px' }}>
+        {/* 操作按钮 */}
+        <Space>
+          <Button type="primary" icon={<PlusOutlined />}>
+            新增
+          </Button>
+          <Button type="default" icon={<PlusOutlined />}>
+            批量导入
+          </Button>
+          <Button type="default" danger icon={<DeleteOutlined />}>
+            批量删除
+          </Button>
+        </Space>
+      </Card>
     </Flex>
   );
 };
