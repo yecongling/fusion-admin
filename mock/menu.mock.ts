@@ -394,7 +394,7 @@ export default defineMock([
                 meta: {
                   keepAlive: false,
                   icon: 'UserOutlined',
-                  title: '用户管理',
+                  title: '系统用户',
                   internal: false,
                 },
               },
@@ -407,7 +407,7 @@ export default defineMock([
                 meta: {
                   keepAlive: false,
                   icon: 'UsergroupDeleteOutlined',
-                  title: '角色管理',
+                  title: '系统角色',
                   internal: false,
                 },
               },
@@ -420,7 +420,7 @@ export default defineMock([
                 meta: {
                   keepAlive: false,
                   icon: 'MenuOutlined',
-                  title: '菜单管理',
+                  title: '系统菜单',
                   internal: false,
                 },
               },

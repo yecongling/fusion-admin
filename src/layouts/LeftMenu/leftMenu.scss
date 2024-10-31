@@ -1,3 +1,10 @@
+.ant-menu {
+  > .ant-layout-sider-children {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
 .sider ul.ant-menu::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -6,7 +13,7 @@
 }
 
 .side-menu {
-  height: calc(100% - 90px);
+  flex: 1;
   overflow: hidden;
 }
 

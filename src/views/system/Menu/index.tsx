@@ -1,10 +1,10 @@
 import React from 'react';
 
 /**
- * 菜单管理
+ * 系统菜单维护
  * @returns
  */
 const Menu: React.FC = () => {
-  return <>菜单管理</>;
+  return <>系统菜单维护</>;
 };
 export default Menu;

@@ -1,12 +1,30 @@
 import React, { memo, useCallback, useEffect, useState } from 'react';
-import { Layout, Image, Spin, Menu, MenuProps, Button } from 'antd';
+import {
+  Layout,
+  Image,
+  Spin,
+  Menu,
+  MenuProps,
+  Button,
+  Divider,
+  Space,
+  Segmented,
+  Tooltip,
+  ConfigProvider,
+} from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, setCollapse } from '@stores/store.ts';
+import { RootState, setCollapse, setTheme } from '@stores/store.ts';
 import favicon from '@assets/svg/vite.svg';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import './leftMenu.scss';
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import {
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  MoonOutlined,
+  QuestionCircleOutlined,
+  SunOutlined,
+} from '@ant-design/icons';
 import { RouteItem } from '@type/route';
 import { addIcon, getOpenKeys, searchRoute } from '@utils/utils';
 
@@ -176,34 +194,87 @@ const LeftMenu: React.FC = memo(() => {
           onOpenChange={onOpenChange}
         />
       </Spin>
+      <Divider style={{ margin: '8px 0' }} />
       <div
         className="collapse"
         style={{
+          height: collapse ? '140px' : '40px',
           display: 'flex',
-          justifyContent: collapse ? 'center' : 'end',
+          alignContent: 'center',
+          justifyContent: 'center',
         }}
       >
-        <Button
-          type="text"
-          size="small"
-          style={{
-            cursor: 'pointer',
-            fontSize: '16px',
-          }}
-          icon={
-            collapse ? (
-              <MenuUnfoldOutlined
-                style={{ color: theme === 'dark' ? 'white' : 'black' }}
-              />
-            ) : (
-              <MenuFoldOutlined
-                style={{ color: theme === 'dark' ? 'white' : 'black' }}
-              />
-            )
-          }
-          onClick={() => dispatch(setCollapse(!collapse))}
-          className="btnbor"
-        />
+        <Space direction={collapse ? 'vertical' : 'horizontal'} align="center">
+          <ConfigProvider
+            theme={{
+              components: {
+                Segmented: {
+                  itemHoverColor:
+                    theme === 'dark' ? '#eee' : 'rgba(0,0,0,0.88)',
+                  itemColor: theme === 'dark' ? '#fff' : 'rgba(0, 0, 0, 0.65)',
+                  itemSelectedBg: theme === 'dark' ? '#1677ff' : '#fff',
+                  itemSelectedColor:
+                    theme === 'dark' ? '#fff' : 'rgba(0,0,0,0.88)',
+                  trackBg: theme === 'dark' ? '#001529' : '#f5f5f5',
+                },
+              },
+            }}
+          >
+            <Segmented
+              onChange={(value) => dispatch(setTheme(value as any))}
+              vertical={collapse}
+              size="small"
+              options={[
+                {
+                  label: collapse ? '' : 'light',
+                  value: 'light',
+                  icon: <SunOutlined />,
+                },
+                {
+                  label: collapse ? '' : 'dark',
+                  value: 'dark',
+                  icon: <MoonOutlined />,
+                },
+              ]}
+            />
+          </ConfigProvider>
+          <Tooltip title="帮助文档">
+            <Button
+              size="small"
+              color="default"
+              variant="filled"
+              shape="circle"
+              icon={
+                <QuestionCircleOutlined
+                  style={{ color: theme === 'dark' ? 'white' : 'black' }}
+                />
+              }
+            />
+          </Tooltip>
+          <Button
+            size="small"
+            color="default"
+            variant="filled"
+            shape="circle"
+            style={{
+              cursor: 'pointer',
+              fontSize: '16px',
+            }}
+            icon={
+              collapse ? (
+                <MenuUnfoldOutlined
+                  style={{ color: theme === 'dark' ? 'white' : 'black' }}
+                />
+              ) : (
+                <MenuFoldOutlined
+                  style={{ color: theme === 'dark' ? 'white' : 'black' }}
+                />
+              )
+            }
+            onClick={() => dispatch(setCollapse(!collapse))}
+            className="btnbor"
+          />
+        </Space>
       </div>
     </Layout.Sider>
   );
