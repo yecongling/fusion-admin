@@ -61,7 +61,7 @@ export default defineConfig({
   performance: {
     chunkSplit: {
       strategy: 'split-by-experience',
-      // 下面的部分单独分饱
+      // 下面的部分单独分包
       forceSplitting: {
         axios: /node_modules[\\/]axios/,
         react: /node_modules[\\/]react/,
