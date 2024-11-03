@@ -11,7 +11,7 @@ import { RequestOptions } from '@type/axios';
 import { Response } from '@type/global';
 import { antdUtils } from '../antdUtil';
 import { joinTimestamp } from './helper';
-import { RequestEnum, ResultEnum } from '@enums/httpEnum';
+import { HttpCodeEnum, RequestEnum } from '@enums/httpEnum';
 import { setObjToUrlParams } from '../utils';
 import { isString } from '../is';
 import { encrypt } from '../encrypt';
@@ -101,9 +101,7 @@ export const transform: AxiosTransform = {
     const { code, data: rtn, message: msg } = data;
     // 系统默认200状态码为正常成功请求，可在枚举中配置自己的
     const hasSuccess =
-      data &&
-      Reflect.has(data, 'code') &&
-      (code === ResultEnum.SUCCESS || code === 200);
+      data && Reflect.has(data, 'code') && code === HttpCodeEnum.SUCCESS;
     if (hasSuccess) {
       if (msg && options.successMessageMode === 'success') {
         // 信息成功提示
@@ -113,7 +111,7 @@ export const transform: AxiosTransform = {
     }
     let timeoutMsg = '';
     switch (code) {
-      case ResultEnum.TIMEOUT:
+      case HttpCodeEnum.RC401:
         timeoutMsg = '接口请求超时';
         // setToken("");
         // window.location.href = "/login";
@@ -124,7 +122,7 @@ export const transform: AxiosTransform = {
         }
     }
     if (options.errorMessageMode === 'modal') {
-      if (code === 401) {
+      if (code === HttpCodeEnum.RC401) {
         antdUtils.modal?.confirm({
           title: '凭证失效',
           content: '当前用户身份验证凭证已过期或无效，请重新登录！',

@@ -16,8 +16,8 @@ export default defineConfig({
     }),
     pluginSass({
       // sass文件默认注入全局的变量文件
-      sassLoaderOptions(config) {
-        config.additionalData = `@use "${path.resolve(__dirname, 'src/assets/styles/variables.scss')}" as *;`;
+      sassLoaderOptions: {
+        additionalData: `@use "${path.resolve(__dirname, 'src/assets/styles/variables.scss')}" as *;`,
       },
     }),
     // mock 插件
@@ -69,8 +69,8 @@ export default defineConfig({
         redux: /node_modules[\\/]redux/,
         lodash: /node_modules[\\/]lodash/,
         echarts: /node_modules[\\/]echarts/,
-        antdIcons: /node_modules[\\/]@ant-design\/icons/
-      }
+        antdIcons: /node_modules[\\/]@ant-design\/icons/,
+      },
     },
   },
   // 服务相关

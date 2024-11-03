@@ -16,6 +16,8 @@ import { login } from '@services/login/loginApi';
 import { getMenuListByRoleId } from '@services/system/menu/menuApi';
 import { useDispatch } from 'react-redux';
 import { setMenus } from '@stores/store';
+import { HttpCodeEnum } from '@enums/httpEnum';
+import { antdUtils } from '@utils/antdUtil';
 
 /**
  * 登录模块
@@ -46,7 +48,22 @@ const Login: React.FC = () => {
       // 根据code判定登录状态（和枚举的状态码进行判定） 只会存在几种情况，用户名不存在，用户名或密码错误，用户名冻结，验证码错误或者过期
       // case中使用{}包裹的目的是为了保证变量做用于仅限于case块
       switch (code) {
-        case 200:
+        // 用户名不存在或禁用
+        case HttpCodeEnum.RC107:
+        case HttpCodeEnum.RC102:
+          form.setFields([{ name: 'username', errors: [message] }]);
+          break;
+        // 密码输入错误
+        case HttpCodeEnum.RC108:
+          form.setFields([{ name: 'password', errors: [message] }]);
+          break;
+        // 验证码错误或过期
+        case HttpCodeEnum.RC300:
+        case HttpCodeEnum.RC301:
+          form.setFields([{ name: 'captcha', errors: [message] }]);
+          break;
+        // 登录成功
+        case HttpCodeEnum.SUCCESS:
           {
             const { token, roleId, homePath = '/home', username } = data;
             sessionStorage.setItem('token', token);
@@ -64,6 +81,8 @@ const Login: React.FC = () => {
         default:
           break;
       }
+    } catch (error: any) {
+      antdUtils.modal?.error({ title: '错误提示', content: error });
     } finally {
       setLoading(false);
     }

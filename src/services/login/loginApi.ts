@@ -29,7 +29,7 @@ export const login = (params: any) => {
       url: LoginApi.login,
       data: params,
     },
-    { isReturnNativeResponse: true },
+    { isTransformResponse: false },
   );
 };
 
@@ -45,8 +45,8 @@ export const getCode = () => {
 
 /**
  * 用户退出登录
- * @param userId 用户ID
+ * @param token 用户token
  */
-export const logout = (userId: string) => {
-  HttpRequest.delete({ url: LoginApi.logout, params: { userId } });
+export const logout = (token: string) => {
+  HttpRequest.delete({ url: LoginApi.logout, params: { token } });
 };
