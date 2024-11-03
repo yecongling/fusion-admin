@@ -41,22 +41,29 @@ const Login: React.FC = () => {
     setLoading(true);
     // 这里考虑返回的内容不仅包括token，还包括用户登录的角色（需要存储在本地，用于刷新页面时重新根据角色获取菜单）、配置的首页地址（供登录后进行跳转）
     try {
-      const {
-        token,
-        roleId,
-        homePath = '/home',
-        username,
-      } = await login(values);
-      sessionStorage.setItem('token', token);
-      sessionStorage.setItem('isLogin', 'true');
-      sessionStorage.setItem('roleId', roleId);
-      // 存储登录的用户名
-      sessionStorage.setItem('loginUser', username);
-      // 登录成功根据角色获取菜单（这里暂时不判定登录失败的情况，后续添加）
-      const menu = await getMenuListByRoleId({ roleId });
-      dispatch(setMenus(menu));
-      // 跳转到首页，这里的跳转需要后续调整为从finally中去判定，登录成功后才考虑
-      navigate(homePath);
+      const { code, data, message } = await login(values);
+
+      // 根据code判定登录状态（和枚举的状态码进行判定） 只会存在几种情况，用户名不存在，用户名或密码错误，用户名冻结，验证码错误或者过期
+      // case中使用{}包裹的目的是为了保证变量做用于仅限于case块
+      switch (code) {
+        case 200:
+          {
+            const { token, roleId, homePath = '/home', username } = data;
+            sessionStorage.setItem('token', token);
+            sessionStorage.setItem('isLogin', 'true');
+            sessionStorage.setItem('roleId', roleId);
+            // 存储登录的用户名
+            sessionStorage.setItem('loginUser', username);
+            // 登录成功根据角色获取菜单（这里暂时不判定登录失败的情况，后续添加）
+            const menu = await getMenuListByRoleId({ roleId });
+            dispatch(setMenus(menu));
+            // 跳转到首页，这里的跳转需要后续调整为从finally中去判定，登录成功后才考虑
+            navigate(homePath);
+          }
+          break;
+        default:
+          break;
+      }
     } finally {
       setLoading(false);
     }

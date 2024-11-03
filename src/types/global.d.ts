@@ -1,9 +1,10 @@
 /**
  * 定义ajax请求的相应结果
  */
-export interface Result<T> {
+export interface Response {
+  // 这里的状态码需要与后端的状态码枚举匹配
   code: number;
   message: string;
-  data: T;
+  data: any;
   success: boolean;
 }

@@ -8,7 +8,7 @@ import {
   InternalAxiosRequestConfig,
 } from 'axios';
 import { RequestOptions } from '@type/axios';
-import { Result } from '@type/global';
+import { Response } from '@type/global';
 import { antdUtils } from '../antdUtil';
 import { joinTimestamp } from './helper';
 import { RequestEnum, ResultEnum } from '@enums/httpEnum';
@@ -38,7 +38,7 @@ export abstract class AxiosTransform {
    * 响应数据转换
    */
   transformResponseHook?: (
-    res: AxiosResponse<Result<any>>,
+    res: AxiosResponse<Response>,
     options: RequestOptions,
   ) => any;
 
@@ -81,7 +81,7 @@ export const transform: AxiosTransform = {
    * @param options
    */
   transformResponseHook: (
-    res: AxiosResponse<Result<any>>,
+    res: AxiosResponse<Response>,
     options: RequestOptions,
   ) => {
     const { isTransformResponse, isReturnNativeResponse } = options;
@@ -89,7 +89,7 @@ export const transform: AxiosTransform = {
     if (isReturnNativeResponse) {
       return res;
     }
-    // 不进行任何处理
+    // 不进行任何处理，直接返回响应数据
     if (!isTransformResponse) {
       return res.data;
     }
@@ -124,10 +124,10 @@ export const transform: AxiosTransform = {
         }
     }
     if (options.errorMessageMode === 'modal') {
-      if (code === 403) {
+      if (code === 401) {
         antdUtils.modal?.confirm({
-          title: '会话过期',
-          content: '当前会话已失效，请重新登录！',
+          title: '凭证失效',
+          content: '当前用户身份验证凭证已过期或无效，请重新登录！',
           onOk() {
             // 登录失效后需要将本地token清除
             sessionStorage.removeItem('token');

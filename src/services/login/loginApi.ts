@@ -1,4 +1,5 @@
-import { HttpRequest } from "@utils/request";
+import { HttpRequest } from '@utils/request';
+import { Response } from '@type/global';
 
 /**
  * 枚举登录需要的接口地址
@@ -7,26 +8,29 @@ export enum LoginApi {
   /**
    * 登录
    */
-  login = "/login",
+  login = '/login',
 
   /**
    * 退出登录
    */
-  logout = "/logout",
+  logout = '/logout',
   /**
    * 获取验证码
    */
-  getCode = "/getCode",
+  getCode = '/getCode',
 }
 
 /**
  * 登录接口的实现
  */
 export const login = (params: any) => {
-  return HttpRequest.post({
-    url: LoginApi.login,
-    data: params,
-  });
+  return HttpRequest.post<Response>(
+    {
+      url: LoginApi.login,
+      data: params,
+    },
+    { isReturnNativeResponse: true },
+  );
 };
 
 /**
