@@ -32,6 +32,12 @@ export default defineConfig({
   html: {
     favicon: path.resolve(__dirname, './src/assets/svg/vite.svg'),
     title: 'fusionAdmin',
+    tags: [
+      {
+        tag: 'html',
+        attrs: {lang: 'zh'}
+      }
+    ]
   },
   // 配置路径别名
   source: {
@@ -72,6 +78,8 @@ export default defineConfig({
         antdIcons: /node_modules[\\/]@ant-design\/icons/,
       },
     },
+    // 移除console.[method]语句
+    removeConsole: true
   },
   // 服务相关
   server: {
