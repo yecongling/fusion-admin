@@ -231,10 +231,10 @@ export const transform: AxiosTransform = {
       const result = encrypt(config.data);
       config.data = result.data;
       // 将秘钥放到请求头里面
-      config.headers['encryptKey'] = result.key;
+      config.headers['X-Encrypted-Key'] = result.key;
     }
     // 将加密配置放到请求头里面
-    config.headers['encrypt'] = cpt;
+    config.headers['X-Encrypted'] = cpt;
     return config;
   },
 
