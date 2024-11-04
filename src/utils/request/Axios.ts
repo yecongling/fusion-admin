@@ -11,7 +11,7 @@ import { cloneDeep } from 'lodash-es';
 import { RequestOptions } from '@type/axios';
 import { isFunction } from '@utils/is';
 import { CreateAxiosOptions } from './transform';
-import { Result } from '@type/global';
+import { Response } from '@type/global';
 
 export class RAxios {
   private axiosInstance: AxiosInstance;
@@ -100,8 +100,8 @@ export class RAxios {
 
     return new Promise((resolve, reject) => {
       this.axiosInstance
-        .request<any, AxiosResponse<Result<any>>>(conf)
-        .then((res: AxiosResponse<Result<any>>) => {
+        .request<any, AxiosResponse<Response>>(conf)
+        .then((res: AxiosResponse<Response>) => {
           if (transformResponseHook && isFunction(transformResponseHook)) {
             try {
               const ret = transformResponseHook(res, opt);
