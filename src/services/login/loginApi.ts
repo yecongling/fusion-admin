@@ -37,7 +37,7 @@ export const login = (params: any) => {
  * 获取验证码
  * @returns 验证码
  */
-export const getCode = () => {
+export const getCaptcha = () => {
   return HttpRequest.get({
     url: LoginApi.getCode,
   });

@@ -47,4 +47,13 @@ export default defineMock([
       };
     },
   },
+  {
+    url: '/api/getCode',
+    method: 'GET',
+    body: {
+      code: 200,
+      message: '',
+      data: Math.floor(Math.random() * 10000).toString(),
+    },
+  },
 ]);

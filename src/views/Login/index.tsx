@@ -1,7 +1,7 @@
 /**
  * 登录界面
  */
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button, Checkbox, Col, Form, Input, Row } from 'antd';
 import logo from '@assets/images/logo.png';
 import {
@@ -12,7 +12,7 @@ import {
 import styles from './login.module.scss';
 import filing from '@assets/images/filing.png';
 import { useNavigate } from 'react-router-dom';
-import { login } from '@services/login/loginApi';
+import { getCaptcha, login } from '@services/login/loginApi';
 import { getMenuListByRoleId } from '@services/system/menu/menuApi';
 import { useDispatch } from 'react-redux';
 import { setMenus } from '@stores/store';
@@ -30,10 +30,13 @@ const Login: React.FC = () => {
   const dispatch = useDispatch();
   // 加载状态
   const [loading, setLoading] = useState<boolean>(false);
-  // 验证码
-  const [code, setCode] = useState(
-    Math.floor(Math.random() * 10000).toString(),
-  );
+  // 验证码（后续更改从后端获取）
+  const [code, setCode] = useState<string>('');
+
+  // 页面挂载请求后端获取验证码
+  useEffect(() => {
+    getCode();
+  }, []);
 
   /**
    * 登录表单提交
@@ -61,6 +64,8 @@ const Login: React.FC = () => {
         case HttpCodeEnum.RC300:
         case HttpCodeEnum.RC301:
           form.setFields([{ name: 'captcha', errors: [message] }]);
+          // 刷新验证码
+          getCode();
           break;
         // 登录成功
         case HttpCodeEnum.SUCCESS:
@@ -71,10 +76,10 @@ const Login: React.FC = () => {
             sessionStorage.setItem('roleId', roleId);
             // 存储登录的用户名
             sessionStorage.setItem('loginUser', username);
-            // 登录成功根据角色获取菜单（这里暂时不判定登录失败的情况，后续添加）
+            // 登录成功根据角色获取菜单
             const menu = await getMenuListByRoleId({ roleId });
             dispatch(setMenus(menu));
-            // 跳转到首页，这里的跳转需要后续调整为从finally中去判定，登录成功后才考虑
+            // 跳转到首页
             navigate(homePath);
           }
           break;
@@ -91,8 +96,11 @@ const Login: React.FC = () => {
   /**
    * 获取验证码
    */
-  const getCode = () => {
-    setCode(Math.floor(Math.random() * 10000).toString());
+  const getCode = async () => {
+    const code = await getCaptcha();
+    setCode(code);
+    // TODO 这里暂时将验证码设置到输入框中，后续更改为用户输入
+    form.setFieldValue('captcha', code);
   };
 
   return (
@@ -168,6 +176,7 @@ const Login: React.FC = () => {
                     size="large"
                     ref={inputRef}
                     autoFocus
+                    autoComplete="off"
                     allowClear
                     placeholder="用户名：admin"
                     prefix={<UserOutlined />}
@@ -180,7 +189,7 @@ const Login: React.FC = () => {
                   <Input.Password
                     size="large"
                     allowClear
-                    autoComplete="new-password"
+                    autoComplete="off"
                     placeholder="密码：123456qwe,."
                     prefix={<LockOutlined />}
                   />
