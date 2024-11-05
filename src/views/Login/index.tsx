@@ -84,6 +84,16 @@ const Login: React.FC = () => {
           }
           break;
         default:
+          // 默认按登录失败处理
+          antdUtils.modal?.error({
+            title: '错误提示',
+            content: (
+              <>
+                <p>登录失败：错误状态码:{code}</p>
+                <p>失败原因:{message}</p>
+              </>
+            ),
+          });
           break;
       }
     } catch (error: any) {
