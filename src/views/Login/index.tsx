@@ -32,6 +32,8 @@ const Login: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   // 验证码（后续更改从后端获取）
   const [code, setCode] = useState<string>('');
+  // 验证码的校验key，获取验证码的时候返回，用于验证码的校验
+  const [checkKey, setCheckKey] = useState<string>('');
 
   // 页面挂载请求后端获取验证码
   useEffect(() => {
@@ -43,6 +45,8 @@ const Login: React.FC = () => {
    * @param values 提交表单的数据
    */
   const submit = async (values: any) => {
+    // 加入验证码校验key
+    values['checkKey'] = checkKey;
     setLoading(true);
     // 这里考虑返回的内容不仅包括token，还包括用户登录的角色（需要存储在本地，用于刷新页面时重新根据角色获取菜单）、配置的首页地址（供登录后进行跳转）
     try {
@@ -86,10 +90,10 @@ const Login: React.FC = () => {
         default:
           // 默认按登录失败处理
           antdUtils.modal?.error({
-            title: '错误提示',
+            title: '登录失败',
             content: (
               <>
-                <p>登录失败：错误状态码:{code}</p>
+                <p>错误状态码:{code}</p>
                 <p>失败原因:{message}</p>
               </>
             ),
@@ -97,7 +101,7 @@ const Login: React.FC = () => {
           break;
       }
     } catch (error: any) {
-      antdUtils.modal?.error({ title: '错误提示', content: error });
+      antdUtils.modal?.error({ title: '登录失败', content: error });
     } finally {
       setLoading(false);
     }
@@ -107,8 +111,9 @@ const Login: React.FC = () => {
    * 获取验证码
    */
   const getCode = async () => {
-    const code = await getCaptcha();
+    const { code, checkKey: key } = await getCaptcha();
     setCode(code);
+    setCheckKey(key);
     // TODO 这里暂时将验证码设置到输入框中，后续更改为用户输入
     form.setFieldValue('captcha', code);
   };
