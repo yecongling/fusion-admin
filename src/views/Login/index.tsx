@@ -122,7 +122,7 @@ const Login: React.FC = () => {
                     fontWeight: 700,
                   }}
                 >
-                  集成信息管理平台
+                  融合管理平台
                 </span>
               </p>
               <p style={{ fontSize: '14px', margin: 0 }}>
@@ -133,7 +133,7 @@ const Login: React.FC = () => {
                     color: '#999999',
                   }}
                 >
-                  Integration System
+                  Fusion Admin
                 </span>
               </p>
             </div>
