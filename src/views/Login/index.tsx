@@ -74,12 +74,12 @@ const Login: React.FC = () => {
         // 登录成功
         case HttpCodeEnum.SUCCESS:
           {
-            const { token, roleId, homePath = '/home', username } = data;
+            const { token, roleId, homePath = '/home' } = data;
             sessionStorage.setItem('token', token);
             sessionStorage.setItem('isLogin', 'true');
             sessionStorage.setItem('roleId', roleId);
             // 存储登录的用户名
-            sessionStorage.setItem('loginUser', username);
+            sessionStorage.setItem('loginUser', values.username);
             // 登录成功根据角色获取菜单
             const menu = await getMenuListByRoleId({ roleId });
             dispatch(setMenus(menu));
