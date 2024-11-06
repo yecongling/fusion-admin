@@ -74,7 +74,8 @@ const Login: React.FC = () => {
         // 登录成功
         case HttpCodeEnum.SUCCESS:
           {
-            const { token, roleId, homePath = '/home' } = data;
+            // 没有配置首页地址默认跳到404（为了避免没有菜单的时候确跳到指定页面了）
+            const { token, roleId, homePath = '/404' } = data;
             sessionStorage.setItem('token', token);
             sessionStorage.setItem('isLogin', 'true');
             sessionStorage.setItem('roleId', roleId);

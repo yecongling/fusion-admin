@@ -11,6 +11,7 @@ import {
   Segmented,
   Tooltip,
   ConfigProvider,
+  Empty,
 } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, setCollapse, setTheme } from '@stores/store.ts';
@@ -103,7 +104,7 @@ const LeftMenu: React.FC = memo(() => {
       // const route = searchRoute(key, menus);
       // const title = route.meta?.title;
       // if (title) {
-      //   document.title = title + "-integration";
+      //   document.title = title + "-fusion";
       // }
     },
     [],
@@ -184,15 +185,19 @@ const LeftMenu: React.FC = memo(() => {
         </Link>
       </div>
       <Spin wrapperClassName="side-menu" spinning={loading} tip="加载中">
-        <Menu
-          mode="inline"
-          theme={theme}
-          selectedKeys={selectedKeys}
-          openKeys={openKeys}
-          items={menuList}
-          onClick={clickMenu}
-          onOpenChange={onOpenChange}
-        />
+        {menuList.length > 0 ? (
+          <Menu
+            mode="inline"
+            theme={theme}
+            selectedKeys={selectedKeys}
+            openKeys={openKeys}
+            items={menuList}
+            onClick={clickMenu}
+            onOpenChange={onOpenChange}
+          />
+        ) : (
+          <Empty description={<>暂无菜单，请检查用户角色是否具有菜单！</>} />
+        )}
       </Spin>
       <Divider style={{ margin: '8px 0' }} />
       <div

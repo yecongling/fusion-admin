@@ -26,7 +26,7 @@ const App: React.FC = () => {
    * 查询用户的菜单信息
    */
   const getMenuData = async () => {
-    const roleId = sessionStorage.getItem('roleId') || 'admin';
+    const roleId = sessionStorage.getItem('roleId') || '';
     return await getMenuListByRoleId({ roleId });
   };
 
