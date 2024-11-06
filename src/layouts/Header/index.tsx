@@ -102,7 +102,7 @@ const Header: React.FC = memo(() => {
    * 跳转到github
    */
   const routeGitHub = () => {
-    window.open('https://github.com/yecongling/integration-admin', '_blank');
+    window.open('https://github.com/yecongling/fusion-admin', '_blank');
   };
 
   return (
