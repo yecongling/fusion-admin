@@ -11,11 +11,11 @@ export enum Api {
   // 获取所有上级菜单
   getDirectoryMenu = '/system/menu/getDirectoryMenu',
   // 添加菜单
-  addPermission = '/system/menu/addPermission',
+  addMenu = '/system/menu/addMenu',
   // 编辑菜单
-  updatePermission = '/system/menu/updatePermission',
+  updateMenu = '/system/menu/updateMenu',
   // 删除菜单
-  deletePermission = '/system/menu/deletePermission',
+  deleteMenu = '/system/menu/deleteMenu',
 }
 
 /**
@@ -30,5 +30,21 @@ export const getMenuListByRoleId = (params: any) => {
       params,
     },
     { successMessageMode: 'none' },
+  );
+};
+
+/**
+ * 查询所有菜单
+ * @param params 查询条件
+ */
+export const getAllMenus = (params: Record<string, any>) => {
+  return HttpRequest.get(
+    {
+      url: Api.getAllMenus,
+      params,
+    },
+    {
+      successMessageMode: 'none',
+    },
   );
 };

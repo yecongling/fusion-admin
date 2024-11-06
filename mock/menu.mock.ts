@@ -644,4 +644,15 @@ export default defineMock([
       };
     },
   },
+  {
+    url: '/api/system/menu/getAllMenus',
+    method: 'GET',
+    body() {
+      return {
+        code: 200,
+        message: 'success',
+        data: [],
+      };
+    },
+  },
 ]);

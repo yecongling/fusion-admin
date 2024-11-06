@@ -10,23 +10,23 @@ export interface MenuModel {
   url: string;
   component: string;
   componentName: string;
-  redirect: string;
+  redirect?: string;
   menuType: number;
-  perms: string;
-  permsType: string;
+  perms?: string;
+  permsType?: string;
   sortNo: number;
   alwaysShow: boolean;
   icon: string;
-  route: boolean;
+  route?: boolean;
   leaf: boolean;
-  keepAlive: boolean;
+  keepAlive?: boolean;
   hidden: boolean;
-  hideTab: boolean;
-  description: string;
+  hideTab?: boolean;
+  description?: string;
   delFlag: number;
-  ruleFlag: number;
+  ruleFlag?: number;
   status: string;
-  internalOrExternal: boolean;
+  internalOrExternal?: boolean;
   children?: MenuModel[];
 }
 
