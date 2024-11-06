@@ -20,7 +20,7 @@ const Notify: React.FC = () => {
     [key: string]: MessageListType;
   }>({});
   // 原始数据
-  const [dataSource, setDatasource] = useState<MessageListType>([]);
+  const [dataSource, setDataSource] = useState<MessageListType>([]);
 
   // 加载数据
   useEffect(() => {
@@ -29,7 +29,7 @@ const Notify: React.FC = () => {
     // 模拟取数据
     setTimeout(() => {
       // 模拟从后台取数据
-      setDatasource([
+      setDataSource([
         {
           id: '1',
           title: '您有新的待办',
@@ -72,7 +72,7 @@ const Notify: React.FC = () => {
   const tabList: TabsProps['items'] = [
     {
       key: 'message',
-      label: '消息(2)',
+      label: <>消息({groupData['message'].length})</>,
       icon: <MessageOutlined />,
       children: (
         <MessageList
@@ -87,7 +87,7 @@ const Notify: React.FC = () => {
     },
     {
       key: 'notify',
-      label: '通知(3)',
+      label: <>通知({groupData['notify'].length})</>,
       icon: <NotificationOutlined />,
       children: (
         <MessageList
@@ -102,7 +102,7 @@ const Notify: React.FC = () => {
     },
     {
       key: 'todo',
-      label: '待办(5)',
+      label: <>待办({groupData['todo'].length})</>,
       icon: <ReconciliationOutlined />,
       children: (
         <MessageList
