@@ -17,7 +17,7 @@ const RouterBeforeEach: React.FC = () => {
     const bLogin = sessionStorage.getItem('isLogin');
     // 这里需要添加判定，如果是已登录状态，且访问根路径，则直接导向到首页
     if (location.pathname === '/' && bLogin) {
-      const index = sessionStorage.getItem('homePath') || '/home';
+      const index = sessionStorage.getItem('homePath') || '/404';
       navigate(index);
     } else if (bLogin == 'false' || !bLogin || location.pathname === '/') {
       // 未登录状态或登录状态已失效，则跳转到登录页面
