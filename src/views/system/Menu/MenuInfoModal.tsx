@@ -1,4 +1,4 @@
-import { Form, Modal } from 'antd';
+import { Form, Input, Modal } from 'antd';
 import React, { useEffect } from 'react';
 
 /**
@@ -15,6 +15,7 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
   const [form] = Form.useForm();
 
   useEffect(() => {
+    if (!visible) return;
     if (currentRow) {
       // 填充表单数据
       form.setFieldsValue(currentRow);
@@ -22,11 +23,20 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
       // 清空表单数据，表示新增
       form.resetFields();
     }
-  }, [currentRow, form]);
+  }, [currentRow, form, visible]);
 
   return (
-    <Modal open={visible} onOk={() => onOk(form.getFieldsValue())} onCancel={onCancel}>
-      <Form form={form}>表单</Form>
+    <Modal
+      title={currentRow ? '编辑菜单数据' : '新增菜单数据'}
+      open={visible}
+      onOk={() => onOk(form.getFieldsValue())}
+      onCancel={onCancel}
+    >
+      <Form form={form}>
+        <Form.Item name={`name`} label="菜单名称">
+          <Input />
+        </Form.Item>
+      </Form>
     </Modal>
   );
 };

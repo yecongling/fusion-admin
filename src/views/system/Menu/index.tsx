@@ -58,6 +58,12 @@ const Menu: React.FC = () => {
       key: 'name',
     },
     {
+      title: '组件',
+      width: 160,
+      dataIndex: 'component',
+      key: 'component',
+    },
+    {
       title: '路径',
       width: 160,
       dataIndex: 'url',
@@ -65,7 +71,7 @@ const Menu: React.FC = () => {
     },
     {
       title: '操作',
-      width: 160,
+      width: '160px',
       dataIndex: 'operation',
       fixed: 'right',
       render: (_: any, record: any) => {
@@ -231,6 +237,8 @@ const Menu: React.FC = () => {
           </Space>
           {/* 表格数据 */}
           <Table
+            size="small"
+            style={{ marginTop: '8px' }}
             bordered
             dataSource={tableData}
             columns={columns}
