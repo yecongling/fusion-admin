@@ -105,6 +105,14 @@ const Header: React.FC = memo(() => {
     window.open('https://github.com/yecongling/fusion-admin', '_blank');
   };
 
+  /**
+   * 检索菜单
+   * @param name 菜单名
+   */
+  const searchMenu = (name: string) => {
+    console.log(name);
+  };
+
   return (
     <>
       <Layout.Header
@@ -127,6 +135,7 @@ const Header: React.FC = memo(() => {
                   style={{ cursor: 'pointer', fontSize: '18px' }}
                 />
               }
+              onChange={(e) => searchMenu(e.target.value)}
             />
             <Tooltip placement="bottom" title="github">
               <GithubOutlined
