@@ -70,10 +70,39 @@ const Menu: React.FC = () => {
       key: 'url',
     },
     {
+      title: '类型',
+      width: 80,
+      dataIndex: 'menu_type',
+      key: 'menu_type',
+      align: 'center',
+    },
+    {
+      title: '图标',
+      width: 80,
+      dataIndex: 'icon',
+      key: 'icon',
+      align: 'center',
+    },
+    {
+      title: '顺序',
+      width: 80,
+      dataIndex: 'sortNum',
+      key: 'sortNum',
+      align: 'center',
+    },
+    {
+      title: '状态',
+      width: 80,
+      dataIndex: 'status',
+      key: 'status',
+      align: 'center',
+    },
+    {
       title: '操作',
       width: '160px',
       dataIndex: 'operation',
       fixed: 'right',
+      align: 'center',
       render: (_: any, record: any) => {
         return (
           <Space>
