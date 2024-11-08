@@ -1,5 +1,5 @@
-import { Form, Input, Modal } from 'antd';
-import React, { useEffect } from 'react';
+import { Form, Input, InputRef, Modal } from 'antd';
+import React, { useEffect, useRef } from 'react';
 
 /**
  * 菜单信息编辑弹窗
@@ -13,6 +13,7 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
 }) => {
   // 表单实例
   const [form] = Form.useForm();
+  const nameRef = useRef<InputRef>(null);
 
   useEffect(() => {
     if (!visible) return;
@@ -23,6 +24,7 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
       // 清空表单数据，表示新增
       form.resetFields();
     }
+    nameRef.current?.focus();
   }, [currentRow, form, visible]);
 
   return (
@@ -31,10 +33,11 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
       open={visible}
       onOk={() => onOk(form.getFieldsValue())}
       onCancel={onCancel}
+      maskClosable={false}
     >
       <Form form={form}>
         <Form.Item name={`name`} label="菜单名称">
-          <Input autoFocus/>
+          <Input autoFocus ref={nameRef}/>
         </Form.Item>
       </Form>
     </Modal>

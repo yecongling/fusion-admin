@@ -252,16 +252,20 @@ export const transform: AxiosTransform = {
    */
   responseInterceptorsCatch: (error: any) => {
     const err: string = error?.toString?.() ?? '';
+    const result = error.response?.data ?? {};
+    const { code: responseCode, message: responseMessage } = result;
     const { code, message } = error || {};
     let errMessage = '接口请求错误';
-    if (code === 'ECONNABORTED' && message.indexOf('timeout') !== -1) {
-      errMessage = '接口请求超时';
-    }
-    if (err?.includes('Network Error')) {
+    if (responseCode && responseMessage) {
+      errMessage = responseMessage;
+    } else if (code === 'ECONNABORTED' && message.indexOf('timeout') !== -1) {
+      errMessage = '接口请求超时，请稍后重试';
+    } else if (err?.includes('Network Error')) {
       errMessage = '网络异常';
     }
+
     if (errMessage) {
-      antdUtils.message?.error(errMessage);
+      antdUtils.modal?.error({ title: '服务异常', content: errMessage });
       return Promise.reject(error);
     }
 

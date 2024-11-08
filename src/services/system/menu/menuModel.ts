@@ -1,5 +1,3 @@
-import { RouteItem } from '@type/route';
-
 /**
  * 菜单
  */

@@ -25,6 +25,8 @@ export enum HttpCodeEnum {
   RC300 = 300,
   // 验证码已过期
   RC301 = 301,
+  // 未找到响应的资源
+  RC404 = 404
 }
 
 /**

@@ -5,6 +5,7 @@ export default defineMock([
   {
     url: '/api/login',
     method: 'POST',
+    enabled: false,
     body(request) {
       const body = request.body;
       const { username, password } = body;
@@ -48,8 +49,9 @@ export default defineMock([
     },
   },
   {
-    url: '/api/getCode',
+    url: '/api/getCaptcha',
     method: 'GET',
+    enabled: false,
     body: {
       code: 200,
       message: '',

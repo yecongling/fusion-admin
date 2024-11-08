@@ -2,7 +2,7 @@
  * 登录界面
  */
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Checkbox, Col, Form, Input, Row } from 'antd';
+import { Button, Checkbox, Col, Form, Image, Input, Row } from 'antd';
 import logo from '@assets/images/logo.png';
 import {
   LockOutlined,
@@ -59,15 +59,22 @@ const Login: React.FC = () => {
         case HttpCodeEnum.RC107:
         case HttpCodeEnum.RC102:
           form.setFields([{ name: 'username', errors: [message] }]);
+          form.getFieldInstance('username').focus();
+          // 刷新验证码
+          getCode();
           break;
         // 密码输入错误
         case HttpCodeEnum.RC108:
           form.setFields([{ name: 'password', errors: [message] }]);
+          form.getFieldInstance('password').focus();
+          // 刷新验证码
+          getCode();
           break;
         // 验证码错误或过期
         case HttpCodeEnum.RC300:
         case HttpCodeEnum.RC301:
           form.setFields([{ name: 'captcha', errors: [message] }]);
+          form.getFieldInstance('captcha').focus();
           // 刷新验证码
           getCode();
           break;
@@ -99,10 +106,10 @@ const Login: React.FC = () => {
               </>
             ),
           });
+          // 刷新验证码
+          getCode();
           break;
       }
-    } catch (error: any) {
-      antdUtils.modal?.error({ title: '登录失败', content: error });
     } finally {
       setLoading(false);
     }
@@ -112,11 +119,11 @@ const Login: React.FC = () => {
    * 获取验证码
    */
   const getCode = async () => {
-    const { code, checkKey: key } = await getCaptcha();
+    // 时间key
+    const key = new Date().getTime().toString();
+    const code = await getCaptcha(key);
     setCode(code);
     setCheckKey(key);
-    // TODO 这里暂时将验证码设置到输入框中，后续更改为用户输入
-    form.setFieldValue('captcha', code);
   };
 
   return (
@@ -177,7 +184,6 @@ const Login: React.FC = () => {
                 initialValues={{
                   username: 'admin',
                   password: '123456qwe,.',
-                  captcha: code,
                   remember: true,
                 }}
                 size="large"
@@ -230,9 +236,13 @@ const Login: React.FC = () => {
                       <Button
                         size="large"
                         onClick={getCode}
-                        style={{ width: '100%', backgroundColor: '#f0f0f0' }}
+                        style={{
+                          width: '100%',
+                          backgroundColor: '#f0f0f0',
+                          padding: '2px',
+                        }}
                       >
-                        {code}
+                        <Image src={code} preview={false} />
                       </Button>
                     </Col>
                   </Row>

@@ -103,7 +103,7 @@ const Menu: React.FC = () => {
     },
     {
       title: '操作',
-      width: '120px',
+      width: '10%',
       dataIndex: 'operation',
       fixed: 'right',
       align: 'center',
