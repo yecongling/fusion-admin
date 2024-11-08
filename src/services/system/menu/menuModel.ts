@@ -30,11 +30,6 @@ export interface MenuModel {
   children?: MenuModel[];
 }
 
-export type permissionResult = {
-  code: number;
-  data: MenuModel[];
-};
-
 /**
  * 目录
  */
@@ -48,8 +43,3 @@ export type directoryResult = {
   code: number;
   directory: Directory[];
 };
-
-/**
- * 请求菜单的返回值类型
- */
-export type getMenuListResultModel = RouteItem[];

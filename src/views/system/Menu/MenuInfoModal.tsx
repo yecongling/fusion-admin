@@ -34,7 +34,7 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
     >
       <Form form={form}>
         <Form.Item name={`name`} label="菜单名称">
-          <Input />
+          <Input autoFocus/>
         </Form.Item>
       </Form>
     </Modal>

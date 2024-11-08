@@ -651,7 +651,28 @@ export default defineMock([
       return {
         code: 200,
         message: 'success',
-        data: [],
+        data: [
+          {
+            id: 'menu00001',
+            name: '测试菜单',
+            url: '/system/menu',
+            component: 'system/Menu',
+            icon: '',
+            menuType: 2,
+            sortNo: 1,
+            status: '2'
+          },
+          {
+            id: 'menu00002',
+            name: '测试菜单',
+            url: '/system/menu',
+            component: 'system/Menu',
+            icon: '',
+            menuType: 2,
+            sortNo: 1,
+            status: '2'
+          }
+        ],
       };
     },
   },

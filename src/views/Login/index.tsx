@@ -294,7 +294,7 @@ const Login: React.FC = () => {
             marginLeft: '6px',
           }}
         >
-          蜀ICP备2023022276号-1
+          蜀ICP备2023022276号-2
         </a>
       </div>
     </>

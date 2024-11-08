@@ -1,12 +1,14 @@
 import {
   DeleteOutlined,
   EditOutlined,
+  ExclamationCircleFilled,
   PlusOutlined,
   RedoOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
 import { getAllMenus } from '@services/system/menu/menuApi';
 import {
+  App,
   Button,
   Card,
   Col,
@@ -19,15 +21,22 @@ import {
   Space,
   Table,
   TableProps,
+  theme,
+  Tooltip,
 } from 'antd';
 import React, { useEffect, useState } from 'react';
 import MenuInfoModal from './MenuInfoModal';
+
+const { useToken } = theme;
 
 /**
  * 系统菜单维护
  */
 const Menu: React.FC = () => {
+  const { modal } = App.useApp();
   const [form] = Form.useForm();
+  // 使用主题
+  const { token } = useToken();
   // 编辑弹窗窗口打开关闭
   const [openEditModal, setOpenEditorModal] = useState<boolean>(false);
 
@@ -37,16 +46,11 @@ const Menu: React.FC = () => {
   const [currentRow, setCurrentRow] = useState(null);
   // 表达加载状态
   const [loading, setLoading] = useState<boolean>(false);
+  // 当前选中的行数据
+  const [selRows, setSelectedRows] = useState<any[]>([]);
 
   useEffect(() => {
-    setLoading(true);
-    queryMenuData()
-      .then((response) => {
-        setTableData(response);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    queryMenuData();
   }, []);
 
   // 定义表格列
@@ -72,8 +76,8 @@ const Menu: React.FC = () => {
     {
       title: '类型',
       width: 80,
-      dataIndex: 'menu_type',
-      key: 'menu_type',
+      dataIndex: 'menuType',
+      key: 'menuType',
       align: 'center',
     },
     {
@@ -86,8 +90,8 @@ const Menu: React.FC = () => {
     {
       title: '顺序',
       width: 80,
-      dataIndex: 'sortNum',
-      key: 'sortNum',
+      dataIndex: 'sortNo',
+      key: 'sortNo',
       align: 'center',
     },
     {
@@ -99,7 +103,7 @@ const Menu: React.FC = () => {
     },
     {
       title: '操作',
-      width: '160px',
+      width: '120px',
       dataIndex: 'operation',
       fixed: 'right',
       align: 'center',
@@ -107,12 +111,16 @@ const Menu: React.FC = () => {
         return (
           <Space>
             <Button
-              icon={<EditOutlined />}
+              icon={<EditOutlined style={{ color: token.colorPrimary }} />}
               type="text"
               onClick={() => {
-                alert(`编辑${record}`);
+                setCurrentRow(record);
+                setOpenEditorModal(true);
               }}
             />
+            <Tooltip title="添加下级">
+              <Button icon={<PlusOutlined />} type="text" onClick={() => {}} />
+            </Tooltip>
             <Button danger icon={<DeleteOutlined />} type="text" />
           </Space>
         );
@@ -121,19 +129,28 @@ const Menu: React.FC = () => {
   ];
 
   /**
+   * 多行选中的配置
+   */
+  const rowSelection: TableProps['rowSelection'] = {
+    // 行选中的回调
+    onChange(_selectedRowKeys, selectedRows) {
+      setSelectedRows(selectedRows);
+    },
+  };
+
+  /**
    * 检索表单提交
    * @param values  检索表单条件
    */
   const onFinish = (values: any) => {
-    queryMenuData(values).then((response) => {
-      setTableData(response);
-    });
+    queryMenuData(values);
   };
 
   /**
    * 查询菜单数据
    */
   const queryMenuData = async (params?: any) => {
+    setLoading(true);
     // 获取表单查询条件
     const formCon = params || form.getFieldsValue();
     // 拼接查询条件，没有选择的条件就不拼接
@@ -145,7 +162,28 @@ const Menu: React.FC = () => {
     });
 
     // 调用查询
-    return getAllMenus(queryCondition);
+    getAllMenus(queryCondition)
+      .then((response) => {
+        setTableData(response);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  /**
+   * 批量删除选中的菜单
+   */
+  const deleteBatch = () => {
+    modal.confirm({
+      title: '批量删除',
+      icon: <ExclamationCircleFilled />,
+      content: '确定批量删除菜单吗？数据删除后将无法恢复！',
+      onOk() {
+        console.log('批量删除', selRows);
+        // 调用删除接口，删除成功后刷新页面数据
+      },
+    });
   };
 
   /**
@@ -260,7 +298,13 @@ const Menu: React.FC = () => {
             <Button type="default" icon={<PlusOutlined />}>
               批量导入
             </Button>
-            <Button type="default" danger icon={<DeleteOutlined />}>
+            <Button
+              type="default"
+              danger
+              icon={<DeleteOutlined />}
+              disabled={selRows.length === 0}
+              onClick={deleteBatch}
+            >
               批量删除
             </Button>
           </Space>
@@ -272,6 +316,8 @@ const Menu: React.FC = () => {
             dataSource={tableData}
             columns={columns}
             loading={loading}
+            rowKey="id"
+            rowSelection={{ ...rowSelection }}
           />
         </Card>
       </Flex>
