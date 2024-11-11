@@ -17,7 +17,7 @@ export default defineConfig({
     pluginSass({
       // sass文件默认注入全局的变量文件
       sassLoaderOptions: {
-        additionalData: `@use "${path.resolve(__dirname, 'src/assets/styles/variables.scss')}" as *;`,
+        additionalData: `@use 'src/assets/styles/variables.scss' as *;`,
       },
     }),
     // mock 插件
@@ -35,9 +35,9 @@ export default defineConfig({
     tags: [
       {
         tag: 'html',
-        attrs: {lang: 'zh'}
-      }
-    ]
+        attrs: { lang: 'zh' },
+      },
+    ],
   },
   // 配置路径别名
   source: {
@@ -79,7 +79,7 @@ export default defineConfig({
       },
     },
     // 移除console.[method]语句
-    removeConsole: true
+    removeConsole: true,
   },
   // 服务相关
   server: {
