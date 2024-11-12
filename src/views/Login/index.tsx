@@ -271,7 +271,7 @@ const Login: React.FC = () => {
         <a
           target="_blank"
           rel="noreferrer"
-          href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=51012202001603"
+          href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=51012202001944"
           style={{
             display: 'inline-block',
             textDecoration: 'none',
@@ -289,7 +289,7 @@ const Login: React.FC = () => {
               color: '#939393',
             }}
           >
-            {/* 川公网安备 51012202001603号 */}
+            川公网安备51012202001944
           </p>
         </a>
         <a
