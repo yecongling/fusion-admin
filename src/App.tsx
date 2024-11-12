@@ -52,13 +52,16 @@ const App: React.FC = () => {
 
   return (
     <ConfigProvider
-      theme={{ token: { colorPrimary: global.colorPrimary }, components: {
-        Layout: {
-          headerPadding: '0 16px 0 0',
-          headerHeight: '50px',
-          headerBg: '#fff'
-        }
-      } }}
+      theme={{
+        token: { colorPrimary: global.colorPrimary },
+        components: {
+          Layout: {
+            headerPadding: '0 16px 0 0',
+            headerHeight: '50px',
+            headerBg: '#fff',
+          },
+        },
+      }}
       locale={zhCN}
     >
       <AntdApp style={{ height: '100%' }}>

@@ -38,7 +38,7 @@ export const getMenuListByRoleId = (params: any) => {
  * @param params 查询条件
  */
 export const getAllMenus = (params: Record<string, any>) => {
-  return HttpRequest.get(
+  return HttpRequest.post(
     {
       url: Api.getAllMenus,
       params,

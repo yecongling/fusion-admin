@@ -646,7 +646,8 @@ export default defineMock([
   },
   {
     url: '/api/system/menu/getAllMenus',
-    method: 'GET',
+    method: 'POST',
+    enabled: false,
     body() {
       return {
         code: 200,

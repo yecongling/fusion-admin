@@ -13,7 +13,6 @@ import {
   Card,
   Col,
   ConfigProvider,
-  Flex,
   Form,
   Input,
   Row,
@@ -21,11 +20,14 @@ import {
   Space,
   Table,
   TableProps,
+  Tag,
   theme,
   Tooltip,
 } from 'antd';
 import React, { useEffect, useState } from 'react';
 import MenuInfoModal from './MenuInfoModal';
+import './menu.scss';
+import useParentSize from '@hooks/useParentSize';
 
 const { useToken } = theme;
 
@@ -48,6 +50,8 @@ const Menu: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   // 当前选中的行数据
   const [selRows, setSelectedRows] = useState<any[]>([]);
+  // 容器高度计算（表格）
+  const { parentRef, height } = useParentSize();
 
   useEffect(() => {
     queryMenuData();
@@ -63,13 +67,13 @@ const Menu: React.FC = () => {
     },
     {
       title: '组件',
-      width: 160,
+      width: 140,
       dataIndex: 'component',
       key: 'component',
     },
     {
       title: '路径',
-      width: 160,
+      width: 140,
       dataIndex: 'url',
       key: 'url',
     },
@@ -79,16 +83,26 @@ const Menu: React.FC = () => {
       dataIndex: 'menuType',
       key: 'menuType',
       align: 'center',
+      render(value) {
+        switch (value) {
+          case 0:
+            return '一级菜单';
+          case 1:
+            return '子菜单';
+          default:
+            return '';
+        }
+      },
     },
     {
       title: '图标',
-      width: 80,
+      width: 120,
       dataIndex: 'icon',
       key: 'icon',
       align: 'center',
     },
     {
-      title: '顺序',
+      title: '序号',
       width: 80,
       dataIndex: 'sortNo',
       key: 'sortNo',
@@ -100,6 +114,13 @@ const Menu: React.FC = () => {
       dataIndex: 'status',
       key: 'status',
       align: 'center',
+      render(value) {
+        if (value == 1) {
+          return <Tag color="green">启用</Tag>;
+        } else {
+          return <Tag color="gray">停用</Tag>;
+        }
+      },
     },
     {
       title: '操作',
@@ -111,17 +132,21 @@ const Menu: React.FC = () => {
         return (
           <Space>
             <Button
-              icon={<EditOutlined style={{ color: token.colorPrimary }} />}
-              type="text"
+              icon={<EditOutlined style={{ color: '#fa8c16' }} />}
+              type="link"
               onClick={() => {
                 setCurrentRow(record);
                 setOpenEditorModal(true);
               }}
             />
             <Tooltip title="添加下级">
-              <Button icon={<PlusOutlined />} type="text" onClick={() => {}} />
+              <Button
+                icon={<PlusOutlined style={{ color: token.colorPrimary }} />}
+                type="link"
+                onClick={() => {}}
+              />
             </Tooltip>
-            <Button danger icon={<DeleteOutlined />} type="text" />
+            <Button danger icon={<DeleteOutlined />} type="link" />
           </Space>
         );
       },
@@ -216,111 +241,116 @@ const Menu: React.FC = () => {
 
   return (
     <>
-      <Flex vertical flex="auto">
-        {/* 菜单检索条件栏 */}
-        <ConfigProvider
-          theme={{
-            components: {
-              Form: {
-                itemMarginBottom: 0,
-              },
+      {/* 菜单检索条件栏 */}
+      <ConfigProvider
+        theme={{
+          components: {
+            Form: {
+              itemMarginBottom: 0,
             },
-          }}
-        >
-          <Card>
-            <Form
-              form={form}
-              initialValues={{ menu_type: '', status: '' }}
-              onFinish={onFinish}
-            >
-              <Row gutter={24}>
-                <Col span={6}>
-                  <Form.Item name="title" label="菜单名称" colon={false}>
-                    <Input autoFocus allowClear autoComplete="off" />
-                  </Form.Item>
-                </Col>
-                <Col span={6}>
-                  <Form.Item name="menu_type" label="菜单类型" colon={false}>
-                    <Select
-                      allowClear
-                      options={[
-                        { value: '', label: '请选择', disabled: true },
-                        { value: 1, label: '一级菜单' },
-                        { value: 2, label: '子菜单' },
-                        { value: 3, label: '按钮权限' },
-                      ]}
-                    />
-                  </Form.Item>
-                </Col>
-                <Col span={6}>
-                  <Form.Item name="status" label="状态" colon={false}>
-                    <Select
-                      allowClear
-                      options={[
-                        { value: '', label: '请选择', disabled: true },
-                        { value: 1, label: '启用' },
-                        { value: 0, label: '停用' },
-                      ]}
-                    />
-                  </Form.Item>
-                </Col>
-                <Col span={6} style={{ textAlign: 'right' }}>
-                  <Space>
-                    <Button
-                      type="primary"
-                      htmlType="submit"
-                      icon={<SearchOutlined />}
-                    >
-                      检索
-                    </Button>
-                    <Button
-                      type="default"
-                      icon={<RedoOutlined />}
-                      onClick={() => {
-                        form.resetFields();
-                      }}
-                    >
-                      重置
-                    </Button>
-                  </Space>
-                </Col>
-              </Row>
-            </Form>
-          </Card>
-        </ConfigProvider>
-        {/* 查询表格 */}
-        <Card style={{ flex: 1, marginTop: '8px' }}>
-          {/* 操作按钮 */}
-          <Space>
-            <Button type="primary" icon={<PlusOutlined />} onClick={addMenu}>
-              新增
-            </Button>
-            <Button type="default" icon={<PlusOutlined />}>
-              批量导入
-            </Button>
-            <Button
-              type="default"
-              danger
-              icon={<DeleteOutlined />}
-              disabled={selRows.length === 0}
-              onClick={deleteBatch}
-            >
-              批量删除
-            </Button>
-          </Space>
-          {/* 表格数据 */}
-          <Table
-            size="small"
-            style={{ marginTop: '8px' }}
-            bordered
-            dataSource={tableData}
-            columns={columns}
-            loading={loading}
-            rowKey="id"
-            rowSelection={{ ...rowSelection }}
-          />
+          },
+        }}
+      >
+        <Card>
+          <Form
+            form={form}
+            initialValues={{ menu_type: '', status: '' }}
+            onFinish={onFinish}
+          >
+            <Row gutter={24}>
+              <Col span={6}>
+                <Form.Item name="title" label="菜单名称" colon={false}>
+                  <Input autoFocus allowClear autoComplete="off" />
+                </Form.Item>
+              </Col>
+              <Col span={6}>
+                <Form.Item name="menu_type" label="菜单类型" colon={false}>
+                  <Select
+                    allowClear
+                    options={[
+                      { value: '', label: '请选择', disabled: true },
+                      { value: 1, label: '一级菜单' },
+                      { value: 2, label: '子菜单' },
+                      { value: 3, label: '按钮权限' },
+                    ]}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={6}>
+                <Form.Item name="status" label="状态" colon={false}>
+                  <Select
+                    allowClear
+                    options={[
+                      { value: '', label: '请选择', disabled: true },
+                      { value: 1, label: '启用' },
+                      { value: 0, label: '停用' },
+                    ]}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={6} style={{ textAlign: 'right' }}>
+                <Space>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    icon={<SearchOutlined />}
+                  >
+                    检索
+                  </Button>
+                  <Button
+                    type="default"
+                    icon={<RedoOutlined />}
+                    onClick={() => {
+                      form.resetFields();
+                    }}
+                  >
+                    重置
+                  </Button>
+                </Space>
+              </Col>
+            </Row>
+          </Form>
         </Card>
-      </Flex>
+      </ConfigProvider>
+      {/* 查询表格 */}
+      <Card
+        style={{ flex: 1, marginTop: '8px' }}
+        styles={{ body: { height: '100%' } }}
+        ref={parentRef}
+      >
+        {/* 操作按钮 */}
+        <Space>
+          <Button type="primary" icon={<PlusOutlined />} onClick={addMenu}>
+            新增
+          </Button>
+          <Button type="default" icon={<PlusOutlined />}>
+            批量导入
+          </Button>
+          <Button
+            type="default"
+            danger
+            icon={<DeleteOutlined />}
+            disabled={selRows.length === 0}
+            onClick={deleteBatch}
+          >
+            批量删除
+          </Button>
+        </Space>
+        {/* 表格数据 */}
+        <Table
+          size="small"
+          style={{ marginTop: '8px' }}
+          bordered
+          pagination={false}
+          dataSource={tableData}
+          columns={columns}
+          loading={loading}
+          rowKey="id"
+          scroll={{ y: height - 128 }}
+          rowSelection={{ ...rowSelection }}
+        />
+      </Card>
+
       {/* 新增、编辑弹窗 */}
       <MenuInfoModal
         visible={openEditModal}
