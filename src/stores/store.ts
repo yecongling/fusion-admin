@@ -53,6 +53,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: 'root',
   storage,
+  whiteList: ['menus']
 };
 
 // 持久化reducer

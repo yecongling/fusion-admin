@@ -28,6 +28,7 @@ import React, { useEffect, useState } from 'react';
 import MenuInfoModal from './MenuInfoModal';
 import './menu.scss';
 import useParentSize from '@hooks/useParentSize';
+import { addIcon } from '@utils/utils';
 
 const { useToken } = theme;
 
@@ -96,10 +97,13 @@ const Menu: React.FC = () => {
     },
     {
       title: '图标',
-      width: 120,
+      width: 80,
       dataIndex: 'icon',
       key: 'icon',
       align: 'center',
+      render(value) {
+        return addIcon(value);
+      }
     },
     {
       title: '序号',
@@ -161,6 +165,7 @@ const Menu: React.FC = () => {
     onChange(_selectedRowKeys, selectedRows) {
       setSelectedRows(selectedRows);
     },
+    columnWidth: 32
   };
 
   /**

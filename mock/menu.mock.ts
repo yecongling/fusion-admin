@@ -4,6 +4,7 @@ import { defineMock } from 'rspack-plugin-mock/helper';
 export default defineMock([
   {
     url: '/api/system/menu/getMenusByRole',
+    enabled: false,
     method: 'GET',
     body(request) {
       const query = request.query;

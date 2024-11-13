@@ -89,6 +89,7 @@ const Header: React.FC = memo(() => {
             sessionStorage.removeItem('roleId');
             sessionStorage.removeItem('isLogin');
             sessionStorage.removeItem('loginUser');
+            dispatch(clearCache());
             // 退出到登录页面
             navigate('/login');
           },
