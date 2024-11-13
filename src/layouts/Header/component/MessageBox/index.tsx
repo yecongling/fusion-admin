@@ -72,7 +72,7 @@ const Notify: React.FC = () => {
   const tabList: TabsProps['items'] = [
     {
       key: 'message',
-      label: <>消息({groupData['message'].length})</>,
+      label: <>消息({groupData['message']?.length || ''})</>,
       icon: <MessageOutlined />,
       children: (
         <MessageList
@@ -87,7 +87,7 @@ const Notify: React.FC = () => {
     },
     {
       key: 'notify',
-      label: <>通知({groupData['notify'].length})</>,
+      label: <>通知({groupData['notify']?.length || ''})</>,
       icon: <NotificationOutlined />,
       children: (
         <MessageList
@@ -102,7 +102,7 @@ const Notify: React.FC = () => {
     },
     {
       key: 'todo',
-      label: <>待办({groupData['todo'].length})</>,
+      label: <>待办({groupData['todo']?.length || ''})</>,
       icon: <ReconciliationOutlined />,
       children: (
         <MessageList
