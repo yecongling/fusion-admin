@@ -259,24 +259,24 @@ const Menu: React.FC = () => {
         <Card>
           <Form
             form={form}
-            initialValues={{ menu_type: '', status: '' }}
+            initialValues={{ menuType: '', status: '' }}
             onFinish={onFinish}
           >
             <Row gutter={24}>
               <Col span={6}>
-                <Form.Item name="title" label="菜单名称" colon={false}>
+                <Form.Item name="name" label="菜单名称" colon={false}>
                   <Input autoFocus allowClear autoComplete="off" />
                 </Form.Item>
               </Col>
               <Col span={6}>
-                <Form.Item name="menu_type" label="菜单类型" colon={false}>
+                <Form.Item name="menuType" label="菜单类型" colon={false}>
                   <Select
                     allowClear
                     options={[
                       { value: '', label: '请选择', disabled: true },
-                      { value: 1, label: '一级菜单' },
-                      { value: 2, label: '子菜单' },
-                      { value: 3, label: '按钮权限' },
+                      { value: 0, label: '一级菜单' },
+                      { value: 1, label: '子菜单' },
+                      { value: 2, label: '按钮权限' },
                     ]}
                   />
                 </Form.Item>
