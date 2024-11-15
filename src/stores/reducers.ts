@@ -13,6 +13,8 @@ export interface GlobalState {
   colorPrimary: string;
   // 菜单
   menus: any[];
+  // 是否展开锁屏
+  screenLock: boolean;
 }
 
 // 定义初始全局状态
@@ -26,4 +28,6 @@ export const initGlobalState: GlobalState = {
   colorPrimary: '#1677ff',
   // 菜单
   menus: [],
+  // 默认不锁屏
+  screenLock: false,
 };

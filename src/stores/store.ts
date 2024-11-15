@@ -34,12 +34,16 @@ const globalSlice = createSlice({
       state.menuWidth = action.payload;
     },
 
+    // 设置屏幕锁定
+    setScreenLock(state: GlobalState, action: PayloadAction<boolean>) {
+      state.screenLock = action.payload;
+    },
+
     // 清空缓存
     clearCache(state: GlobalState) {
       state.theme = 'light';
       state.collapse = false;
       state.colorPrimary = '#1677ff';
-      state.menus = [];
     },
   },
 });
@@ -77,4 +81,5 @@ export const {
   setMenus,
   clearCache,
   setMenuWidth,
+  setScreenLock
 } = globalSlice.actions;

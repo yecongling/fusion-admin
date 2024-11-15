@@ -25,7 +25,7 @@ import {
 import React, { memo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { clearCache } from '@stores/store';
+import { clearCache, setScreenLock } from '@stores/store';
 import avatar from '@assets/images/avatar.png';
 import MessageBox from './component/MessageBox';
 import FullScreen from './component/FullScreen';
@@ -65,7 +65,7 @@ const Header: React.FC = memo(() => {
       label: '刷新缓存',
       icon: <SyncOutlined />,
       onClick: () => {
-        dispatch(clearCache());
+        // 后端的缓存信息（相当于把缓存数据刷新）
       },
     },
     {
@@ -148,7 +148,7 @@ const Header: React.FC = memo(() => {
               <LockOutlined
                 style={{ cursor: 'pointer', fontSize: '18px' }}
                 onClick={() => {
-                  alert('进行锁屏操作');
+                  dispatch(setScreenLock(true));
                 }}
               />
             </Tooltip>

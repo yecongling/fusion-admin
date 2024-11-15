@@ -3,6 +3,7 @@ import React from 'react';
 import LeftMenu from './LeftMenu';
 import Header from './Header';
 import Content from './Content';
+import ScreenLock from '@components/ScreenLock';
 
 /**
  * 系统整体布局
@@ -20,6 +21,8 @@ const Layouts: React.FC = () => {
           <Content />
         </Layout>
       </Layout>
+      {/* 锁屏区域 */}
+      <ScreenLock />
     </>
   );
 };
