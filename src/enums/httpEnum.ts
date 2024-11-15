@@ -1,13 +1,4 @@
 /**
- * 枚举一些http的变量
- */
-export enum ResultEnum {
-  SUCCESS = 0,
-  ERROR = 1,
-  TIMEOUT = 401,
-}
-
-/**
  * 枚举HTTP的状态码
  */
 export enum HttpCodeEnum {
@@ -26,7 +17,11 @@ export enum HttpCodeEnum {
   // 验证码已过期
   RC301 = 301,
   // 未找到响应的资源
-  RC404 = 404
+  RC404 = 404,
+  // 后端服务异常
+  RC500 = 500,
+  // 网关异常（后端服务不可访问）
+  RC502 = 502,
 }
 
 /**

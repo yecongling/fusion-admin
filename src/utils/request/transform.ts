@@ -3,6 +3,7 @@
  */
 /* 数据处理 */
 import {
+  AxiosError,
   AxiosRequestConfig,
   AxiosResponse,
   InternalAxiosRequestConfig,
@@ -45,7 +46,10 @@ export abstract class AxiosTransform {
   /**
    * @description: 请求失败处理
    */
-  requestCatchHook?: (e: Error, options: RequestOptions) => Promise<any>;
+  requestCatchHook?: (
+    e: Error | AxiosError,
+    options: RequestOptions,
+  ) => Promise<any>;
 
   /**
    * @description: 请求之前的拦截器
@@ -239,6 +243,29 @@ export const transform: AxiosTransform = {
   },
 
   /**
+   * 请求失败后处理（如502网关错误）
+   *
+   * @param error 错误信息
+   * @param options 请求配置
+   */
+  requestCatchHook: (error: Error | AxiosError) => {
+    const code = (error as AxiosError).status;
+    let errMessage = '';
+    if (code === HttpCodeEnum.RC502) {
+      errMessage = '接口请求失败，请检查接口服务是否可正常访问！';
+    } else if (code === HttpCodeEnum.RC500) {
+      errMessage = '接口服务器内部错误，请稍后再试！';
+    }
+    if (errMessage) {
+      antdUtils.modal?.error({
+        title: `服务异常，状态码(${code})`,
+        content: errMessage,
+      });
+    }
+    return Promise.reject(error);
+  },
+
+  /**
    * 响应拦截器处理
    * @param res
    */
@@ -247,7 +274,7 @@ export const transform: AxiosTransform = {
   },
 
   /**
-   * 响应错误处理
+   * 响应错误处理(这种是针对后端服务有响应的，比如404之类的)
    * @param error
    */
   responseInterceptorsCatch: (error: any) => {
@@ -255,7 +282,7 @@ export const transform: AxiosTransform = {
     const result = error.response?.data ?? {};
     const { code: responseCode, message: responseMessage } = result;
     const { code, message } = error || {};
-    let errMessage = '接口请求错误';
+    let errMessage = '';
     if (responseCode && responseMessage) {
       errMessage = responseMessage;
     } else if (code === 'ECONNABORTED' && message.indexOf('timeout') !== -1) {
@@ -265,7 +292,10 @@ export const transform: AxiosTransform = {
     }
 
     if (errMessage) {
-      antdUtils.modal?.error({ title: '服务异常', content: errMessage });
+      antdUtils.modal?.error({
+        title: `服务异常（状态码：${code}）`,
+        content: errMessage,
+      });
       return Promise.reject(error);
     }
 
