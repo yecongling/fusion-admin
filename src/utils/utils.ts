@@ -14,6 +14,7 @@ export function handleRouter(
   routerList: RouteItem[],
   newArr: RouteObject[] = [],
 ) {
+  if (!routerList) return newArr;
   routerList.forEach((item: RouteItem) => {
     const menu: RouteObject = {};
     if (typeof item === 'object' && item.path && item.route == '1') {
@@ -54,14 +55,17 @@ export function setObjToUrlParams(baseUrl: string, obj: any): string {
     : baseUrl.replace(/\/?$/, '?') + parameters;
 }
 
-export function deepMerge<T = object>(src: Record<string, any> = {}, target: any = {}): T {
+export function deepMerge<T = object>(
+  src: Record<string, any> = {},
+  target: any = {},
+): T {
   let key: string;
   for (key in target) {
     src[key] = isObject(src[key])
       ? deepMerge(src[key], target[key])
       : (src[key] = target[key]);
   }
-  return src;
+  return src as T;
 }
 
 /**
