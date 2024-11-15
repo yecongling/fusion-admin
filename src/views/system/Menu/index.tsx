@@ -2,6 +2,7 @@ import {
   DeleteOutlined,
   EditOutlined,
   ExclamationCircleFilled,
+  PlusCircleOutlined,
   PlusOutlined,
   RedoOutlined,
   SearchOutlined,
@@ -87,7 +88,7 @@ const Menu: React.FC = () => {
       render(value) {
         switch (value) {
           case 0:
-            return '一级菜单';
+            return '目录';
           case 1:
             return '子菜单';
           default:
@@ -103,7 +104,7 @@ const Menu: React.FC = () => {
       align: 'center',
       render(value) {
         return addIcon(value);
-      }
+      },
     },
     {
       title: '序号',
@@ -165,7 +166,8 @@ const Menu: React.FC = () => {
     onChange(_selectedRowKeys, selectedRows) {
       setSelectedRows(selectedRows);
     },
-    columnWidth: 32
+    columnWidth: 32,
+    fixed: true,
   };
 
   /**
@@ -194,11 +196,28 @@ const Menu: React.FC = () => {
     // 调用查询
     getAllMenus(queryCondition)
       .then((response) => {
-        setTableData(response);
+        // 内部数据需要处理，内部的children如果没有数据，需要转变为null
+        const data = transformMenuData(response);
+        setTableData(data);
       })
       .finally(() => {
         setLoading(false);
       });
+  };
+
+  /**
+   * 转换菜单数据，children没有数据的转换为null
+   * @param data
+   */
+  const transformMenuData = (data: any) => {
+    return data.map((item: any) => {
+      if (!item.children || item.children.length === 0) {
+        item.children = null;
+      } else {
+        item.children = transformMenuData(item.children);
+      }
+      return item;
+    });
   };
 
   /**
@@ -223,6 +242,8 @@ const Menu: React.FC = () => {
     setCurrentRow(null);
     setOpenEditorModal(true);
   };
+
+  const expandAllMenus = () => {};
 
   /**
    * 关闭编辑弹窗
