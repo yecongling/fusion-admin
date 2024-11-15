@@ -493,17 +493,15 @@
     estree-walker "^2.0.2"
     picomatch "^2.3.1"
 
-"@rsbuild/core@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@rsbuild/core/-/core-1.1.1.tgz#d1a7a52851ec76533e4e0d7c68a1dc92fa086383"
-  integrity sha512-CJoO3PIC0Cm/z1iL6nWoIuQzETEMY+D+UIrlMGmWuhdGiixDE2x0spban7jmmJRE7w3Ns8b2ccCmhp6rovEojw==
+"@rsbuild/core@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.npmmirror.com/@rsbuild/core/-/core-1.1.2.tgz#a369cd017c64ddfc14dac2b55831d3124f8724af"
+  integrity sha512-HM2roS0z6gFDGIdJqA1suZHNa0zQ0sOcsII3DVs9LvdbweoaSLFNbRdpnYwZO479Ijzlec3jXGQMTlQBe/I0Sw==
   dependencies:
     "@rspack/core" "~1.1.1"
     "@rspack/lite-tapable" "~1.0.1"
     "@swc/helpers" "^0.5.15"
     core-js "~3.39.0"
-  optionalDependencies:
-    fsevents "~2.3.3"
 
 "@rsbuild/plugin-image-compress@^1.0.2":
   version "1.0.2"
@@ -1749,7 +1747,7 @@ formidable@2.1.2:
     once "^1.4.0"
     qs "^6.11.0"
 
-fsevents@~2.3.2, fsevents@~2.3.3:
+fsevents@~2.3.2:
   version "2.3.3"
   resolved "https://registry.npmmirror.com/fsevents/-/fsevents-2.3.3.tgz#cac6407785d03675a2a5e1a5305c697b347d90d6"
   integrity sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==
