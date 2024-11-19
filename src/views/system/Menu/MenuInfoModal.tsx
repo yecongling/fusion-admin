@@ -1,3 +1,4 @@
+import { QuestionCircleFilled } from '@ant-design/icons';
 import DragModal from '@components/modal/DragModal';
 import {
   Form,
@@ -6,8 +7,9 @@ import {
   InputRef,
   Radio,
   Switch,
+  Tooltip,
 } from 'antd';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 /**
  * 菜单信息编辑弹窗
@@ -22,6 +24,7 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
   // 表单实例
   const [form] = Form.useForm();
   const nameRef = useRef<InputRef>(null);
+  const [menuType, setMenuType] = useState<number>(currentRow?.menuType || 2);
 
   useEffect(() => {
     if (!visible) return;
@@ -64,7 +67,7 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
       <Form
         form={form}
         initialValues={{
-          menuType: 2,
+          menuType: 1,
           isRoute: true,
           hidden: false,
           internalOrExternal: false,
@@ -73,16 +76,12 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
         labelCol={{ span: 4 }}
       >
         <Form.Item name="menuType" label="菜单类型">
-          <Radio.Group buttonStyle="solid">
-            <Radio.Button value={1}>菜单目录</Radio.Button>
-            <Radio.Button value={2}>子目录</Radio.Button>
-            <Radio.Button value={3}>权限按钮</Radio.Button>
+          <Radio.Group buttonStyle="solid" onChange={(e) => setMenuType(e.target.value)}>
+            <Radio.Button value={0}>菜单目录</Radio.Button>
+            <Radio.Button value={1}>子目录</Radio.Button>
+            <Radio.Button value={2}>权限按钮</Radio.Button>
           </Radio.Group>
         </Form.Item>
-        <Form.Item name="parentId" label="上级菜单">
-          <Input allowClear autoComplete="off" />
-        </Form.Item>
-
         <Form.Item
           name={`name`}
           label="菜单名称"
@@ -90,9 +89,16 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
         >
           <Input autoFocus ref={nameRef} />
         </Form.Item>
+        {
+          menuType !== 0 && (
+            <Form.Item name="parentId" label="上级菜单">
+              <Input allowClear autoComplete="off" />
+            </Form.Item>
+          )
+        }
         <Form.Item
           name="url"
-          label="路径"
+          label={<><Tooltip title="访问的路由地址，如为外链，则路由地址需要以`http(s)://开头`"><QuestionCircleFilled /></Tooltip>路由地址</>}
           rules={[{ required: true, message: '路径不能为空!' }]}
         >
           <Input allowClear autoComplete="off" />
@@ -100,7 +106,7 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
         <Form.Item
           name="component"
           label="前端组件"
-          rules={[{ required: true, message: '前端组件配置不能为空!' }]}
+          rules={[{ required: menuType === 1, message: '前端组件配置不能为空!' }]}
         >
           <Input allowClear autoComplete="off" />
         </Form.Item>
@@ -110,10 +116,10 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
         <Form.Item name="redirect" label="默认跳转地址">
           <Input allowClear autoComplete="off" />
         </Form.Item>
-        <Form.Item name="Icon" label="菜单图标">
+        <Form.Item name="icon" label="菜单图标">
           <Input allowClear autoComplete="off" />
         </Form.Item>
-        <Form.Item name="sortNum" label="排序">
+        <Form.Item name="sortNo" label="排序">
           <InputNumber min={0} autoComplete="off" />
         </Form.Item>
         <Form.Item name="isRoute" label="是否路由菜单">
@@ -122,7 +128,7 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
         <Form.Item name="hidden" label="隐藏路由">
           <Switch checkedChildren="是" unCheckedChildren="否" />
         </Form.Item>
-        <Form.Item name="internalOrExternal" label="打开方式">
+        <Form.Item name="internalOrExternal" label={<><Tooltip title="选择是外链，则路由地址需要以`http(s)://开头`"><QuestionCircleFilled /></Tooltip>打开方式</>}>
           <Switch checkedChildren="外部" unCheckedChildren="内部" />
         </Form.Item>
         <Form.Item name="status" label="状态">
