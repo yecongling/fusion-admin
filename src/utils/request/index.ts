@@ -11,7 +11,7 @@ function createAxios(opts?: Partial<CreateAxiosOptions>) {
     deepMerge(
       {
         authenticationScheme: '',
-        timeout: 0,
+        timeout: 10 * 1000,
         headers: { 'Content-Type': ContentTypeEnum.JSON },
         // 数据处理方式
         transform,
