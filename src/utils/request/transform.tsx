@@ -16,6 +16,7 @@ import { HttpCodeEnum, RequestEnum } from '@enums/httpEnum';
 import { setObjToUrlParams } from '../utils';
 import { isString } from '../is';
 import { encrypt } from '../encrypt';
+import React from 'react';
 
 export interface CreateAxiosOptions extends AxiosRequestConfig {
   authenticationScheme?: string;
@@ -282,18 +283,25 @@ export const transform: AxiosTransform = {
     const result = error.response?.data ?? {};
     const { code: responseCode, message: responseMessage } = result;
     const { code, message } = error || {};
-    let errMessage = '';
-    if (responseCode && responseMessage) {
-      errMessage = responseMessage;
+    let errMessage: string | React.ReactNode = '';
+    if (responseCode === HttpCodeEnum.RC404 && responseMessage) {
+      errMessage = (
+        <>
+          <div>错误信息：{responseMessage}</div>
+          <div>请求路径：{error.config.url}</div>
+        </>
+      );
     } else if (code === 'ECONNABORTED' && message.indexOf('timeout') !== -1) {
       errMessage = '接口请求超时，请稍后重试';
     } else if (err?.includes('Network Error')) {
       errMessage = '网络异常';
+    } else if (responseCode && responseMessage) {
+      errMessage = responseMessage;
     }
 
     if (errMessage) {
       antdUtils.modal?.error({
-        title: `服务异常（状态码：${code}）`,
+        title: `服务异常（状态码：${responseCode || code}）`,
         content: errMessage,
       });
       return Promise.reject(error);
