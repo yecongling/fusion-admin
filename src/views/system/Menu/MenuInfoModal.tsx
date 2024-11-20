@@ -1,4 +1,4 @@
-import { QuestionCircleFilled } from '@ant-design/icons';
+import { QuestionCircleFilled, SettingOutlined } from '@ant-design/icons';
 import DragModal from '@components/modal/DragModal';
 import {
   Form,
@@ -47,6 +47,22 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
     }
   };
 
+  /**
+   * 点击确认的时候先做数据校验
+   */
+  const handleOk = () => {
+    // 字段校验，校验通过的才调用传过来的回调
+    form.validateFields().then(() => {
+      // 清除所有错误
+      
+      onOk(form.getFieldsValue());
+    }).catch((errorInfo) => {
+      // 滚动并聚焦到第一个错误字段
+      form.scrollToField(errorInfo.errorFields[0].name);
+      form.focusField(errorInfo.errorFields[0].name);
+    });
+  }
+
   return (
     <DragModal
       width={800}
@@ -59,7 +75,7 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
       }}
       title={currentRow ? '编辑菜单数据' : '新增菜单数据'}
       open={visible}
-      onOk={() => onOk(form.getFieldsValue())}
+      onOk={handleOk}
       onCancel={onCancel}
       maskClosable={false}
       afterOpenChange={onAfterOpenChange}
@@ -77,8 +93,8 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
       >
         <Form.Item name="menuType" label="菜单类型">
           <Radio.Group buttonStyle="solid" onChange={(e) => setMenuType(e.target.value)}>
-            <Radio.Button value={0}>菜单目录</Radio.Button>
-            <Radio.Button value={1}>子目录</Radio.Button>
+            <Radio.Button value={0}>一级菜单</Radio.Button>
+            <Radio.Button value={1}>子菜单</Radio.Button>
             <Radio.Button value={2}>权限按钮</Radio.Button>
           </Radio.Group>
         </Form.Item>
@@ -117,7 +133,7 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
           <Input allowClear autoComplete="off" />
         </Form.Item>
         <Form.Item name="icon" label="菜单图标">
-          <Input allowClear autoComplete="off" />
+          <Input allowClear autoComplete="off" addonAfter={<SettingOutlined/>}/>
         </Form.Item>
         <Form.Item name="sortNo" label="排序">
           <InputNumber min={0} autoComplete="off" />

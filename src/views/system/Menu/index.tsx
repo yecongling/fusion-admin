@@ -243,8 +243,6 @@ const Menu: React.FC = () => {
     setOpenEditorModal(true);
   };
 
-  const expandAllMenus = () => {};
-
   /**
    * 关闭编辑弹窗
    */
@@ -259,10 +257,12 @@ const Menu: React.FC = () => {
   const onEditOk = (menuData: Record<string, any>) => {
     // 请求后台进行数据保存（这里需要判定是编辑操作还是新增操作 - 根据currentRow 是否有数据来判定操作状态）
     if (currentRow == null) {
-      // 保存数据
+      // 新增数据
+
     } else {
       // 编辑数据
     }
+    debugger
   };
 
   return (
