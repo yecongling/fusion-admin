@@ -2,12 +2,15 @@ import {
   DeleteOutlined,
   EditOutlined,
   ExclamationCircleFilled,
-  PlusCircleOutlined,
   PlusOutlined,
   RedoOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
-import { getAllMenus } from '@services/system/menu/menuApi';
+import {
+  addMenu,
+  getAllMenus,
+  updateMenu,
+} from '@services/system/menu/menuApi';
 import {
   App,
   Button,
@@ -48,7 +51,7 @@ const Menu: React.FC = () => {
   const [tableData, setTableData] = useState<any[]>([]);
   // 当前编辑的行数据
   const [currentRow, setCurrentRow] = useState(null);
-  // 表达加载状态
+  // 表格加载状态
   const [loading, setLoading] = useState<boolean>(false);
   // 当前选中的行数据
   const [selRows, setSelectedRows] = useState<any[]>([]);
@@ -238,7 +241,7 @@ const Menu: React.FC = () => {
   /**
    * 新增按钮点击
    */
-  const addMenu = () => {
+  const onAddMenuClick = () => {
     setCurrentRow(null);
     setOpenEditorModal(true);
   };
@@ -258,11 +261,11 @@ const Menu: React.FC = () => {
     // 请求后台进行数据保存（这里需要判定是编辑操作还是新增操作 - 根据currentRow 是否有数据来判定操作状态）
     if (currentRow == null) {
       // 新增数据
-
+      addMenu(menuData);
     } else {
       // 编辑数据
+      updateMenu(menuData);
     }
-    debugger
   };
 
   return (
@@ -346,7 +349,11 @@ const Menu: React.FC = () => {
       >
         {/* 操作按钮 */}
         <Space>
-          <Button type="primary" icon={<PlusOutlined />} onClick={addMenu}>
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            onClick={onAddMenuClick}
+          >
             新增
           </Button>
           <Button type="default" icon={<PlusOutlined />}>
@@ -377,13 +384,15 @@ const Menu: React.FC = () => {
         />
       </Card>
 
-      {/* 新增、编辑弹窗 */}
-      <MenuInfoModal
-        visible={openEditModal}
-        currentRow={currentRow}
-        onCancel={closeEditModal}
-        onOk={onEditOk}
-      />
+      {/* 新增、编辑弹窗，点击了按钮的时候才挂载 */}
+      {openEditModal && (
+        <MenuInfoModal
+          visible={openEditModal}
+          currentRow={currentRow}
+          onCancel={closeEditModal}
+          onOk={onEditOk}
+        />
+      )}
     </>
   );
 };
