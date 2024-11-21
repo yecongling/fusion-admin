@@ -105,6 +105,9 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
         }}
         labelCol={{ span: 4 }}
       >
+        <Form.Item name="id" hidden>
+          <Input />
+        </Form.Item>
         <Form.Item name="menuType" label="菜单类型">
           <Radio.Group
             buttonStyle="solid"
