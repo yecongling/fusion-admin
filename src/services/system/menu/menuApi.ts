@@ -9,7 +9,7 @@ export enum Api {
   // 获取所有菜单
   getAllMenus = '/system/menu/getAllMenus',
   // 获取所有上级菜单
-  getDirectoryMenu = '/system/menu/getDirectoryMenu',
+  getDirectory = '/system/menu/getDirectory',
   // 添加菜单
   addMenu = '/system/menu/addMenu',
   // 编辑菜单
@@ -59,8 +59,8 @@ export const getAllMenus = (params: Record<string, any>) => {
  * 获取所有的一级菜单
  * @returns 
  */
-export const getDirectoryMenu = () => {
-  return HttpRequest.get({ url: Api.getDirectoryMenu });
+export const getDirectory = () => {
+  return HttpRequest.get({ url: Api.getDirectory }, { successMessageMode: 'none' });
 };
 
 /**

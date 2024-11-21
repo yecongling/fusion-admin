@@ -1,6 +1,6 @@
 import { QuestionCircleFilled, SettingOutlined } from '@ant-design/icons';
 import DragModal from '@components/modal/DragModal';
-import { getDirectoryMenu } from '@services/system/menu/menuApi';
+import { getDirectory } from '@services/system/menu/menuApi';
 import {
   Form,
   Input,
@@ -43,7 +43,7 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
 
   // 组件挂载查询目录数据
   useEffect(() => {
-    getDirectoryMenu().then((response) => {
+    getDirectory().then((response) => {
       setDirectory(response);
     });
   }, []);
