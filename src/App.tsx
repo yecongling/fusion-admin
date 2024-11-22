@@ -53,7 +53,9 @@ const App: React.FC = () => {
   return (
     <ConfigProvider
       theme={{
-        token: { colorPrimary: global.colorPrimary },
+        token: {
+          colorPrimary: global.colorPrimary
+        },
         components: {
           Layout: {
             headerPadding: '0 16px 0 0',

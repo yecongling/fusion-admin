@@ -384,15 +384,13 @@ const Menu: React.FC = () => {
         />
       </Card>
 
-      {/* 新增、编辑弹窗，点击了按钮的时候才挂载 */}
-      {openEditModal && (
-        <MenuInfoModal
-          visible={openEditModal}
-          currentRow={currentRow}
-          onCancel={closeEditModal}
-          onOk={onEditOk}
-        />
-      )}
+      {/* 新增、编辑弹窗 */}
+      <MenuInfoModal
+        visible={openEditModal}
+        currentRow={currentRow}
+        onCancel={closeEditModal}
+        onOk={onEditOk}
+      />
     </>
   );
 };

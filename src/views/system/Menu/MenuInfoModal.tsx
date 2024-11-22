@@ -32,21 +32,18 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
 
   useEffect(() => {
     if (!visible) return;
-    if (currentRow) {
-      // 填充表单数据
-      form.setFieldsValue(currentRow);
-    } else {
-      // 清空表单数据，表示新增
-      form.resetFields();
-    }
-  }, [currentRow, form, visible]);
-
-  // 组件挂载查询目录数据
-  useEffect(() => {
+    // 组件挂载查询目录数据
     getDirectory().then((response) => {
       setDirectory(response);
+      if (currentRow) {
+        // 填充表单数据
+        form.setFieldsValue(currentRow);
+      } else {
+        // 清空表单数据，表示新增
+        form.resetFields();
+      }
     });
-  }, []);
+  }, [currentRow, form, visible]);
 
   /**
    * 弹窗打开关闭的回调（打开后默认聚焦到名称输入框）
