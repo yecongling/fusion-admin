@@ -140,7 +140,10 @@ export const transform: AxiosTransform = {
           },
         });
       } else {
-        antdUtils.modal?.error({ title: '错误提示', content: timeoutMsg });
+        antdUtils.modal?.error({
+          title: `服务异常（状态码：${code}）`,
+          content: msg,
+        });
       }
     } else if (options.errorMessageMode === 'message') {
       antdUtils.message?.error(timeoutMsg);

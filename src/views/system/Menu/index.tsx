@@ -8,6 +8,7 @@ import {
 } from '@ant-design/icons';
 import {
   addMenu,
+  deleteMenuBatch,
   getAllMenus,
   updateMenu,
 } from '@services/system/menu/menuApi';
@@ -27,6 +28,7 @@ import {
   Tag,
   theme,
   Tooltip,
+  Upload,
 } from 'antd';
 import React, { useEffect, useState } from 'react';
 import MenuInfoModal from './MenuInfoModal';
@@ -232,8 +234,10 @@ const Menu: React.FC = () => {
       icon: <ExclamationCircleFilled />,
       content: '确定批量删除菜单吗？数据删除后将无法恢复！',
       onOk() {
-        console.log('批量删除', selRows);
         // 调用删除接口，删除成功后刷新页面数据
+        deleteMenuBatch(selRows.map((item: any) => item.id)).then(() => {
+          queryMenuData();
+        });
       },
     });
   };
@@ -257,14 +261,21 @@ const Menu: React.FC = () => {
    * 弹窗点击确定的回调函数
    * @param menuData 编辑的菜单数据
    */
-  const onEditOk = (menuData: Record<string, any>) => {
-    // 请求后台进行数据保存（这里需要判定是编辑操作还是新增操作 - 根据currentRow 是否有数据来判定操作状态）
-    if (currentRow == null) {
-      // 新增数据
-      addMenu(menuData);
-    } else {
-      // 编辑数据
-      updateMenu(menuData);
+  const onEditOk = async (menuData: Record<string, any>) => {
+    // 请求后台进行数据保存
+    try {
+      if (currentRow == null) {
+        // 新增数据
+        await addMenu(menuData);
+      } else {
+        // 编辑数据
+        await updateMenu(menuData);
+      }
+      // 操作成功，关闭弹窗，刷新数据
+      closeEditModal();
+      queryMenuData();
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -356,9 +367,11 @@ const Menu: React.FC = () => {
           >
             新增
           </Button>
-          <Button type="default" icon={<PlusOutlined />}>
-            批量导入
-          </Button>
+          <Upload accept=".xlsx">
+            <Button type="default" icon={<PlusOutlined />}>
+              批量导入
+            </Button>
+          </Upload>
           <Button
             type="default"
             danger
