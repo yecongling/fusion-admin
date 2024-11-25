@@ -22,6 +22,8 @@ export enum Api {
   exportMenus = '/system/menu/export',
   // 批量导入
   importMenus = '/system/menu/import',
+  // 验证菜单权限
+  checkPermission = '/system/menu/checkPermission'
 }
 
 /**
@@ -134,5 +136,17 @@ export const importMenu = (file: any) => {
   return HttpRequest.post({
     url: Api.importMenus,
     data: file,
+  });
+};
+
+/**
+ * 验证菜单权限
+ * @param params 菜单数据
+ * @returns 结果
+ */
+export const checkPermission = (params: any) => {
+  return HttpRequest.post({
+    url: Api.checkPermission,
+    data: params,
   });
 };
