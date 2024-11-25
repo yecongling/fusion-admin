@@ -493,12 +493,12 @@
     estree-walker "^2.0.2"
     picomatch "^2.3.1"
 
-"@rsbuild/core@^1.1.4":
-  version "1.1.4"
-  resolved "https://registry.npmmirror.com/@rsbuild/core/-/core-1.1.4.tgz#9cb54515fc7df10e01fca0a8803b94b4a44239dd"
-  integrity sha512-fN13hH6Ag0WgCCDUJErNvGs39hSePr8MTaJu1TjUZbFAY3DtOsUHhEb2V5zCUiaeMLMz7ef+krj7+duAJkizog==
+"@rsbuild/core@^1.1.5":
+  version "1.1.5"
+  resolved "https://registry.npmmirror.com/@rsbuild/core/-/core-1.1.5.tgz#49f323c162a18ac5c2439eecb0d22d4f43882237"
+  integrity sha512-hiczO0D2ipBt8TM8TZ0BP9kcuS6WdIq2eqLEOQuSTHQ1SDD4fg1u59Q9yaBq2Ku+tX5S2Ud+uRvDXz2GUN7SNQ==
   dependencies:
-    "@rspack/core" "~1.1.2"
+    "@rspack/core" "~1.1.3"
     "@rspack/lite-tapable" "~1.0.1"
     "@swc/helpers" "^0.5.15"
     core-js "~3.39.0"
@@ -530,73 +530,73 @@
     reduce-configs "^1.0.0"
     sass-embedded "^1.81.0"
 
-"@rspack/binding-darwin-arm64@1.1.2":
-  version "1.1.2"
-  resolved "https://registry.npmmirror.com/@rspack/binding-darwin-arm64/-/binding-darwin-arm64-1.1.2.tgz#e567a2a9f4f5fedaa4b1b7efa76377b652b01997"
-  integrity sha512-Ay4Srve6U3pDFCsmwVJ1PHHKyeURO/iNU1pjiH986Q30bHDozfHWxCjcy0BJnK4CI4HcSaMQi5YF6BMps3ayuQ==
+"@rspack/binding-darwin-arm64@1.1.3":
+  version "1.1.3"
+  resolved "https://registry.npmmirror.com/@rspack/binding-darwin-arm64/-/binding-darwin-arm64-1.1.3.tgz#17059d6f3d4d74fd174926d88edb9ac58cfe863e"
+  integrity sha512-gpLUBMDAS/uEcnE+ODy1ILTeyp1oM4QCq8rRhKHuOfsIe1AZ9Mct59v2omIE/r+R4dnbJ0ikIpto9qJZ6P2u1A==
 
-"@rspack/binding-darwin-x64@1.1.2":
-  version "1.1.2"
-  resolved "https://registry.npmmirror.com/@rspack/binding-darwin-x64/-/binding-darwin-x64-1.1.2.tgz#0f9cd41373cc5f38935d0f1e65a0bba3628a33aa"
-  integrity sha512-s/Mepgi8SHs75QNCtnHo/ua4fAsAz3JdJ6EfdkTmODCE2GwExXy43xl0qWhlzN1FDHnRFIZ0k6tWE0K+uCbKpQ==
+"@rspack/binding-darwin-x64@1.1.3":
+  version "1.1.3"
+  resolved "https://registry.npmmirror.com/@rspack/binding-darwin-x64/-/binding-darwin-x64-1.1.3.tgz#62895c939d03f0681db00d3a1864853b0a059fd8"
+  integrity sha512-m1G7SzkRfr1oLgghbAxUwj1J7hSKhtskQZiVeqe5tewKimFr6xLpKSTLTnEtlW0gdGNf1+dRMX/4kLMwhOdY7g==
 
-"@rspack/binding-linux-arm64-gnu@1.1.2":
-  version "1.1.2"
-  resolved "https://registry.npmmirror.com/@rspack/binding-linux-arm64-gnu/-/binding-linux-arm64-gnu-1.1.2.tgz#a6c261b68d3417e430381a6c84cc362368863250"
-  integrity sha512-x2JgHIAKY9CaCt5Q0EwlomyfhLYUOJ7PRUy85axROvMAPRnyRmcDr2OYQPa4KSQ+nDvF7m5SVmchHhepaORwaw==
+"@rspack/binding-linux-arm64-gnu@1.1.3":
+  version "1.1.3"
+  resolved "https://registry.npmmirror.com/@rspack/binding-linux-arm64-gnu/-/binding-linux-arm64-gnu-1.1.3.tgz#0ea68af571f5ce9a1a46f6b89ef34cfd4c351ef9"
+  integrity sha512-MpOrO1oppxAm8J1ztNz6G5DG/oL9ZLHmIz9vYNV6PKnk+MPhCXqfhFmQ2hZm5VIVKuOobfYEJiDUqKg2MLg8gA==
 
-"@rspack/binding-linux-arm64-musl@1.1.2":
-  version "1.1.2"
-  resolved "https://registry.npmmirror.com/@rspack/binding-linux-arm64-musl/-/binding-linux-arm64-musl-1.1.2.tgz#cb4447907be925356354b197738bcffb633f7fc8"
-  integrity sha512-kvikjjzErfJEGldJnBTRPSkXcoICaW1PUkicVZJGYcpS6AmXz9OdbHsBKhBvJFCP+BoAHRpK10L0DAydF9kSfg==
+"@rspack/binding-linux-arm64-musl@1.1.3":
+  version "1.1.3"
+  resolved "https://registry.npmmirror.com/@rspack/binding-linux-arm64-musl/-/binding-linux-arm64-musl-1.1.3.tgz#b841499d9769c12cd9b87cea724dbd10210e73c6"
+  integrity sha512-PnUDC1JxT6a5hJW0hhJ9ubWk3R+nk7eLXyNaORHyQH4k8o89Zm5GYoKnDgO4eRy41NB9/aBJQJRGSRn0iAsZgw==
 
-"@rspack/binding-linux-x64-gnu@1.1.2":
-  version "1.1.2"
-  resolved "https://registry.npmmirror.com/@rspack/binding-linux-x64-gnu/-/binding-linux-x64-gnu-1.1.2.tgz#95f45cfb7a73f7d105eab8b38ef4fbca04d8d261"
-  integrity sha512-wg5n7qTl0NRGL+7dzrZcKObM18GKMQDL5Ke7cEWmdHooH0rlyYK6ExIqzE5u/3GJ7KYBlDj/IgAMu5KLd8Ygjw==
+"@rspack/binding-linux-x64-gnu@1.1.3":
+  version "1.1.3"
+  resolved "https://registry.npmmirror.com/@rspack/binding-linux-x64-gnu/-/binding-linux-x64-gnu-1.1.3.tgz#1ca6f4e4f747ec80e0dbeff17b383fdea051ca69"
+  integrity sha512-+6JgyKXOp2QrHzlru95mge70tDkYlaY4NNE9xyrdj6PgTnM9cVPx4sLVhHC9+tWXaTFnccfEe9Tt6LjKnjHGaA==
 
-"@rspack/binding-linux-x64-musl@1.1.2":
-  version "1.1.2"
-  resolved "https://registry.npmmirror.com/@rspack/binding-linux-x64-musl/-/binding-linux-x64-musl-1.1.2.tgz#ee6ae2e5b5901f65fcbf709cf1e1006bcb36e1d1"
-  integrity sha512-1705atWiL6mo0KVRUoRcn5SFirUAJhREENzsQSucIYyHOX5bKjPDrd+7SAOSLOGc/yGJSmWZv6NzEH/WvY8TeA==
+"@rspack/binding-linux-x64-musl@1.1.3":
+  version "1.1.3"
+  resolved "https://registry.npmmirror.com/@rspack/binding-linux-x64-musl/-/binding-linux-x64-musl-1.1.3.tgz#469a0bd9638df5327ff0ae31a344b17a300d6ebd"
+  integrity sha512-X0TJTVL1Roqq/tvN26QO4u62x2xp5tE0dlhwhbeCHrBdgBzc+PHvcv/8lclRcq6lDPzceAgcnNX/+RbWg0DzKg==
 
-"@rspack/binding-win32-arm64-msvc@1.1.2":
-  version "1.1.2"
-  resolved "https://registry.npmmirror.com/@rspack/binding-win32-arm64-msvc/-/binding-win32-arm64-msvc-1.1.2.tgz#9269153f4501e6e8bb3cc904ca4dc512343abba3"
-  integrity sha512-DL9v6PAlC0dZnAjwNpdv5JyebidIctLTRCXO6q3bVL03i0jSyX5gRnd6YM5A9176M5HLBnSJjgujqhCffeFA3g==
+"@rspack/binding-win32-arm64-msvc@1.1.3":
+  version "1.1.3"
+  resolved "https://registry.npmmirror.com/@rspack/binding-win32-arm64-msvc/-/binding-win32-arm64-msvc-1.1.3.tgz#2bba8f0571747d501dc41dd0d2b6a59a95c7b09b"
+  integrity sha512-Lvpp5Q30YiPNkuOFPawp2al2CTWElPeG3X0E9LFIfPdVkLc/e2nkf5a6zSYtnbD2oaskzQIYN/k27fWqWWcVHA==
 
-"@rspack/binding-win32-ia32-msvc@1.1.2":
-  version "1.1.2"
-  resolved "https://registry.npmmirror.com/@rspack/binding-win32-ia32-msvc/-/binding-win32-ia32-msvc-1.1.2.tgz#ad87d64021540abe2a98d8d3fa8adf4e71fb9969"
-  integrity sha512-RluX7GENVpophR5BB4v0XxqffpGpBLTJDwoQBY0LjfOTGpLv8A0zrGIOMUsJGKE10MOlNfTUQOyB+p6sxLJzcQ==
+"@rspack/binding-win32-ia32-msvc@1.1.3":
+  version "1.1.3"
+  resolved "https://registry.npmmirror.com/@rspack/binding-win32-ia32-msvc/-/binding-win32-ia32-msvc-1.1.3.tgz#961f4ba7aeb9ef7808efdcf55193382be5b14166"
+  integrity sha512-tC+xXcbTRX7l+NFnlGK8UhDIJrKma7S/MA1KDol23/I3Vw67EcaHDwG+q2v7uiJsxn9XooIOSCJhPKmUUfZNXg==
 
-"@rspack/binding-win32-x64-msvc@1.1.2":
-  version "1.1.2"
-  resolved "https://registry.npmmirror.com/@rspack/binding-win32-x64-msvc/-/binding-win32-x64-msvc-1.1.2.tgz#a55280eeb8ada2c5bcae813924d586ac33ad71c2"
-  integrity sha512-fXg6y/IajuYyBy3oOsat20U+CLrDK/l4FLdg8ETfDPb5isD7jcmhyWXBeJVZVcwHT+Sj1LnLLUuhc+FGFk4aeA==
+"@rspack/binding-win32-x64-msvc@1.1.3":
+  version "1.1.3"
+  resolved "https://registry.npmmirror.com/@rspack/binding-win32-x64-msvc/-/binding-win32-x64-msvc-1.1.3.tgz#ec4fe49bc06c945fc5cac0286641ce84c7c619a0"
+  integrity sha512-jeRaPJtsD/+m1QINgoDMA6D3kOcTwSHVmGSxR6fznLA5BKa76m8lewuALYxHHq9/qcgwJ4e6UtiwrO2JL3vxVQ==
 
-"@rspack/binding@1.1.2":
-  version "1.1.2"
-  resolved "https://registry.npmmirror.com/@rspack/binding/-/binding-1.1.2.tgz#b1b24bc2f4db7f336852f0f286a0024b4ec8535b"
-  integrity sha512-HUE7EPvrgbabbhW635wSrthidZY1Kijk6+rvmTFuxzmxsBtZNcrhUFVw7Z1fwa2fykiOhbot61EDV9X1qoIa4g==
+"@rspack/binding@1.1.3":
+  version "1.1.3"
+  resolved "https://registry.npmmirror.com/@rspack/binding/-/binding-1.1.3.tgz#601e32f5642fb4f1904b1ca0712d4e0dc312d755"
+  integrity sha512-fB1ziJ1UXO2P4ZDO+dviSNuxknUqrz6QQ6QGfpC+S1ClUy1HOhHXss/Yn78B/R9py6dlqZzmhmhz2d+XzFVApA==
   optionalDependencies:
-    "@rspack/binding-darwin-arm64" "1.1.2"
-    "@rspack/binding-darwin-x64" "1.1.2"
-    "@rspack/binding-linux-arm64-gnu" "1.1.2"
-    "@rspack/binding-linux-arm64-musl" "1.1.2"
-    "@rspack/binding-linux-x64-gnu" "1.1.2"
-    "@rspack/binding-linux-x64-musl" "1.1.2"
-    "@rspack/binding-win32-arm64-msvc" "1.1.2"
-    "@rspack/binding-win32-ia32-msvc" "1.1.2"
-    "@rspack/binding-win32-x64-msvc" "1.1.2"
+    "@rspack/binding-darwin-arm64" "1.1.3"
+    "@rspack/binding-darwin-x64" "1.1.3"
+    "@rspack/binding-linux-arm64-gnu" "1.1.3"
+    "@rspack/binding-linux-arm64-musl" "1.1.3"
+    "@rspack/binding-linux-x64-gnu" "1.1.3"
+    "@rspack/binding-linux-x64-musl" "1.1.3"
+    "@rspack/binding-win32-arm64-msvc" "1.1.3"
+    "@rspack/binding-win32-ia32-msvc" "1.1.3"
+    "@rspack/binding-win32-x64-msvc" "1.1.3"
 
-"@rspack/core@~1.1.2":
-  version "1.1.2"
-  resolved "https://registry.npmmirror.com/@rspack/core/-/core-1.1.2.tgz#1320c4cacca2c94e30db2c60e404c56b65168df2"
-  integrity sha512-cXYPImNpHl2nZmWcMv7WHsorkOaIZP9csPc2J8WxEJhOEotcgP33TKmRTAfJYszV4cqUuKbVjLMv0WgX1OeftQ==
+"@rspack/core@~1.1.3":
+  version "1.1.3"
+  resolved "https://registry.npmmirror.com/@rspack/core/-/core-1.1.3.tgz#4ca0c9c51d2b124d0c75b7c3c739866e56a53a12"
+  integrity sha512-LdM1mAlBtEh9ozbpyWVW5uuL+aJMjYqd531pH5/i/EPDKNrOLrQWVNMa2dh07qLwJZXoTFMf7LWA7QNsmBUPJg==
   dependencies:
     "@module-federation/runtime-tools" "0.5.1"
-    "@rspack/binding" "1.1.2"
+    "@rspack/binding" "1.1.3"
     "@rspack/lite-tapable" "1.0.1"
     caniuse-lite "^1.0.30001616"
 
