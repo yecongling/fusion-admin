@@ -1,5 +1,5 @@
 import { Layout } from 'antd';
-import React from 'react';
+import type React from 'react';
 import LeftMenu from './LeftMenu';
 import Header from './Header';
 import Content from './Content';
