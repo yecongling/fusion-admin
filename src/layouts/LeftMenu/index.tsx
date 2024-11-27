@@ -1,10 +1,11 @@
-import React, { memo, useCallback, useEffect, useState } from 'react';
+import type React from 'react';
+import { memo, useEffect, useState } from 'react';
 import {
   Layout,
   Image,
   Spin,
   Menu,
-  MenuProps,
+  type MenuProps,
   Button,
   Divider,
   Space,
@@ -14,7 +15,7 @@ import {
   Empty,
 } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, setCollapse, setTheme } from '@stores/store.ts';
+import { type RootState, setCollapse, setTheme } from '@stores/store.ts';
 import favicon from '@assets/svg/vite.svg';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
@@ -26,7 +27,7 @@ import {
   QuestionCircleOutlined,
   SunOutlined,
 } from '@ant-design/icons';
-import { RouteItem } from '@type/route';
+import type { RouteItem } from '@type/route';
 import { addIcon, getOpenKeys, searchRoute } from '@utils/utils';
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -69,16 +70,17 @@ const LeftMenu: React.FC = memo(() => {
 
   // 处理后台返回菜单 key 值为 antd 菜单需要的 key 值
   const deepLoopFloat = (menuList: RouteItem[], newArr: MenuItem[] = []) => {
-    menuList.forEach((item: RouteItem) => {
+    for (const item of menuList) {
       // 如果不能显示的菜单不显示
       if (item?.meta?.menuType === 2) {
-        return true;
+        continue;
       }
       // 下面判断代码解释 *** !item?.children?.length   ==>   (!item.children || item.children.length === 0)
       if (!item?.children?.length) {
-        return newArr.push(
+        newArr.push(
           getItem(item.meta?.title, item.path, addIcon(item.meta?.icon)),
         );
+        continue;
       }
       newArr.push(
         getItem(
@@ -88,27 +90,24 @@ const LeftMenu: React.FC = memo(() => {
           deepLoopFloat(item.children),
         ),
       );
-    });
+    }
     return newArr;
   };
 
   /**
    * 菜单点击跳转
    */
-  const clickMenu: MenuProps['onClick'] = useCallback(
-    ({ key }: { key: string }) => {
-      // 配置外置跳转路由
-      // if (route.meta.isLink) window.open(route.meta.isLink, "_blank");
-      navigate(key);
-      // 可以通过这里去查询菜单路由，以此构建面包屑
-      // const route = searchRoute(key, menus);
-      // const title = route.meta?.title;
-      // if (title) {
-      //   document.title = title + "-fusion";
-      // }
-    },
-    [],
-  );
+  const clickMenu: MenuProps['onClick'] = ({ key }: { key: string }) => {
+    // 配置外置跳转路由
+    // if (route.meta.isLink) window.open(route.meta.isLink, "_blank");
+    navigate(key);
+    // 可以通过这里去查询菜单路由，以此构建面包屑
+    // const route = searchRoute(key, menus);
+    // const title = route.meta?.title;
+    // if (title) {
+    //   document.title = title + "-fusion";
+    // }
+  };
 
   // 刷新页面菜单保持高亮
   useEffect(() => {
@@ -120,7 +119,7 @@ const LeftMenu: React.FC = memo(() => {
     }
     const title = route.meta?.title;
     if (title) {
-      document.title = 'Fusion Admin -' + title;
+      document.title = `Fusion Admin -${title}`;
     }
     if (!collapse) {
       setOpenKeys(openKey);
@@ -141,9 +140,10 @@ const LeftMenu: React.FC = memo(() => {
   useEffect(() => {
     if (!menus || menus.length === 0) return;
     setLoading(true);
-    setMenuList(deepLoopFloat(menus, []));
+    const menu = deepLoopFloat(menus, []);
+    setMenuList(menu);
     setLoading(false);
-  }, []);
+  }, [menus]);
 
   return (
     <Layout.Sider

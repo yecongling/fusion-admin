@@ -1,8 +1,9 @@
-import React, { memo, useState } from 'react';
+import type React from 'react';
+import { memo, useState } from 'react';
 import {
   Col,
   ColorPicker,
-  ColorPickerProps,
+  type ColorPickerProps,
   Divider,
   Drawer,
   Row,
@@ -10,7 +11,7 @@ import {
   Switch,
 } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, setColorPrimary, setTheme } from '@stores/store';
+import { type RootState, setColorPrimary, setTheme } from '@stores/store';
 
 /**
  * 系统设置界面组件的属性配置

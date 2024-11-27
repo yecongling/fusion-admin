@@ -18,11 +18,12 @@ import {
   Dropdown,
   Input,
   Layout,
-  MenuProps,
+  type MenuProps,
   Space,
   Tooltip,
 } from 'antd';
-import React, { memo, useState } from 'react';
+import type React from 'react';
+import { memo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { clearCache, setScreenLock } from '@stores/store';
@@ -73,13 +74,13 @@ const Header: React.FC = memo(() => {
       label: '退出登录',
       icon: <LogoutOutlined />,
       disabled: false,
-      onClick: function () {
+      onClick: () => {
         modal.confirm({
           title: '退出登录',
           icon: <ExclamationCircleOutlined />,
           content: '确认退出登录吗？',
           okText: '确认',
-          onOk: function () {
+          onOk: () => {
             const token = sessionStorage.getItem('token');
 
             // 清除后端的信息

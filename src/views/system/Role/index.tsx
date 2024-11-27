@@ -1,4 +1,9 @@
-import { DeleteOutlined, PlusOutlined, RedoOutlined, SearchOutlined } from '@ant-design/icons';
+import {
+  DeleteOutlined,
+  PlusOutlined,
+  RedoOutlined,
+  SearchOutlined,
+} from '@ant-design/icons';
 import useParentSize from '@hooks/useParentSize';
 import {
   Button,
@@ -11,9 +16,10 @@ import {
   Select,
   Space,
   Table,
-  TableProps,
+  type TableProps,
 } from 'antd';
-import React, { useState } from 'react';
+import type React from 'react';
+import { useState } from 'react';
 
 /**
  * 系统角色维护
@@ -44,17 +50,17 @@ const Role: React.FC = () => {
     console.log(values);
   };
 
-    /**
+  /**
    * 多行选中的配置
    */
-    const rowSelection: TableProps['rowSelection'] = {
-      // 行选中的回调
-      onChange(_selectedRowKeys, selectedRows) {
-        setSelectedRows(selectedRows);
-      },
-      columnWidth: 32,
-      fixed: true,
-    };
+  const rowSelection: TableProps['rowSelection'] = {
+    // 行选中的回调
+    onChange(_selectedRowKeys, selectedRows) {
+      setSelectedRows(selectedRows);
+    },
+    columnWidth: 32,
+    fixed: true,
+  };
 
   return (
     <>
@@ -116,41 +122,37 @@ const Role: React.FC = () => {
           </Form>
         </Card>
         {/* 查询表格 */}
-      <Card
-        style={{ flex: 1, marginTop: '8px' }}
-        styles={{ body: { height: '100%' } }}
-        ref={parentRef}
-      >
-        {/* 操作按钮 */}
-        <Space>
-          <Button type="primary" icon={<PlusOutlined />}>
-            新增
-          </Button>
-          <Button type="default" icon={<PlusOutlined />}>
-            批量导入
-          </Button>
-          <Button
-            type="default"
-            danger
-            icon={<DeleteOutlined />}
-          >
-            批量删除
-          </Button>
-        </Space>
-        {/* 表格数据 */}
-        <Table
-          size="small"
-          style={{ marginTop: '8px' }}
-          bordered
-          pagination={false}
-          dataSource={tableData}
-          columns={columns}
-          loading={loading}
-          rowKey="id"
-          scroll={{ y: height - 128 }}
-          rowSelection={{ ...rowSelection }}
-        />
-      </Card>
+        <Card
+          style={{ flex: 1, marginTop: '8px' }}
+          styles={{ body: { height: '100%' } }}
+          ref={parentRef}
+        >
+          {/* 操作按钮 */}
+          <Space>
+            <Button type="primary" icon={<PlusOutlined />}>
+              新增
+            </Button>
+            <Button type="default" icon={<PlusOutlined />}>
+              批量导入
+            </Button>
+            <Button type="default" danger icon={<DeleteOutlined />}>
+              批量删除
+            </Button>
+          </Space>
+          {/* 表格数据 */}
+          <Table
+            size="small"
+            style={{ marginTop: '8px' }}
+            bordered
+            pagination={false}
+            dataSource={tableData}
+            columns={columns}
+            loading={loading}
+            rowKey="id"
+            scroll={{ y: height - 128 }}
+            rowSelection={{ ...rowSelection }}
+          />
+        </Card>
       </ConfigProvider>
     </>
   );

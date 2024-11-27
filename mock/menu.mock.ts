@@ -662,7 +662,7 @@ export default defineMock([
             icon: '',
             menuType: 2,
             sortNo: 1,
-            status: '2'
+            status: '2',
           },
           {
             id: 'menu00002',
@@ -672,8 +672,8 @@ export default defineMock([
             icon: '',
             menuType: 2,
             sortNo: 1,
-            status: '2'
-          }
+            status: '2',
+          },
         ],
       };
     },

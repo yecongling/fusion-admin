@@ -1,5 +1,5 @@
 import { HttpRequest } from '@utils/request';
-import { Response } from '@type/global';
+import type { Response } from '@type/global';
 
 /**
  * 枚举登录需要的接口地址
@@ -40,7 +40,7 @@ export const login = (params: any) => {
 export const getCaptcha = (checkKey: string) => {
   return HttpRequest.get(
     {
-      url: LoginApi.getCode + `/${checkKey}`,
+      url: `${LoginApi.getCode}/${checkKey}`,
     },
     {
       successMessageMode: 'none',

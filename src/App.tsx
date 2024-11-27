@@ -1,6 +1,7 @@
-import { RootState, setMenus } from '@stores/store';
+import { type RootState, setMenus } from '@stores/store';
 import { App as AntdApp, ConfigProvider, Spin } from 'antd';
-import React, { useEffect, useState } from 'react';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import zhCN from 'antd/locale/zh_CN';
@@ -54,7 +55,7 @@ const App: React.FC = () => {
     <ConfigProvider
       theme={{
         token: {
-          colorPrimary: global.colorPrimary
+          colorPrimary: global.colorPrimary,
         },
         components: {
           Layout: {

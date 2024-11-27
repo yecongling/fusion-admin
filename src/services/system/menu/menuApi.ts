@@ -23,7 +23,7 @@ export enum Api {
   // 批量导入
   importMenus = '/system/menu/import',
   // 验证菜单权限
-  checkPermission = '/system/menu/checkPermission'
+  checkPermission = '/system/menu/checkPermission',
 }
 
 /**
@@ -59,10 +59,13 @@ export const getAllMenus = (params: Record<string, any>) => {
 
 /**
  * 获取所有的一级菜单
- * @returns 
+ * @returns
  */
 export const getDirectory = () => {
-  return HttpRequest.get({ url: Api.getDirectory }, { successMessageMode: 'none' });
+  return HttpRequest.get(
+    { url: Api.getDirectory },
+    { successMessageMode: 'none' },
+  );
 };
 
 /**

@@ -24,13 +24,14 @@ import {
   Select,
   Space,
   Table,
-  TableProps,
+  type TableProps,
   Tag,
   theme,
   Tooltip,
   Upload,
 } from 'antd';
-import React, { useEffect, useState } from 'react';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 import MenuInfoModal from './MenuInfoModal';
 import './menu.scss';
 import useParentSize from '@hooks/useParentSize';
@@ -125,11 +126,10 @@ const Menu: React.FC = () => {
       key: 'status',
       align: 'center',
       render(value) {
-        if (value == 1) {
+        if (value === 1) {
           return <Tag color="green">启用</Tag>;
-        } else {
-          return <Tag color="gray">停用</Tag>;
         }
+        return <Tag color="gray">停用</Tag>;
       },
     },
     {
@@ -192,11 +192,11 @@ const Menu: React.FC = () => {
     const formCon = params || form.getFieldsValue();
     // 拼接查询条件，没有选择的条件就不拼接
     const queryCondition: Record<string, any> = {};
-    Object.keys(formCon).forEach((item: string) => {
+    for (const item of Object.keys(formCon)) {
       if (formCon[item] || formCon[item] === 0) {
         queryCondition[item] = formCon[item];
       }
-    });
+    }
 
     // 调用查询
     getAllMenus(queryCondition)

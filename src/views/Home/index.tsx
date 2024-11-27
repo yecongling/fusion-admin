@@ -1,5 +1,5 @@
 import { Button, Card, Col, Row, DatePicker } from 'antd';
-import React from 'react';
+import type React from 'react';
 
 const { RangePicker } = DatePicker;
 

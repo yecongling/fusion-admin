@@ -5,13 +5,14 @@ import {
   Form,
   Input,
   InputNumber,
-  InputRef,
+  type InputRef,
   Radio,
   Switch,
   Tooltip,
   TreeSelect,
 } from 'antd';
-import React, { useEffect, useRef, useState } from 'react';
+import type React from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 /**
  * 菜单信息编辑弹窗
@@ -120,7 +121,7 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
           </Radio.Group>
         </Form.Item>
         <Form.Item
-          name={`name`}
+          name={'name'}
           label="菜单名称"
           rules={[{ required: true, message: '菜单名称不能为空!' }]}
         >

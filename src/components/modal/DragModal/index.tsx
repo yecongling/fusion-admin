@@ -1,4 +1,4 @@
-import { Modal, ModalProps } from 'antd';
+import { Modal, type ModalProps } from 'antd';
 import { useRef, useState } from 'react';
 import type { DraggableData, DraggableEvent } from 'react-draggable';
 import Draggable from 'react-draggable';

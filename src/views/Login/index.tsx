@@ -1,7 +1,5 @@
-/**
- * 登录界面
- */
-import React, { useEffect, useRef, useState } from 'react';
+import type React from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button, Checkbox, Col, Form, Image, Input, Row } from 'antd';
 import logo from '@assets/images/logo.png';
 import {
@@ -46,7 +44,7 @@ const Login: React.FC = () => {
    */
   const submit = async (values: any) => {
     // 加入验证码校验key
-    values['checkKey'] = checkKey;
+    values.checkKey = checkKey;
     setLoading(true);
     // 这里考虑返回的内容不仅包括token，还包括用户登录的角色（需要存储在本地，用于刷新页面时重新根据角色获取菜单）、配置的首页地址（供登录后进行跳转）
     try {

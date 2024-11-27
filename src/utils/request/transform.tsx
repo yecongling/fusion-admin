@@ -2,21 +2,21 @@
  * axios中对数据的中转处理
  */
 /* 数据处理 */
-import {
+import type {
   AxiosError,
   AxiosRequestConfig,
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from 'axios';
-import { RequestOptions } from '@type/axios';
-import { Response } from '@type/global';
+import type { RequestOptions } from '@type/axios';
+import type { Response } from '@type/global';
 import { antdUtils } from '../antdUtil';
 import { joinTimestamp } from './helper';
 import { HttpCodeEnum, RequestEnum } from '@enums/httpEnum';
 import { setObjToUrlParams } from '../utils';
 import { isString } from '../is';
 import { encrypt } from '../encrypt';
-import React from 'react';
+import type React from 'react';
 
 export interface CreateAxiosOptions extends AxiosRequestConfig {
   authenticationScheme?: string;
@@ -180,7 +180,7 @@ export const transform: AxiosTransform = {
         );
       } else {
         // 兼容restful风格
-        config.url = config.url + params + `${joinTimestamp(joinTime, true)}`;
+        config.url = `${config.url + params}${joinTimestamp(joinTime, true)}`;
         config.params = undefined;
       }
     } else {
@@ -221,7 +221,7 @@ export const transform: AxiosTransform = {
     // 请求之前处理token
     const token = sessionStorage.getItem('token');
     if (token && options?.requestOptions?.withToken !== false) {
-      config.headers['token'] = token;
+      config.headers.token = token;
     }
     const cpt = options?.requestOptions?.encrypt;
     // 进行数据加密

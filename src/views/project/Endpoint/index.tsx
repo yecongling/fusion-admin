@@ -1,11 +1,9 @@
-import React from "react";
+import type React from 'react';
 /**
  * 端点管理模块
- * @returns 
+ * @returns
  */
 const Endpoint: React.FC = () => {
-    return (
-        <>端点管理</>
-    )
-}
+  return <>端点管理</>;
+};
 export default Endpoint;

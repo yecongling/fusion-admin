@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 import { Breadcrumb } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
-import { RouteItem } from '@type/route';
+import type { RouteItem } from '@type/route';
 import { useSelector } from 'react-redux';
-import { RootState } from '@stores/store';
+import type { RootState } from '@stores/store';
 
 /**
  * 面包屑
@@ -23,7 +24,7 @@ const BreadcrumbNav: React.FC = () => {
       setItems(breadItems);
     }
     // 设置面包屑内容
-  }, [location.pathname]);
+  }, [location.pathname, menus]);
 
   // 组件的DOM内容
   return (
@@ -55,18 +56,12 @@ function patchBreadcrumb(
           pathname.substring(item.path.length, item.path.length + 1) === '/')
       ) {
         const pth: Record<string, any> = {};
-        pth['title'] = (
-          <>
-            <span style={{ padding: '0 4px' }}>{item.meta?.title}</span>
-          </>
+        pth.title = (
+          <span style={{ padding: '0 4px' }}>{item.meta?.title}</span>
         );
-        pth['key'] = item.path;
+        pth.key = item.path;
         if (pathname === item.path) {
-          pth['title'] = (
-            <>
-              <Link to={item.path}>{item.meta?.title}</Link>
-            </>
-          );
+          pth.title = <Link to={item.path}>{item.meta?.title}</Link>;
         }
         result.push(pth);
       }

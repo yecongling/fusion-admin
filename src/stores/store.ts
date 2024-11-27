@@ -1,5 +1,5 @@
-import { GlobalState, initGlobalState } from './reducers';
-import { configureStore, PayloadAction } from '@reduxjs/toolkit';
+import { type GlobalState, initGlobalState } from './reducers';
+import { configureStore, type PayloadAction } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { combineReducers } from 'redux';
@@ -57,7 +57,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: 'root',
   storage,
-  whiteList: ['menus']
+  whiteList: ['menus'],
 };
 
 // 持久化reducer
@@ -81,5 +81,5 @@ export const {
   setMenus,
   clearCache,
   setMenuWidth,
-  setScreenLock
+  setScreenLock,
 } = globalSlice.actions;

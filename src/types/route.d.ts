@@ -36,7 +36,7 @@ export interface RouteMeta {
   // 忽略授权
   ignoreAuth?: boolean;
   // 缓存
-  keepAlive?: boolean
+  keepAlive?: boolean;
   // 图标
   icon?: string;
   frameSrc?: string;

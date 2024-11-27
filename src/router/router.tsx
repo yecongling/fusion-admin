@@ -1,11 +1,11 @@
 import { Navigate, useRoutes } from 'react-router-dom';
 import { LazyLoad } from './lazyLoad';
-import React, { ReactNode, Suspense, useEffect, useState } from 'react';
+import React, { type ReactNode, Suspense, useEffect, useState } from 'react';
 import { App, Skeleton } from 'antd';
 import { antdUtils } from '@utils/antdUtil';
-import { RootState } from '@stores/store';
+import type { RootState } from '@stores/store';
 import { handleRouter } from '@utils/utils';
-import { RouteObject } from '@type/route';
+import type { RouteObject } from '@type/route';
 import { useSelector } from 'react-redux';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorFallback } from './ErrorBoundary';
