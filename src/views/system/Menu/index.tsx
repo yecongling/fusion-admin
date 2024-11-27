@@ -1,6 +1,5 @@
 import {
   DeleteOutlined,
-  EditOutlined,
   ExclamationCircleFilled,
   PlusOutlined,
   RedoOutlined,
@@ -26,8 +25,6 @@ import {
   Table,
   type TableProps,
   Tag,
-  theme,
-  Tooltip,
   Upload,
 } from 'antd';
 import type React from 'react';
@@ -37,16 +34,12 @@ import './menu.scss';
 import useParentSize from '@hooks/useParentSize';
 import { addIcon } from '@utils/utils';
 
-const { useToken } = theme;
-
 /**
  * 系统菜单维护
  */
 const Menu: React.FC = () => {
   const { modal } = App.useApp();
   const [form] = Form.useForm();
-  // 使用主题
-  const { token } = useToken();
   // 编辑弹窗窗口打开关闭
   const [openEditModal, setOpenEditorModal] = useState<boolean>(false);
 
@@ -140,23 +133,21 @@ const Menu: React.FC = () => {
       align: 'center',
       render: (_: any, record: any) => {
         return (
-          <Space>
+          <Space size={0}>
             <Button
-              icon={<EditOutlined style={{ color: '#fa8c16' }} />}
+              size="small"
               type="link"
+              style={{ color: '#fa8c16' }}
               onClick={() => {
                 setCurrentRow(record);
                 setOpenEditorModal(true);
               }}
-            />
-            <Tooltip title="添加下级">
-              <Button
-                icon={<PlusOutlined style={{ color: token.colorPrimary }} />}
-                type="link"
-                onClick={() => {}}
-              />
-            </Tooltip>
-            <Button danger icon={<DeleteOutlined />} type="link" />
+            >
+              修改
+            </Button>
+            <Button size="small" variant="link" color="danger">
+              删除
+            </Button>
           </Space>
         );
       },
@@ -384,7 +375,7 @@ const Menu: React.FC = () => {
         </Space>
         {/* 表格数据 */}
         <Table
-          size="small"
+          size="middle"
           style={{ marginTop: '8px' }}
           bordered
           pagination={false}
