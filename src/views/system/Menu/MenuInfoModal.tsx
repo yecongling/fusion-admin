@@ -29,6 +29,8 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
   const [menuType, setMenuType] = useState<number>(currentRow?.menuType || 2);
   // 目录的dropdown菜单
   const [directory, setDirectory] = useState<any[]>([]);
+  // 设置对话框加载状态
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     if (!visible) return;
@@ -42,6 +44,7 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
         // 清空表单数据，表示新增
         form.resetFields();
       }
+      setLoading(false);
     });
   }, [currentRow, form, visible]);
 
@@ -87,6 +90,7 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
       title={currentRow ? '编辑菜单数据' : '新增菜单数据'}
       open={visible}
       onOk={handleOk}
+      loading={loading}
       onCancel={onCancel}
       maskClosable={false}
       afterOpenChange={onAfterOpenChange}
