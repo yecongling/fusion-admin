@@ -1,8 +1,9 @@
-import { Input, InputRef } from 'antd';
+import { Input, type InputRef } from 'antd';
 import favicon from '@assets/svg/vite.svg';
-import { RootState, setScreenLock } from '@stores/store';
+import { type RootState, setScreenLock } from '@stores/store';
 import { useDispatch, useSelector } from 'react-redux';
-import React, { useEffect, useRef } from 'react';
+import type React from 'react';
+import { useEffect, useRef } from 'react';
 import style from './screenLock.module.scss';
 
 /**
