@@ -88,9 +88,9 @@ export const Router = () => {
   const [route, setRoute] = useState([...dynamicRoutes]);
 
   // 从store中获取
-  const global = useSelector((state: RootState) => state.global);
+  const menuState = useSelector((state: RootState) => state.menuState);
   // 取不到菜单数据默认空数组，避免handleRouter处理错误
-  const { menus = [] } = global;
+  const { menus = [] } = menuState;
 
   useEffect(() => {
     route[0].children = [...handleRouter(menus), ...errorRoutes];

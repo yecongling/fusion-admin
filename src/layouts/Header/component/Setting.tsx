@@ -24,7 +24,7 @@ export interface SettingProps {
 /* 系统配置界面 */
 const Setting: React.FC<SettingProps> = memo(({ open, setOpen }) => {
   // 从全局状态库中获取数据
-  const globalState = useSelector((state: RootState) => state.global);
+  const globalState = useSelector((state: RootState) => state.globalState);
   const dispatch = useDispatch();
   const { theme, colorPrimary } = globalState;
   const [value, setValue] = useState<ColorPickerProps['value']>(colorPrimary);

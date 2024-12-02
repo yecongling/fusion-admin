@@ -12,7 +12,7 @@ import style from './screenLock.module.scss';
  */
 const ScreenLock: React.FC = () => {
   // 状态
-  const globalState = useSelector((state: RootState) => state.global);
+  const globalState = useSelector((state: RootState) => state.globalState);
   const dispatch = useDispatch();
   const { screenLock } = globalState;
   const pwdRef = useRef<InputRef>(null);

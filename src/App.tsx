@@ -16,7 +16,7 @@ const App: React.FC = () => {
   // 触发更新的钩子函数
   const dispatch = useDispatch();
   // 获取数据的钩子函数
-  const global = useSelector((state: RootState) => state.global);
+  const global = useSelector((state: RootState) => state.globalState);
   // 应用加载中
   const [loading, setLoading] = useState<boolean>(false);
   // 路由跳转

@@ -37,8 +37,10 @@ type MenuItem = Required<MenuProps>['items'][number];
  */
 const LeftMenu: React.FC = memo(() => {
   // 从状态库中获取状态
-  const globalState = useSelector((state: RootState) => state.global);
-  const { menus, theme, collapse, menuWidth } = globalState;
+  const globalState = useSelector((state: RootState) => state.globalState);
+  const menuState = useSelector((state: RootState) => state.menuState);
+  const { theme, collapse, menuWidth } = globalState;
+  const { menus } = menuState;
   const dispatch = useDispatch();
 
   const { pathname } = useLocation();
