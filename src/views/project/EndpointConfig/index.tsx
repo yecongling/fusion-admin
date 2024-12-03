@@ -1,12 +1,32 @@
-import { Card, Col, Input, Row, Space, Tree } from 'antd';
+import {
+  EditOutlined,
+  EllipsisOutlined,
+  PlusOutlined,
+} from '@ant-design/icons';
+import {
+  Card,
+  Col,
+  Dropdown,
+  Input,
+  Row,
+  Space,
+  Tooltip,
+  Tree,
+  theme,
+} from 'antd';
 import type { DataNode } from 'antd/es/tree';
 import type React from 'react';
 import { useState } from 'react';
+
+const { useToken } = theme;
 
 /**
  * 端点配置模块
  */
 const EndpointConfig: React.FC = () => {
+  const { token } = useToken();
+  // 鼠标hover的节点
+  const [hoveredKey, setHoveredKey] = useState<string | null>('http');
   // 树结构数据
   const [treeData, setTreeData] = useState<ConfigTypeNode[]>([
     {
@@ -27,6 +47,50 @@ const EndpointConfig: React.FC = () => {
     console.log(info);
   };
 
+  /**
+   * 树节点渲染
+   * @param nodeData 节点数据
+   * @returns
+   */
+  const treeTitleRender = (nodeData: ConfigTypeNode) => (
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+      }}
+      onMouseEnter={() => {
+        setHoveredKey(nodeData.key as string);
+      }}
+      onMouseLeave={() => {
+        setHoveredKey(null);
+      }}
+    >
+      <span>{nodeData.title as React.ReactNode}</span>
+      {hoveredKey === nodeData.key && (
+        <Space style={{ marginLeft: '8px' }} size={8}>
+          <Tooltip title="编辑">
+            <EditOutlined style={{ color: '#fa8c16' }} />
+          </Tooltip>
+          <Dropdown
+            trigger={['click']}
+            menu={{
+              items: [
+                { key: 'addSibling', label: '添加同级' },
+                { key: 'addSub', label: '添加下级' },
+              ],
+            }}
+          >
+            <PlusOutlined style={{ color: token.colorPrimary }} />
+          </Dropdown>
+          <Tooltip title="更多">
+            <EllipsisOutlined />
+          </Tooltip>
+        </Space>
+      )}
+    </div>
+  );
+
   // 查询后台返回的数据需要进行处理才能丢给treeData渲染
   return (
     <Row gutter={8} style={{ height: '100%' }}>
@@ -37,7 +101,13 @@ const EndpointConfig: React.FC = () => {
             {/* 检索 */}
             <Input.Search placeholder="请输入名称检索" />
             {/* 树结构 */}
-            <Tree treeData={treeData} onSelect={onTreeSelect} />
+            <Tree
+              blockNode
+              defaultExpandAll
+              treeData={treeData}
+              onSelect={onTreeSelect}
+              titleRender={treeTitleRender}
+            />
           </Space>
         </Card>
       </Col>

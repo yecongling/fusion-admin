@@ -42,10 +42,12 @@ const App: React.FC = () => {
       try {
         // 模拟从后台获取数据
         getMenuData().then((menu) => {
-          if (!menu) return;
           dispatch(setMenus(menu));
+        }).finally(() => {
+          setLoading(false);
         });
-      } finally {
+      } catch (e) {
+        console.error(e);
         setLoading(false);
       }
     }
