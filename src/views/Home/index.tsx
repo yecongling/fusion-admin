@@ -1,5 +1,4 @@
 import { Button, Card, Col, Row, DatePicker } from 'antd';
-import type React from 'react';
 
 const { RangePicker } = DatePicker;
 
@@ -7,7 +6,8 @@ const { RangePicker } = DatePicker;
  * 首页
  * @returns 组件内容
  */
-const Home: React.FC = () => {
+function Home () {
+  console.log('Home');
   return (
     <>
       <Row gutter={8}>

@@ -1,17 +1,16 @@
 import { Navigate, useRoutes } from 'react-router-dom';
 import { LazyLoad } from './lazyLoad';
-import React, { type ReactNode, Suspense, useEffect, useState } from 'react';
-import { App, Skeleton } from 'antd';
-import { antdUtils } from '@utils/antdUtil';
-import type { RootState } from '@stores/store';
-import { handleRouter } from '@utils/utils';
+import React, { type ReactNode, Suspense, useMemo } from 'react';
+import { Skeleton } from 'antd';
 import type { RouteObject } from '@type/route';
-import { useSelector } from 'react-redux';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorFallback } from './ErrorBoundary';
+import { useSelector } from 'react-redux';
+import type { RootState } from '@stores/store';
+import { handleRouter } from '@utils/utils';
 
 // 默认的错误路由
-const errorRoutes: RouteObject[] = [
+export const errorRoutes: RouteObject[] = [
   {
     path: '*',
     component: () => <Navigate replace to="/404" />,
@@ -77,24 +76,15 @@ const generateRouter = (routers: RouteObject[]) => {
  * 路由部分
  */
 export const Router = () => {
-  // 方便非react组件内部使用
-  const { notification, message, modal } = App.useApp();
-  useEffect(() => {
-    antdUtils.setMessageInstance(message);
-    antdUtils.setNotificationInstance(notification);
-    antdUtils.setModalInstance(modal);
-  }, [notification, message, modal]);
-
-  const [route, setRoute] = useState([...dynamicRoutes]);
-
   // 从store中获取
   const menuState = useSelector((state: RootState) => state.menuState);
   // 取不到菜单数据默认空数组，避免handleRouter处理错误
   const { menus = [] } = menuState;
-
-  useEffect(() => {
-    route[0].children = [...handleRouter(menus), ...errorRoutes];
-    setRoute([...route]);
+  // 使用useMemo 缓存处理后的路由
+  const memoizedRoutes = useMemo(() => {
+    // 确保动态路由只有在菜单数据变化时才重新生成
+    dynamicRoutes[0].children = [...handleRouter(menus), ...errorRoutes];
+    return generateRouter(dynamicRoutes);
   }, [menus]);
-  return useRoutes(generateRouter(route));
+  return useRoutes(memoizedRoutes);
 };
