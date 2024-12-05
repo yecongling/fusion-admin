@@ -49,7 +49,6 @@ const LeftMenu: React.FC = memo(() => {
   // 定义一些状态变量
   const [menuList, setMenuList] = useState<MenuItem[]>([]);
   const [loading, setLoading] = useState(false);
-  const [selectedKeys, setSelectedKeys] = useState<string[]>([pathname]);
   const [openKeys, setOpenKeys] = useState<string[]>([]);
 
   const titleColor = theme === 'dark' ? '#fff' : '#1890ff';
@@ -103,12 +102,6 @@ const LeftMenu: React.FC = memo(() => {
     // 配置外置跳转路由
     // if (route.meta.isLink) window.open(route.meta.isLink, "_blank");
     navigate(key);
-    // 可以通过这里去查询菜单路由，以此构建面包屑
-    // const route = searchRoute(key, menus);
-    // const title = route.meta?.title;
-    // if (title) {
-    //   document.title = title + "-fusion";
-    // }
   };
 
   // 刷新页面菜单保持高亮
@@ -126,7 +119,6 @@ const LeftMenu: React.FC = memo(() => {
     if (!collapse) {
       setOpenKeys(openKey);
     }
-    setSelectedKeys(openKey.concat([pathname]));
   }, [pathname, collapse, menus]);
 
   // 设置当前展开的 subMenu
@@ -191,7 +183,7 @@ const LeftMenu: React.FC = memo(() => {
           <Menu
             mode="inline"
             theme={theme}
-            selectedKeys={selectedKeys}
+            defaultSelectedKeys={[pathname]}
             openKeys={openKeys}
             items={menuList}
             onClick={clickMenu}

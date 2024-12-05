@@ -2,7 +2,9 @@ import {
   EditOutlined,
   EllipsisOutlined,
   PlusOutlined,
+  SettingOutlined,
 } from '@ant-design/icons';
+import { MyIcon } from '@components/MyIcon';
 import {
   Card,
   Col,
@@ -16,7 +18,7 @@ import {
 } from 'antd';
 import type { DataNode } from 'antd/es/tree';
 import type React from 'react';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 const { useToken } = theme;
 
@@ -26,7 +28,7 @@ const { useToken } = theme;
 const EndpointConfig: React.FC = () => {
   const { token } = useToken();
   // 鼠标hover的节点
-  const [hoveredKey, setHoveredKey] = useState<string | null>('http');
+  const [hoveredKey, setHoveredKey] = useState<string | null>();
   // 树结构数据
   const [treeData, setTreeData] = useState<ConfigTypeNode[]>([
     {
@@ -35,9 +37,16 @@ const EndpointConfig: React.FC = () => {
       type: 'type',
       children: [
         {
-          title: 'http://localhost:8080/api/v1/endpoint/list',
-          key: 'http://localhost:8080/api/v1/endpoint/list',
-          type: 'leaf',
+          title: 'HTTP',
+          key: 'list',
+          type: 'isConfig',
+          icon: <SettingOutlined />,
+        },
+        {
+          title: 'SOAP',
+          key: 'soap',
+          type: 'isConfig',
+          icon: <MyIcon type="fusion-EMR" />,
         },
       ],
     },
@@ -66,7 +75,15 @@ const EndpointConfig: React.FC = () => {
         setHoveredKey(null);
       }}
     >
-      <span>{nodeData.title as React.ReactNode}</span>
+      <span className="tree-title">
+        {nodeData.icon && (
+          <span className="ant-tree_iconEle" style={{ marginRight: '8px' }}>
+            {nodeData.icon as ReactNode}
+          </span>
+        )}
+
+        <span>{nodeData.title as React.ReactNode}</span>
+      </span>
       {hoveredKey === nodeData.key && (
         <Space style={{ marginLeft: '8px' }} size={8}>
           <Tooltip title="编辑">
@@ -126,6 +143,7 @@ export default EndpointConfig;
  * 树节点数据类型
  */
 interface ConfigTypeNode extends DataNode {
+  // 节点类型（用于区分是分类还是配置）
   type: string;
   children?: ConfigTypeNode[];
 }

@@ -79,19 +79,17 @@ export function deepMerge<T = object>(
 export const searchRoute = (
   path: string,
   routes: RouteItem[] = [],
-): RouteItem => {
-  let result: RouteItem = {
-    component: '',
-    path: '',
-  };
+): RouteItem | null => {
   for (const item of routes) {
     if (item.path === path) return item;
     if (item.children) {
       const res = searchRoute(path, item.children);
-      if (Object.keys(res).length) result = res;
+      if (res) {
+        return res;
+      }
     }
   }
-  return result;
+  return null;
 };
 
 // 动态渲染 Icon 图标(目前仅考虑使用react-icons/ai里面的，后面这里进行扩展，动态使用react)

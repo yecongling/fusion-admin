@@ -35,5 +35,5 @@
       "@router/*": ["src/router/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "public/font"]
 }
