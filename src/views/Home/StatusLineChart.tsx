@@ -9,15 +9,13 @@ import echarts from '@/config/echartsConfig';
 const StatusLineChart: React.FC = () => {
   const chartRef = useRef<HTMLDivElement>(null);
   const chartInstance = useRef<echarts.ECharts>();
+
   useEffect(() => {
     chartInstance.current = echarts.init(chartRef.current, null, {
-        renderer: 'svg'
+      renderer: 'canvas',
     });
 
     const option = {
-      title: {
-        text: '按需加载示例',
-      },
       tooltip: {},
       xAxis: {
         data: ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
@@ -38,10 +36,25 @@ const StatusLineChart: React.FC = () => {
     };
 
     chartInstance.current.setOption(option);
+
+    const resizeObserver = new ResizeObserver(() => {
+      chartInstance.current?.resize();
+    });
+
+    resizeObserver.observe(chartRef.current as HTMLDivElement);
     return () => {
       chartInstance.current?.dispose();
+      resizeObserver.disconnect();
     };
   }, []);
-  return <div ref={chartRef} style={{ width: '100%', height: '100%' }} />;
+  return (
+    <div
+      ref={chartRef}
+      style={{
+        height: '100%',
+        width: '100%'
+      }}
+    />
+  );
 };
 export default StatusLineChart;

@@ -203,7 +203,11 @@ const LeftMenu: React.FC = memo(() => {
           justifyContent: 'center',
         }}
       >
-        <Space direction={collapse ? 'vertical' : 'horizontal'} align="center">
+        <Space
+          direction={collapse ? 'vertical' : 'horizontal'}
+          align="center"
+          style={{ justifyContent: 'center' }}
+        >
           <ConfigProvider
             theme={{
               components: {

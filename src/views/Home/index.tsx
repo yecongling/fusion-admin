@@ -1,4 +1,5 @@
 import { Button, Card, Col, Row, DatePicker } from 'antd';
+import StatusLineChart from './StatusLineChart';
 
 const { RangePicker } = DatePicker;
 
@@ -6,8 +7,7 @@ const { RangePicker } = DatePicker;
  * 首页
  * @returns 组件内容
  */
-function Home () {
-  console.log('Home');
+function Home() {
   return (
     <>
       <Row gutter={8}>
@@ -32,20 +32,24 @@ function Home () {
       <Row gutter={8} style={{ marginTop: '8px' }}>
         <Col span={12}>
           <Card
-            style={{ height: '300px' }}
-            styles={{ header: { borderBottom: 'none' } }}
+            styles={{
+              header: { borderBottom: 'none' },
+              body: { height: '300px', width: '100%' },
+            }}
             title="引擎状态"
           >
-            欢迎
+            <StatusLineChart />
           </Card>
         </Col>
         <Col span={12}>
           <Card
-            style={{ height: '300px' }}
-            styles={{ header: { borderBottom: 'none' } }}
+            styles={{
+              header: { borderBottom: 'none' },
+              body: { height: '300px' },
+            }}
             title="terminal统计"
           >
-            菜单
+            <StatusLineChart />
           </Card>
         </Col>
       </Row>
@@ -72,5 +76,5 @@ function Home () {
       </Row>
     </>
   );
-};
+}
 export default Home;
