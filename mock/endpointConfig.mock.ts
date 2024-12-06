@@ -2,8 +2,8 @@ import { defineMock } from 'rspack-plugin-mock/helper';
 
 export default defineMock([
   {
-    url: 'api/system/endpoint/getEndpointConfigList',
-    enabled: true,
+    url: 'api/engine/endpointConfig/queryEndpointConfigType',
+    enabled: false,
     method: 'GET',
     body() {
       return {

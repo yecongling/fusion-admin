@@ -4,7 +4,7 @@ import {
   PlusOutlined,
 } from '@ant-design/icons';
 import { MyIcon } from '@/components/MyIcon';
-import { getEndpointConfigList } from '@/services/project/endpoint/endpointApi';
+import { queryEndpointConfigType } from '@/services/project/endpoint/endpointApi';
 import { addIcon } from '@/utils/utils';
 import {
   Card,
@@ -44,10 +44,8 @@ const EndpointConfig: React.FC = () => {
    * @param params 参数
    */
   const queryData = (params?: string) => {
-    const queryCondition: Record<string, any> = {};
-    queryCondition.name = params;
     // 调用查询
-    getEndpointConfigList(queryCondition).then((response) => {
+    queryEndpointConfigType(params).then((response) => {
       // 内部数据需要进行处理，其中的icon需要处理成对应的组件
       const expanded: string[] = [];
       const data = transformData(response, expanded);
