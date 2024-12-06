@@ -1,9 +1,9 @@
 import { Layout } from 'antd';
-import React from 'react';
+import type React from 'react';
 import LeftMenu from './LeftMenu';
 import Header from './Header';
 import Content from './Content';
-import ScreenLock from '@components/ScreenLock';
+import ScreenLock from '@/components/ScreenLock';
 
 /**
  * 系统整体布局

@@ -1,7 +1,8 @@
-import { Button, Card, Spin, Tabs, TabsProps } from 'antd';
-import React, { useEffect, useState } from 'react';
+import { Button, Card, Spin, Tabs, type TabsProps } from 'antd';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 import styles from './message-box.module.scss';
-import MessageList, { MessageListType } from './MessageList';
+import MessageList, { type MessageListType } from './MessageList';
 import { groupBy } from 'lodash-es';
 import {
   MessageOutlined,
@@ -72,14 +73,12 @@ const Notify: React.FC = () => {
   const tabList: TabsProps['items'] = [
     {
       key: 'message',
-      label: <>消息({groupData['message']?.length || ''})</>,
+      label: <>消息({groupData.message?.length || ''})</>,
       icon: <MessageOutlined />,
       children: (
         <MessageList
-          data={groupData['message']}
-          unReadData={(groupData['message'] || []).filter(
-            (item) => !item.status,
-          )}
+          data={groupData.message}
+          unReadData={(groupData.message || []).filter((item) => !item.status)}
           onItemClick={(item) => readMessage([item])}
           onAllBtnClick={(unReadData) => readMessage(unReadData)}
         />
@@ -87,14 +86,12 @@ const Notify: React.FC = () => {
     },
     {
       key: 'notify',
-      label: <>通知({groupData['notify']?.length || ''})</>,
+      label: <>通知({groupData.notify?.length || ''})</>,
       icon: <NotificationOutlined />,
       children: (
         <MessageList
-          data={groupData['notify']}
-          unReadData={(groupData['notify'] || []).filter(
-            (item) => !item.status,
-          )}
+          data={groupData.notify}
+          unReadData={(groupData.notify || []).filter((item) => !item.status)}
           onItemClick={(item) => readMessage([item])}
           onAllBtnClick={(unReadData) => readMessage(unReadData)}
         />
@@ -102,12 +99,12 @@ const Notify: React.FC = () => {
     },
     {
       key: 'todo',
-      label: <>待办({groupData['todo']?.length || ''})</>,
+      label: <>待办({groupData.todo?.length || ''})</>,
       icon: <ReconciliationOutlined />,
       children: (
         <MessageList
-          data={groupData['todo']}
-          unReadData={(groupData['todo'] || []).filter((item) => !item.status)}
+          data={groupData.todo}
+          unReadData={(groupData.todo || []).filter((item) => !item.status)}
           onItemClick={(item) => readMessage([item])}
           onAllBtnClick={(unReadData) => readMessage(unReadData)}
         />

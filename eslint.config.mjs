@@ -28,7 +28,7 @@ export default [
       'react/display-name': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
       'react/prop-types': 'off',
-      '@typescript-eslint/no-unused-expressions': 'off'
+      '@typescript-eslint/no-unused-expressions': 'off',
     },
   },
   { ignores: ['dist/'] },

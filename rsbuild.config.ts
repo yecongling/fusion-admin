@@ -3,7 +3,7 @@ import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginMockServer } from 'rspack-plugin-mock/rsbuild';
 import { pluginImageCompress } from '@rsbuild/plugin-image-compress';
-import path from 'path';
+import path from 'node:path';
 
 export default defineConfig({
   plugins: [
@@ -42,19 +42,7 @@ export default defineConfig({
   // 配置路径别名
   source: {
     alias: {
-      // '@': path.resolve(__dirname, './src'),
-      '@views': path.resolve(__dirname, './src/views'),
-      '@components': path.resolve(__dirname, './src/components'),
-      '@layouts': path.resolve(__dirname, './src/layouts'),
-      '@hooks': path.resolve(__dirname, './src/hooks'),
-      '@enums': path.resolve(__dirname, './src/enums'),
-      '@context': path.resolve(__dirname, './src/context'),
-      '@stores': path.resolve(__dirname, './src/stores'),
-      '@type': path.resolve(__dirname, './src/types'),
-      '@assets': path.resolve(__dirname, './src/assets'),
-      '@utils': path.resolve(__dirname, './src/utils'),
-      '@services': path.resolve(__dirname, './src/services'),
-      '@router': path.resolve(__dirname, './src/router'),
+      '@': path.resolve(__dirname, './src'),
     },
   },
   dev: {

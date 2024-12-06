@@ -1,13 +1,16 @@
 import {
   DeleteOutlined,
-  EditOutlined,
   ExclamationCircleFilled,
-  PlusCircleOutlined,
   PlusOutlined,
   RedoOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
-import { getAllMenus } from '@services/system/menu/menuApi';
+import {
+  addMenu,
+  deleteMenuBatch,
+  getAllMenus,
+  updateMenu,
+} from '@/services/system/menu/menuApi';
 import {
   App,
   Button,
@@ -20,18 +23,16 @@ import {
   Select,
   Space,
   Table,
-  TableProps,
+  type TableProps,
   Tag,
-  theme,
-  Tooltip,
+  Upload,
 } from 'antd';
-import React, { useEffect, useState } from 'react';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 import MenuInfoModal from './MenuInfoModal';
 import './menu.scss';
-import useParentSize from '@hooks/useParentSize';
-import { addIcon } from '@utils/utils';
-
-const { useToken } = theme;
+import useParentSize from '@/hooks/useParentSize';
+import { addIcon } from '@/utils/utils';
 
 /**
  * 系统菜单维护
@@ -39,8 +40,6 @@ const { useToken } = theme;
 const Menu: React.FC = () => {
   const { modal } = App.useApp();
   const [form] = Form.useForm();
-  // 使用主题
-  const { token } = useToken();
   // 编辑弹窗窗口打开关闭
   const [openEditModal, setOpenEditorModal] = useState<boolean>(false);
 
@@ -48,7 +47,7 @@ const Menu: React.FC = () => {
   const [tableData, setTableData] = useState<any[]>([]);
   // 当前编辑的行数据
   const [currentRow, setCurrentRow] = useState(null);
-  // 表达加载状态
+  // 表格加载状态
   const [loading, setLoading] = useState<boolean>(false);
   // 当前选中的行数据
   const [selRows, setSelectedRows] = useState<any[]>([]);
@@ -120,11 +119,10 @@ const Menu: React.FC = () => {
       key: 'status',
       align: 'center',
       render(value) {
-        if (value == 1) {
+        if (value === 1) {
           return <Tag color="green">启用</Tag>;
-        } else {
-          return <Tag color="gray">停用</Tag>;
         }
+        return <Tag color="gray">停用</Tag>;
       },
     },
     {
@@ -135,23 +133,21 @@ const Menu: React.FC = () => {
       align: 'center',
       render: (_: any, record: any) => {
         return (
-          <Space>
+          <Space size={0}>
             <Button
-              icon={<EditOutlined style={{ color: '#fa8c16' }} />}
+              size="small"
               type="link"
+              style={{ color: '#fa8c16' }}
               onClick={() => {
                 setCurrentRow(record);
                 setOpenEditorModal(true);
               }}
-            />
-            <Tooltip title="添加下级">
-              <Button
-                icon={<PlusOutlined style={{ color: token.colorPrimary }} />}
-                type="link"
-                onClick={() => {}}
-              />
-            </Tooltip>
-            <Button danger icon={<DeleteOutlined />} type="link" />
+            >
+              修改
+            </Button>
+            <Button size="small" variant="link" color="danger">
+              删除
+            </Button>
           </Space>
         );
       },
@@ -187,11 +183,11 @@ const Menu: React.FC = () => {
     const formCon = params || form.getFieldsValue();
     // 拼接查询条件，没有选择的条件就不拼接
     const queryCondition: Record<string, any> = {};
-    Object.keys(formCon).forEach((item: string) => {
+    for (const item of Object.keys(formCon)) {
       if (formCon[item] || formCon[item] === 0) {
         queryCondition[item] = formCon[item];
       }
-    });
+    }
 
     // 调用查询
     getAllMenus(queryCondition)
@@ -229,8 +225,10 @@ const Menu: React.FC = () => {
       icon: <ExclamationCircleFilled />,
       content: '确定批量删除菜单吗？数据删除后将无法恢复！',
       onOk() {
-        console.log('批量删除', selRows);
         // 调用删除接口，删除成功后刷新页面数据
+        deleteMenuBatch(selRows.map((item: any) => item.id)).then(() => {
+          queryMenuData();
+        });
       },
     });
   };
@@ -238,12 +236,10 @@ const Menu: React.FC = () => {
   /**
    * 新增按钮点击
    */
-  const addMenu = () => {
+  const onAddMenuClick = () => {
     setCurrentRow(null);
     setOpenEditorModal(true);
   };
-
-  const expandAllMenus = () => {};
 
   /**
    * 关闭编辑弹窗
@@ -256,12 +252,21 @@ const Menu: React.FC = () => {
    * 弹窗点击确定的回调函数
    * @param menuData 编辑的菜单数据
    */
-  const onEditOk = (menuData: Record<string, any>) => {
-    // 请求后台进行数据保存（这里需要判定是编辑操作还是新增操作 - 根据currentRow 是否有数据来判定操作状态）
-    if (currentRow == null) {
-      // 保存数据
-    } else {
-      // 编辑数据
+  const onEditOk = async (menuData: Record<string, any>) => {
+    // 请求后台进行数据保存
+    try {
+      if (currentRow == null) {
+        // 新增数据
+        await addMenu(menuData);
+      } else {
+        // 编辑数据
+        await updateMenu(menuData);
+      }
+      // 操作成功，关闭弹窗，刷新数据
+      closeEditModal();
+      queryMenuData();
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -346,12 +351,18 @@ const Menu: React.FC = () => {
       >
         {/* 操作按钮 */}
         <Space>
-          <Button type="primary" icon={<PlusOutlined />} onClick={addMenu}>
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            onClick={onAddMenuClick}
+          >
             新增
           </Button>
-          <Button type="default" icon={<PlusOutlined />}>
-            批量导入
-          </Button>
+          <Upload accept=".xlsx">
+            <Button type="default" icon={<PlusOutlined />}>
+              批量导入
+            </Button>
+          </Upload>
           <Button
             type="default"
             danger
@@ -364,7 +375,7 @@ const Menu: React.FC = () => {
         </Space>
         {/* 表格数据 */}
         <Table
-          size="small"
+          size="middle"
           style={{ marginTop: '8px' }}
           bordered
           pagination={false}

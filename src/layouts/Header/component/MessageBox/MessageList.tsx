@@ -1,5 +1,6 @@
 import { Avatar, Button, Empty, List, Space, Tag, Typography } from 'antd';
-import React, { ReactNode } from 'react';
+import type React from 'react';
+import type { ReactNode } from 'react';
 import styles from './message-box.module.scss';
 const MessageList: React.FC<MessageListProps> = (props) => {
   const { data, unReadData } = props;
@@ -29,44 +30,43 @@ const MessageList: React.FC<MessageListProps> = (props) => {
    */
   const renderList = (item: MessageItemData, index: number): ReactNode => {
     return (
-      <List.Item key={item.id} style={{ opacity: item.status ? 0.5 : 1 }}>
-        <div
-          style={{ cursor: 'pointer', flex: 1 }}
-          onClick={() => onItemClick(item, index)}
-        >
-          <List.Item.Meta
-            avatar={
-              item.avatar && (
-                <Avatar shape="circle" size={36}>
-                  <img src={item.avatar} />
-                </Avatar>
-              )
-            }
-            title={
-              <div className={styles['message-title']}>
-                <Space size={4}>
-                  <span>{item.title}</span>
-                  <Typography.Text type="secondary">
-                    {item.subTitle}
-                  </Typography.Text>
-                </Space>
-                {item.tag && item.tag.text ? (
-                  <Tag color={item.tag.color}>{item.tag.text}</Tag>
-                ) : null}
-              </div>
-            }
-            description={
-              <div>
-                <Typography.Paragraph style={{ marginBottom: 0 }} ellipsis>
-                  {item.content}
-                </Typography.Paragraph>
-                <Typography.Text type="secondary" style={{ fontSize: 12 }}>
-                  {item.time}
+      <List.Item
+        key={item.id}
+        style={{ opacity: item.status ? 0.5 : 1, cursor: 'pointer', flex: 1 }}
+        onClick={() => onItemClick(item, index)}
+      >
+        <List.Item.Meta
+          avatar={
+            item.avatar && (
+              <Avatar shape="circle" size={36}>
+                <img src={item.avatar} alt="" />
+              </Avatar>
+            )
+          }
+          title={
+            <div className={styles['message-title']}>
+              <Space size={4}>
+                <span>{item.title}</span>
+                <Typography.Text type="secondary">
+                  {item.subTitle}
                 </Typography.Text>
-              </div>
-            }
-          />
-        </div>
+              </Space>
+              {item.tag?.text ? (
+                <Tag color={item.tag.color}>{item.tag.text}</Tag>
+              ) : null}
+            </div>
+          }
+          description={
+            <div>
+              <Typography.Paragraph style={{ marginBottom: 0 }} ellipsis>
+                {item.content}
+              </Typography.Paragraph>
+              <Typography.Text type="secondary" style={{ fontSize: 12 }}>
+                {item.time}
+              </Typography.Text>
+            </div>
+          }
+        />
       </List.Item>
     );
   };
@@ -91,7 +91,7 @@ const MessageList: React.FC<MessageListProps> = (props) => {
       }
       dataSource={data}
       renderItem={renderList}
-    ></List>
+    />
   );
 };
 export default MessageList;

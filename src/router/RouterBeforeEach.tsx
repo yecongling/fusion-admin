@@ -1,5 +1,6 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import React, { useEffect } from 'react';
+import type React from 'react';
+import { useEffect } from 'react';
 import { checkRouterAuth } from './checkRouterAuth';
 
 /**
@@ -19,7 +20,7 @@ const RouterBeforeEach: React.FC = () => {
     if (location.pathname === '/' && bLogin) {
       const index = sessionStorage.getItem('homePath') || '/404';
       navigate(index);
-    } else if (bLogin == 'false' || !bLogin || location.pathname === '/') {
+    } else if (bLogin === 'false' || !bLogin || location.pathname === '/') {
       // 未登录状态或登录状态已失效，则跳转到登录页面
       navigate('/login', { replace: true });
     } else {

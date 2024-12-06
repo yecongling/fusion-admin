@@ -1,5 +1,5 @@
 import debounce from 'lodash/debounce';
-import { RefObject, useEffect, useMemo, useRef, useState } from 'react';
+import { type RefObject, useEffect, useMemo, useRef, useState } from 'react';
 
 // 直接抄airbnb的visx
 //https://github.com/airbnb/visx/blob/master/packages/visx-responsive/src/hooks/useParentSize.ts
@@ -117,12 +117,12 @@ export default function useParentSize<T extends HTMLElement = HTMLDivElement>({
       (window as unknown as PrivateWindow).ResizeObserver;
 
     const observer = new LocalResizeObserver((entries) => {
-      entries.forEach((entry) => {
+      for (const entry of entries) {
         const { left, top, width, height } = entry?.contentRect ?? {};
         animationFrameID.current = window.requestAnimationFrame(() => {
           resize({ width, height, top, left });
         });
-      });
+      }
     });
     if (parentRef.current) observer.observe(parentRef.current);
 

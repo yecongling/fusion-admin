@@ -1,10 +1,11 @@
-import React, { memo, useCallback, useEffect, useState } from 'react';
+import type React from 'react';
+import { memo, useEffect, useState } from 'react';
 import {
   Layout,
   Image,
   Spin,
   Menu,
-  MenuProps,
+  type MenuProps,
   Button,
   Divider,
   Space,
@@ -14,8 +15,8 @@ import {
   Empty,
 } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, setCollapse, setTheme } from '@stores/store.ts';
-import favicon from '@assets/svg/vite.svg';
+import { type RootState, setCollapse, setTheme } from '@/stores/store.ts';
+import favicon from '@/assets/svg/vite.svg';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import './leftMenu.scss';
@@ -26,8 +27,8 @@ import {
   QuestionCircleOutlined,
   SunOutlined,
 } from '@ant-design/icons';
-import { RouteItem } from '@type/route';
-import { addIcon, getOpenKeys, searchRoute } from '@utils/utils';
+import type { RouteItem } from '@/types/route';
+import { addIcon, getOpenKeys, searchRoute } from '@/utils/utils';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -36,8 +37,10 @@ type MenuItem = Required<MenuProps>['items'][number];
  */
 const LeftMenu: React.FC = memo(() => {
   // 从状态库中获取状态
-  const globalState = useSelector((state: RootState) => state.global);
-  const { menus, theme, collapse, menuWidth } = globalState;
+  const globalState = useSelector((state: RootState) => state.globalState);
+  const menuState = useSelector((state: RootState) => state.menuState);
+  const { theme, collapse, menuWidth } = globalState;
+  const { menus } = menuState;
   const dispatch = useDispatch();
 
   const { pathname } = useLocation();
@@ -46,7 +49,6 @@ const LeftMenu: React.FC = memo(() => {
   // 定义一些状态变量
   const [menuList, setMenuList] = useState<MenuItem[]>([]);
   const [loading, setLoading] = useState(false);
-  const [selectedKeys, setSelectedKeys] = useState<string[]>([pathname]);
   const [openKeys, setOpenKeys] = useState<string[]>([]);
 
   const titleColor = theme === 'dark' ? '#fff' : '#1890ff';
@@ -69,16 +71,17 @@ const LeftMenu: React.FC = memo(() => {
 
   // 处理后台返回菜单 key 值为 antd 菜单需要的 key 值
   const deepLoopFloat = (menuList: RouteItem[], newArr: MenuItem[] = []) => {
-    menuList.forEach((item: RouteItem) => {
+    for (const item of menuList) {
       // 如果不能显示的菜单不显示
       if (item?.meta?.menuType === 2) {
-        return true;
+        continue;
       }
       // 下面判断代码解释 *** !item?.children?.length   ==>   (!item.children || item.children.length === 0)
       if (!item?.children?.length) {
-        return newArr.push(
+        newArr.push(
           getItem(item.meta?.title, item.path, addIcon(item.meta?.icon)),
         );
+        continue;
       }
       newArr.push(
         getItem(
@@ -88,27 +91,18 @@ const LeftMenu: React.FC = memo(() => {
           deepLoopFloat(item.children),
         ),
       );
-    });
+    }
     return newArr;
   };
 
   /**
    * 菜单点击跳转
    */
-  const clickMenu: MenuProps['onClick'] = useCallback(
-    ({ key }: { key: string }) => {
-      // 配置外置跳转路由
-      // if (route.meta.isLink) window.open(route.meta.isLink, "_blank");
-      navigate(key);
-      // 可以通过这里去查询菜单路由，以此构建面包屑
-      // const route = searchRoute(key, menus);
-      // const title = route.meta?.title;
-      // if (title) {
-      //   document.title = title + "-fusion";
-      // }
-    },
-    [],
-  );
+  const clickMenu: MenuProps['onClick'] = ({ key }: { key: string }) => {
+    // 配置外置跳转路由
+    // if (route.meta.isLink) window.open(route.meta.isLink, "_blank");
+    navigate(key);
+  };
 
   // 刷新页面菜单保持高亮
   useEffect(() => {
@@ -120,12 +114,11 @@ const LeftMenu: React.FC = memo(() => {
     }
     const title = route.meta?.title;
     if (title) {
-      document.title = 'Fusion Admin -' + title;
+      document.title = `Fusion Admin -${title}`;
     }
     if (!collapse) {
       setOpenKeys(openKey);
     }
-    setSelectedKeys(openKey.concat([pathname]));
   }, [pathname, collapse, menus]);
 
   // 设置当前展开的 subMenu
@@ -141,9 +134,10 @@ const LeftMenu: React.FC = memo(() => {
   useEffect(() => {
     if (!menus || menus.length === 0) return;
     setLoading(true);
-    setMenuList(deepLoopFloat(menus, []));
+    const menu = deepLoopFloat(menus, []);
+    setMenuList(menu);
     setLoading(false);
-  }, []);
+  }, [menus]);
 
   return (
     <Layout.Sider
@@ -189,7 +183,7 @@ const LeftMenu: React.FC = memo(() => {
           <Menu
             mode="inline"
             theme={theme}
-            selectedKeys={selectedKeys}
+            defaultSelectedKeys={[pathname]}
             openKeys={openKeys}
             items={menuList}
             onClick={clickMenu}
@@ -209,7 +203,11 @@ const LeftMenu: React.FC = memo(() => {
           justifyContent: 'center',
         }}
       >
-        <Space direction={collapse ? 'vertical' : 'horizontal'} align="center">
+        <Space
+          direction={collapse ? 'vertical' : 'horizontal'}
+          align="center"
+          style={{ justifyContent: 'center' }}
+        >
           <ConfigProvider
             theme={{
               components: {

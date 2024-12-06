@@ -57,7 +57,7 @@ export default defineMock([
       message: '',
       data: {
         code: Math.floor(Math.random() * 10000).toString(),
-        checkKey: 'sfwgwe'
+        checkKey: 'sfwgwe',
       },
     },
   },

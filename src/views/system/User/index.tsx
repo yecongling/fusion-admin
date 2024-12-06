@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 
 /**
  * 系统用户维护

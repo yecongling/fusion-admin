@@ -1,5 +1,5 @@
 import { Button, Card, Col, Row, DatePicker } from 'antd';
-import React from 'react';
+import StatusLineChart from './StatusLineChart';
 
 const { RangePicker } = DatePicker;
 
@@ -7,7 +7,7 @@ const { RangePicker } = DatePicker;
  * 首页
  * @returns 组件内容
  */
-const Home: React.FC = () => {
+function Home() {
   return (
     <>
       <Row gutter={8}>
@@ -32,20 +32,24 @@ const Home: React.FC = () => {
       <Row gutter={8} style={{ marginTop: '8px' }}>
         <Col span={12}>
           <Card
-            style={{ height: '300px' }}
-            styles={{ header: { borderBottom: 'none' } }}
+            styles={{
+              header: { borderBottom: 'none' },
+              body: { height: '300px', width: '100%' },
+            }}
             title="引擎状态"
           >
-            欢迎
+            <StatusLineChart />
           </Card>
         </Col>
         <Col span={12}>
           <Card
-            style={{ height: '300px' }}
-            styles={{ header: { borderBottom: 'none' } }}
+            styles={{
+              header: { borderBottom: 'none' },
+              body: { height: '300px' },
+            }}
             title="terminal统计"
           >
-            菜单
+            <StatusLineChart />
           </Card>
         </Col>
       </Row>
@@ -72,5 +76,5 @@ const Home: React.FC = () => {
       </Row>
     </>
   );
-};
+}
 export default Home;

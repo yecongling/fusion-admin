@@ -1,17 +1,17 @@
 /* 封装axios */
 
 import axios, {
-  AxiosError,
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosResponse,
-  InternalAxiosRequestConfig,
+  type AxiosError,
+  type AxiosInstance,
+  type AxiosRequestConfig,
+  type AxiosResponse,
+  type InternalAxiosRequestConfig,
 } from 'axios';
 import { cloneDeep } from 'lodash-es';
-import { RequestOptions } from '@type/axios';
-import { isFunction } from '@utils/is';
-import { CreateAxiosOptions } from './transform';
-import { Response } from '@type/global';
+import type { RequestOptions } from '@/types/axios';
+import { isFunction } from '@/utils/is';
+import type { CreateAxiosOptions } from './transform';
+import type { Response } from '@/types/global';
 
 export class RAxios {
   private axiosInstance: AxiosInstance;
@@ -48,7 +48,7 @@ export class RAxios {
     this.axiosInstance.interceptors.request.use(
       (config: InternalAxiosRequestConfig) => {
         if (requestInterceptors && isFunction(requestInterceptors)) {
-          config = requestInterceptors(config, this.options);
+          return requestInterceptors(config, this.options);
         }
         return config;
       },
@@ -64,7 +64,7 @@ export class RAxios {
     // 响应结果拦截器处理
     this.axiosInstance.interceptors.response.use((res: AxiosResponse<any>) => {
       if (responseInterceptors && isFunction(responseInterceptors)) {
-        res = responseInterceptors(res);
+        return responseInterceptors(res);
       }
       return res;
     }, undefined);

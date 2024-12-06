@@ -1,6 +1,7 @@
-import RouterBeforeEach from '@router/RouterBeforeEach';
+import RouterBeforeEach from '@/router/RouterBeforeEach';
 import { Layout, Spin } from 'antd';
-import React, { Suspense } from 'react';
+import type React from 'react';
+import { Suspense } from 'react';
 
 /**
  * 中间主内容区域
