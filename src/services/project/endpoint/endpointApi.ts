@@ -8,16 +8,16 @@ export enum Api {
   /**
    * 获取所有端点配置列表
    */
-  getEndpointConfigList = '/system/endpoint/getEndpointConfigList',
+  queryEndpointConfigType = '/engine/endpointConfig/queryEndpointConfigType',
 }
 
 /**
  * 获取所有端点配置列表
  * @param params
  */
-export const getEndpointConfigList = (params: Record<string, any>) => {
+export const queryEndpointConfigType = (params?: string) => {
   return HttpRequest.get({
-    url: Api.getEndpointConfigList,
-    params,
+    url: Api.queryEndpointConfigType,
+    params: { name: params },
   });
 };
