@@ -2,12 +2,12 @@ import { Navigate, useRoutes } from 'react-router-dom';
 import { LazyLoad } from './lazyLoad';
 import React, { type ReactNode, Suspense, useMemo } from 'react';
 import { Skeleton } from 'antd';
-import type { RouteObject } from '@type/route';
+import type { RouteObject } from '@/types/route';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorFallback } from './ErrorBoundary';
 import { useSelector } from 'react-redux';
-import type { RootState } from '@stores/store';
-import { handleRouter } from '@utils/utils';
+import type { RootState } from '@/stores/store';
+import { handleRouter } from '@/utils/utils';
 
 // 默认的错误路由
 export const errorRoutes: RouteObject[] = [
@@ -34,7 +34,7 @@ export const dynamicRoutes: RouteObject[] = [
   {
     path: '/',
     component: React.lazy(
-      () => import('@layouts/index.tsx'),
+      () => import('@/layouts/index.tsx'),
     ) as unknown as ReactNode,
     children: errorRoutes,
   },

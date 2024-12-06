@@ -1,6 +1,6 @@
 import { Input, type InputRef } from 'antd';
-import favicon from '@assets/svg/vite.svg';
-import { type RootState, setScreenLock } from '@stores/store';
+import favicon from '@/assets/svg/vite.svg';
+import { type RootState, setScreenLock } from '@/stores/store';
 import { useDispatch, useSelector } from 'react-redux';
 import type React from 'react';
 import { useEffect, useRef } from 'react';

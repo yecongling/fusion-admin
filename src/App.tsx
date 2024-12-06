@@ -1,4 +1,4 @@
-import { type RootState, setMenus } from '@stores/store';
+import { type RootState, setMenus } from '@/stores/store';
 import { ConfigProvider, Spin, App as AntdApp } from 'antd';
 import type React from 'react';
 import { useEffect, useState } from 'react';
@@ -6,9 +6,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import zhCN from 'antd/locale/zh_CN';
 import 'dayjs/locale/zh-cn';
-import { Router } from '@router/router';
-import { getMenuListByRoleId } from '@services/system/menu/menuApi';
-import { antdUtils } from '@utils/antdUtil';
+import { Router } from '@/router/router';
+import { getMenuListByRoleId } from '@/services/system/menu/menuApi';
+import { antdUtils } from '@/utils/antdUtil';
 
 /**
  * 主应用

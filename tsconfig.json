@@ -1,39 +1,33 @@
 {
   "compilerOptions": {
-    "lib": ["DOM", "ES2020"],
+    "lib": [
+      "DOM",
+      "ES2020"
+    ],
     "jsx": "react-jsx",
     "target": "ES2020",
     "noEmit": true,
     "skipLibCheck": true,
     "useDefineForClassFields": true,
-
     /* modules */
     "module": "ESNext",
     "isolatedModules": true,
     "resolveJsonModule": true,
     "moduleResolution": "Bundler",
     "allowImportingTsExtensions": true,
-
     /* type checking */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "baseUrl": "./", // 项目根目录
     "paths": {
-      // "@/*": ["src/*"],
-      "@views/*": ["src/views/*"],
-      "@components/*": ["src/components/*"],
-      "@layouts/*": ["src/layouts/*"],
-      "@hooks/*": ["src/hooks/*"],
-      "@enums/*": ["src/enums/*"],
-      "@context/*": ["src/context/*"],
-      "@stores/*": ["src/stores/*"],
-      "@type/*": ["src/types/*"],
-      "@assets/*": ["src/assets/*"],
-      "@utils/*": ["src/utils/*"],
-      "@services/*": ["src/services/*"],
-      "@router/*": ["src/router/*"]
+      "@/*": [
+        "src/*"
+      ]
     }
   },
-  "include": ["src", "public/font"]
+  "include": [
+    "src",
+    "public/font"
+  ]
 }

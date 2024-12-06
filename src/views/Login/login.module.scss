@@ -19,7 +19,7 @@
   min-width: 550px;
   height: calc(100% - 66px);
   min-height: 500px;
-  background-image: url('@assets/svg/login/background.svg');
+  background-image: url('@/assets/svg/login/background.svg');
   background-position: 50%;
   background-size: 100% 100%;
   .login-box {
@@ -42,7 +42,7 @@
       font-weight: 400;
       font-style: normal;
       line-height: 24px;
-      background-image: url('@assets/svg/login/left.svg');
+      background-image: url('@/assets/svg/login/left.svg');
       background-position: 50%;
       background-size: 100% 100%;
     }

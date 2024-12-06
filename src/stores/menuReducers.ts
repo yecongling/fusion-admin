@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { initMenuState, MenuState } from "./reducers";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { initMenuState, type MenuState } from "./reducers";
 
 // 菜单slice
 export const menuSlice = createSlice({

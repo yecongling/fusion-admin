@@ -4,7 +4,7 @@ import {
   RedoOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
-import useParentSize from '@hooks/useParentSize';
+import useParentSize from '@/hooks/useParentSize';
 import {
   Button,
   Card,

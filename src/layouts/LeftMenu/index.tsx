@@ -15,8 +15,8 @@ import {
   Empty,
 } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { type RootState, setCollapse, setTheme } from '@stores/store.ts';
-import favicon from '@assets/svg/vite.svg';
+import { type RootState, setCollapse, setTheme } from '@/stores/store.ts';
+import favicon from '@/assets/svg/vite.svg';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import './leftMenu.scss';
@@ -27,8 +27,8 @@ import {
   QuestionCircleOutlined,
   SunOutlined,
 } from '@ant-design/icons';
-import type { RouteItem } from '@type/route';
-import { addIcon, getOpenKeys, searchRoute } from '@utils/utils';
+import type { RouteItem } from '@/types/route';
+import { addIcon, getOpenKeys, searchRoute } from '@/utils/utils';
 
 type MenuItem = Required<MenuProps>['items'][number];
 

@@ -1,4 +1,4 @@
-import DragModal from '@components/modal/DragModal';
+import DragModal from '@/components/modal/DragModal';
 import type React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { io, type Socket } from 'socket.io-client';

@@ -2,9 +2,9 @@ import type React from 'react';
 import { useEffect, useState } from 'react';
 import { Breadcrumb } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
-import type { RouteItem } from '@type/route';
+import type { RouteItem } from '@/types/route';
 import { useSelector } from 'react-redux';
-import type { RootState } from '@stores/store';
+import type { RootState } from '@/stores/store';
 
 /**
  * 面包屑

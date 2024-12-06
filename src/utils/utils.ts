@@ -1,8 +1,8 @@
 import * as Icons from '@ant-design/icons';
 import { isObject } from './is';
 import React from 'react';
-import type { RouteItem, RouteObject } from '@type/route';
-import { LazyLoad } from '@router/lazyLoad';
+import type { RouteItem, RouteObject } from '@/types/route';
+import { LazyLoad } from '@/router/lazyLoad';
 
 /**
  * @description 使用递归处理路由菜单，生成一维数组，做菜单权限判断

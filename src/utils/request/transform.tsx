@@ -8,11 +8,11 @@ import type {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from 'axios';
-import type { RequestOptions } from '@type/axios';
-import type { Response } from '@type/global';
+import type { RequestOptions } from '@/types/axios';
+import type { Response } from '@/types/global';
 import { antdUtils } from '../antdUtil';
 import { joinTimestamp } from './helper';
-import { HttpCodeEnum, RequestEnum } from '@enums/httpEnum';
+import { HttpCodeEnum, RequestEnum } from '@/enums/httpEnum';
 import { setObjToUrlParams } from '../utils';
 import { isString } from '../is';
 import { encrypt } from '../encrypt';

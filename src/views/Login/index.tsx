@@ -1,21 +1,21 @@
 import type React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { Button, Checkbox, Col, Form, Image, Input, Row } from 'antd';
-import logo from '@assets/images/logo.png';
+import logo from '@/assets/images/logo.png';
 import {
   LockOutlined,
   SecurityScanOutlined,
   UserOutlined,
 } from '@ant-design/icons';
 import styles from './login.module.scss';
-import filing from '@assets/images/filing.png';
+import filing from '@/assets/images/filing.png';
 import { useNavigate } from 'react-router-dom';
-import { getCaptcha, login } from '@services/login/loginApi';
-import { getMenuListByRoleId } from '@services/system/menu/menuApi';
+import { getCaptcha, login } from '@/services/login/loginApi';
+import { getMenuListByRoleId } from '@/services/system/menu/menuApi';
 import { useDispatch } from 'react-redux';
-import { setMenus } from '@stores/store';
-import { HttpCodeEnum } from '@enums/httpEnum';
-import { antdUtils } from '@utils/antdUtil';
+import { setMenus } from '@/stores/store';
+import { HttpCodeEnum } from '@/enums/httpEnum';
+import { antdUtils } from '@/utils/antdUtil';
 
 /**
  * 登录模块

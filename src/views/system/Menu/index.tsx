@@ -10,7 +10,7 @@ import {
   deleteMenuBatch,
   getAllMenus,
   updateMenu,
-} from '@services/system/menu/menuApi';
+} from '@/services/system/menu/menuApi';
 import {
   App,
   Button,
@@ -31,8 +31,8 @@ import type React from 'react';
 import { useEffect, useState } from 'react';
 import MenuInfoModal from './MenuInfoModal';
 import './menu.scss';
-import useParentSize from '@hooks/useParentSize';
-import { addIcon } from '@utils/utils';
+import useParentSize from '@/hooks/useParentSize';
+import { addIcon } from '@/utils/utils';
 
 /**
  * 系统菜单维护

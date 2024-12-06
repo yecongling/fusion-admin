@@ -1,4 +1,4 @@
-import { checkPermission } from '@services/system/menu/menuApi';
+import { checkPermission } from '@/services/system/menu/menuApi';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 

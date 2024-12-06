@@ -1,5 +1,5 @@
-import { HttpRequest } from '@utils/request';
-import type { Response } from '@type/global';
+import { HttpRequest } from '@/utils/request';
+import type { Response } from '@/types/global';
 
 /**
  * 枚举登录需要的接口地址

@@ -3,9 +3,9 @@ import {
   EllipsisOutlined,
   PlusOutlined,
 } from '@ant-design/icons';
-import { MyIcon } from '@components/MyIcon';
-import { getEndpointConfigList } from '@services/project/endpoint/endpointApi';
-import { addIcon } from '@utils/utils';
+import { MyIcon } from '@/components/MyIcon';
+import { getEndpointConfigList } from '@/services/project/endpoint/endpointApi';
+import { addIcon } from '@/utils/utils';
 import {
   Card,
   Col,

@@ -11,7 +11,7 @@ import {
   Switch,
 } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { type RootState, setColorPrimary, setTheme } from '@stores/store';
+import { type RootState, setColorPrimary, setTheme } from '@/stores/store';
 
 /**
  * 系统设置界面组件的属性配置

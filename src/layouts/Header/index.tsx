@@ -26,11 +26,11 @@ import type React from 'react';
 import { memo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { clearCache, setScreenLock } from '@stores/store';
-import avatar from '@assets/images/avatar.png';
+import { clearCache, setScreenLock } from '@/stores/store';
+import avatar from '@/assets/images/avatar.png';
 import MessageBox from './component/MessageBox';
 import FullScreen from './component/FullScreen';
-import { logout } from '@services/login/loginApi';
+import { logout } from '@/services/login/loginApi';
 import Setting from './component/Setting';
 import BreadcrumbNav from './component/BreadcrumbNav';
 /**

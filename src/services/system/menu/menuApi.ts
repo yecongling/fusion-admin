@@ -1,4 +1,4 @@
-import { HttpRequest } from '@utils/request';
+import { HttpRequest } from '@/utils/request';
 
 /**
  * 枚举菜单相关的请求API

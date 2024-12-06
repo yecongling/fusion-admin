@@ -8,10 +8,10 @@ import axios, {
   type InternalAxiosRequestConfig,
 } from 'axios';
 import { cloneDeep } from 'lodash-es';
-import type { RequestOptions } from '@type/axios';
-import { isFunction } from '@utils/is';
+import type { RequestOptions } from '@/types/axios';
+import { isFunction } from '@/utils/is';
 import type { CreateAxiosOptions } from './transform';
-import type { Response } from '@type/global';
+import type { Response } from '@/types/global';
 
 export class RAxios {
   private axiosInstance: AxiosInstance;

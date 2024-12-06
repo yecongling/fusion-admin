@@ -1,4 +1,4 @@
-import { ContentTypeEnum } from '@enums/httpEnum';
+import { ContentTypeEnum } from '@/enums/httpEnum';
 import { deepMerge } from '../utils';
 import { RAxios } from './Axios';
 import { type CreateAxiosOptions, transform } from './transform';

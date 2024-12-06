@@ -1,4 +1,4 @@
-import RouterBeforeEach from '@router/RouterBeforeEach';
+import RouterBeforeEach from '@/router/RouterBeforeEach';
 import { Layout, Spin } from 'antd';
 import type React from 'react';
 import { Suspense } from 'react';

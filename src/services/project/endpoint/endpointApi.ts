@@ -2,7 +2,7 @@
  * 枚举端点相关的请求API
  */
 
-import { HttpRequest } from '@utils/request';
+import { HttpRequest } from '@/utils/request';
 
 export enum Api {
   /**

@@ -1,4 +1,4 @@
-import type { RouteObject } from '@type/route';
+import type { RouteObject } from '@/types/route';
 import { dynamicRoutes } from './router';
 
 // 根据路径获取路由
