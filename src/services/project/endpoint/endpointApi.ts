@@ -2,13 +2,22 @@
  * 枚举端点相关的请求API
  */
 
+import { HttpRequest } from '@utils/request';
+
 export enum Api {
-    addEndpoint = '/system/endpoint/addEndpoint',
-    deleteEndpoint = '/system/endpoint/deleteEndpoint',
-    deleteEndpointBatch = '/system/endpoint/deleteEndpointBatch',
-    exportEndpoints = '/system/endpoint/export',
-    getAllEndpoints = '/system/endpoint/getAllEndpoints',
-    getEndpointList = '/system/endpoint/getEndpointList',
-    importEndpoints = '/system/endpoint/import',
-    updateEndpoint = '/system/endpoint/updateEndpoint'
+  /**
+   * 获取所有端点配置列表
+   */
+  getEndpointConfigList = '/system/endpoint/getEndpointConfigList',
 }
+
+/**
+ * 获取所有端点配置列表
+ * @param params
+ */
+export const getEndpointConfigList = (params: Record<string, any>) => {
+  return HttpRequest.get({
+    url: Api.getEndpointConfigList,
+    params,
+  });
+};

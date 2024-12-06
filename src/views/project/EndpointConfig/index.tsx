@@ -2,9 +2,10 @@ import {
   EditOutlined,
   EllipsisOutlined,
   PlusOutlined,
-  SettingOutlined,
 } from '@ant-design/icons';
 import { MyIcon } from '@components/MyIcon';
+import { getEndpointConfigList } from '@services/project/endpoint/endpointApi';
+import { addIcon } from '@utils/utils';
 import {
   Card,
   Col,
@@ -18,7 +19,7 @@ import {
 } from 'antd';
 import type { DataNode } from 'antd/es/tree';
 import type React from 'react';
-import { ReactNode, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const { useToken } = theme;
 
@@ -30,27 +31,56 @@ const EndpointConfig: React.FC = () => {
   // 鼠标hover的节点
   const [hoveredKey, setHoveredKey] = useState<string | null>();
   // 树结构数据
-  const [treeData, setTreeData] = useState<ConfigTypeNode[]>([
-    {
-      title: 'web服务',
-      key: 'http',
-      type: 'type',
-      children: [
-        {
-          title: 'HTTP',
-          key: 'list',
-          type: 'isConfig',
-          icon: <SettingOutlined />,
-        },
-        {
-          title: 'SOAP',
-          key: 'soap',
-          type: 'isConfig',
-          icon: <MyIcon type="fusion-EMR" />,
-        },
-      ],
-    },
-  ]);
+  const [treeData, setTreeData] = useState<ConfigTypeNode[]>([]);
+  // 树结构展开的节点
+  const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
+
+  useEffect(() => {
+    queryData();
+  }, []);
+
+  /**
+   * 检索
+   * @param params 参数
+   */
+  const queryData = (params?: string) => {
+    const queryCondition: Record<string, any> = {};
+    queryCondition.name = params;
+    // 调用查询
+    getEndpointConfigList(queryCondition).then((response) => {
+      // 内部数据需要进行处理，其中的icon需要处理成对应的组件
+      const expanded: string[] = [];
+      const data = transformData(response, expanded);
+      setTreeData(data);
+      setExpandedKeys(expanded);
+    });
+  };
+
+  /**
+   * 数据转换，处理其中的icon
+   * @param data 数据
+   */
+  const transformData = (data: any[], expanded: string[]): any[] => {
+    return data.map((item: any) => {
+      if (item.icon) {
+        item.icon =
+          item.icon.indexOf('fusion') > -1 ? (
+            <MyIcon type={item.icon} />
+          ) : (
+            addIcon(item.icon)
+          );
+      }
+      if (item.type === 'type') {
+        expanded.push(item.key as string);
+      }
+      // 分类节点，需要处理children数据
+      if (item.children) {
+        transformData(item.children, expanded);
+      }
+      return item;
+    });
+  };
+
   // 树节点选中事件
   const onTreeSelect = (selectedKeys: React.Key[], info: any) => {
     console.log(info);
@@ -62,11 +92,11 @@ const EndpointConfig: React.FC = () => {
    * @returns
    */
   const treeTitleRender = (nodeData: ConfigTypeNode) => (
-    <div
+    <span
       style={{
-        display: 'flex',
-        alignItems: 'center',
+        display: 'inline-flex',
         justifyContent: 'space-between',
+        width: '90%',
       }}
       onMouseEnter={() => {
         setHoveredKey(nodeData.key as string);
@@ -75,15 +105,7 @@ const EndpointConfig: React.FC = () => {
         setHoveredKey(null);
       }}
     >
-      <span className="tree-title">
-        {nodeData.icon && (
-          <span className="ant-tree_iconEle" style={{ marginRight: '8px' }}>
-            {nodeData.icon as ReactNode}
-          </span>
-        )}
-
-        <span>{nodeData.title as React.ReactNode}</span>
-      </span>
+      <span className="tree-title">{nodeData.title as React.ReactNode}</span>
       {hoveredKey === nodeData.key && (
         <Space style={{ marginLeft: '8px' }} size={8}>
           <Tooltip title="编辑">
@@ -105,7 +127,7 @@ const EndpointConfig: React.FC = () => {
           </Tooltip>
         </Space>
       )}
-    </div>
+    </span>
   );
 
   // 查询后台返回的数据需要进行处理才能丢给treeData渲染
@@ -114,13 +136,20 @@ const EndpointConfig: React.FC = () => {
       <Col span={6}>
         {/* 左边端点分类 */}
         <Card style={{ height: '100%' }} title="端点分类列表">
-          <Space direction="vertical" size={8} style={{ width: '100%' }}>
+          <Space
+            direction="vertical"
+            size={8}
+            style={{ width: '100%', minHeight: 0 }}
+            styles={{ item: { flex: 1, overflowY: 'auto' } }}
+          >
             {/* 检索 */}
             <Input.Search placeholder="请输入名称检索" />
             {/* 树结构 */}
             <Tree
               blockNode
+              showIcon
               defaultExpandAll
+              expandedKeys={expandedKeys}
               treeData={treeData}
               onSelect={onTreeSelect}
               titleRender={treeTitleRender}
