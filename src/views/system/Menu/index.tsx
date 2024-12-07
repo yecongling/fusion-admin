@@ -345,7 +345,7 @@ const Menu: React.FC = () => {
       </ConfigProvider>
       {/* 查询表格 */}
       <Card
-        style={{ flex: 1, marginTop: '8px' }}
+        style={{ flex: 1, marginTop: '8px', minHeight: 0 }}
         styles={{ body: { height: '100%' } }}
         ref={parentRef}
       >
