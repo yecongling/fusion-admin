@@ -40,7 +40,7 @@ function Home() {
           <Card
             styles={{
               header: { borderBottom: 'none' },
-              body: { height: '300px', width: '100%' },
+              body: { height: '350px', width: '100%' },
             }}
             title="引擎状态"
           >
@@ -51,7 +51,7 @@ function Home() {
           <Card
             styles={{
               header: { borderBottom: 'none' },
-              body: { height: '300px' },
+              body: { height: '350px' },
             }}
             title="端点统计"
           >
