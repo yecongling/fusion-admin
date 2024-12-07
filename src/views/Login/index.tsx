@@ -91,6 +91,10 @@ const Login: React.FC = () => {
             dispatch(setMenus(menu));
             // 跳转到首页
             navigate(homePath);
+            antdUtils.notification?.success({
+              message: '登录成功',
+              description: '欢迎来到Fuson Admin!',
+            });
           }
           break;
         default:
