@@ -17,6 +17,12 @@ const StatusLineChart: React.FC = () => {
 
     const option = {
       tooltip: {},
+      grid: {
+        left: '5%',
+        right: '5%',
+        bottom: '10%',
+        top: '2%',
+      },
       xAxis: {
         data: ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
       },
@@ -26,6 +32,15 @@ const StatusLineChart: React.FC = () => {
           name: '销量',
           type: 'bar', // 柱状图
           data: [5, 20, 36, 10, 10, 20, 30],
+          itemStyle: {
+            color: () => {
+              const color = new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: '#1677FF' }, // 渐变起点颜色 (从顶部开始)
+                { offset: 1, color: '#f0fbff' }, // 渐变终点颜色 (到底部)
+              ]);
+              return color;
+            },
+          },
         },
         {
           name: '增长',
@@ -52,7 +67,7 @@ const StatusLineChart: React.FC = () => {
       ref={chartRef}
       style={{
         height: '100%',
-        width: '100%'
+        width: '100%',
       }}
     />
   );
