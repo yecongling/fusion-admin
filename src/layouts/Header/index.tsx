@@ -91,6 +91,8 @@ const Header: React.FC = memo(() => {
             sessionStorage.removeItem('isLogin');
             sessionStorage.removeItem('loginUser');
             dispatch(clearCache());
+            // 修改回document.title
+            document.title = 'Fusion Admin - 登录'
             // 退出到登录页面
             navigate('/login');
           },
@@ -123,12 +125,9 @@ const Header: React.FC = memo(() => {
           borderBottom: ' 1px solid #e9edf0',
         }}
       >
-        <div className="dis-fl js-sb ai-ct" style={{ marginLeft: '10px' }}>
           {/* 面包屑 */}
           <BreadcrumbNav />
-        </div>
-        <div className="dis-fl js-sb ai-ct toolbox">
-          <Space size="large">
+          <Space size="large" className="dis-fl js-sb ai-ct toolbox">
             <Input
               variant="filled"
               placeholder="输入内容查询"
@@ -191,7 +190,6 @@ const Header: React.FC = memo(() => {
               </div>
             </Dropdown>
           </Space>
-        </div>
       </Layout.Header>
       {/* 系统设置界面 */}
       <Setting open={openSetting} setOpen={setOpenSetting} />

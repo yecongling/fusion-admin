@@ -143,23 +143,24 @@ const EndpointConfig: React.FC = () => {
             styles={{ item: { flex: 1, overflowY: 'auto' } }}
           >
             {/* 检索 */}
-            <Input.Search placeholder="请输入名称检索" />
+            <Input.Search placeholder="请输入名称检索" autoFocus />
             {/* 树结构 */}
             {/* 如果没有数据则显示为空，手动添加 */}
-            {treeData.length === 0 && (
+            {treeData.length === 0 ? (
               <Empty description="暂无分类！">
                 <Button type="primary">新增分类</Button>
               </Empty>
+            ) : (
+              <Tree
+                blockNode
+                showIcon
+                defaultExpandAll
+                expandedKeys={expandedKeys}
+                treeData={treeData}
+                onSelect={onTreeSelect}
+                titleRender={treeTitleRender}
+              />
             )}
-            <Tree
-              blockNode
-              showIcon
-              defaultExpandAll
-              expandedKeys={expandedKeys}
-              treeData={treeData}
-              onSelect={onTreeSelect}
-              titleRender={treeTitleRender}
-            />
           </Space>
         </Card>
       </Col>

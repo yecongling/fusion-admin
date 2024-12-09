@@ -34,7 +34,7 @@ export default defineConfig({
   // 配置html模板
   html: {
     favicon: path.resolve(__dirname, './src/assets/svg/vite.svg'),
-    title: 'fusionAdmin',
+    title: 'Fusion Admin',
     tags: [
       {
         tag: 'html',
