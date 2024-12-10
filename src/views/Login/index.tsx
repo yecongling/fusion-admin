@@ -1,7 +1,7 @@
 import type React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { Button, Checkbox, Col, Form, Image, Input, Row } from 'antd';
-import logo from '@/assets/images/logo.png';
+import logo from '@/assets/images/icon-512.png';
 import {
   LockOutlined,
   SecurityScanOutlined,

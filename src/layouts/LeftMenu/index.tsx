@@ -16,7 +16,7 @@ import {
 } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { type RootState, setCollapse, setTheme } from '@/stores/store.ts';
-import favicon from '@/assets/svg/vite.svg';
+import logo from '@/assets/images/icon-192.png';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import './leftMenu.scss';
@@ -160,7 +160,7 @@ const LeftMenu: React.FC = memo(() => {
             className="hd-64 mgr-01 dis-fl ai-ct jc-ct"
             style={{ justifyContent: 'space-around' }}
           >
-            <Image width={25} src={favicon} preview={false} />
+            <Image width={25} src={logo} preview={false} />
             {collapse ? (
               ''
             ) : (
