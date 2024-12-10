@@ -12,8 +12,6 @@ const RouterBeforeEach: React.FC = () => {
   const location = useLocation();
 
   useEffect(() => {
-    // 检测当前路径
-    const obj = checkRouterAuth(location.pathname);
     // 判断是否登录
     const bLogin = sessionStorage.getItem('isLogin');
     // 这里需要添加判定，如果是已登录状态，且访问根路径，则直接导向到首页
@@ -24,6 +22,8 @@ const RouterBeforeEach: React.FC = () => {
       // 未登录状态或登录状态已失效，则跳转到登录页面
       navigate('/login', { replace: true });
     } else {
+      // 检测当前路径
+      const obj = checkRouterAuth(location.pathname);
       if (!obj && location.pathname !== '404') {
         navigate('/404');
       }

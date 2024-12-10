@@ -39,6 +39,7 @@ const DragModal: React.FC<ModalProps> = (props) => {
 
   return (
     <Modal
+      maskClosable={false}
       {...props}
       title={
         <div

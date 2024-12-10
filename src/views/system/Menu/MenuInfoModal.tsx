@@ -93,7 +93,6 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
       onOk={handleOk}
       loading={loading}
       onCancel={onCancel}
-      maskClosable={false}
       afterOpenChange={onAfterOpenChange}
     >
       <Form

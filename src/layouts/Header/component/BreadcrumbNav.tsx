@@ -29,7 +29,11 @@ const BreadcrumbNav: React.FC = () => {
   // 组件的DOM内容
   return (
     <>
-      <Breadcrumb items={items} />
+      <Breadcrumb
+        items={items}
+        className="dis-fl js-sb ai-ct"
+        style={{ marginLeft: '10px' }}
+      />
     </>
   );
 };

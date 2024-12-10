@@ -3,6 +3,7 @@ import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginMockServer } from 'rspack-plugin-mock/rsbuild';
 import { pluginImageCompress } from '@rsbuild/plugin-image-compress';
+import { pluginHtmlMinifierTerser } from 'rsbuild-plugin-html-minifier-terser';
 import path from 'node:path';
 
 export default defineConfig({
@@ -27,11 +28,13 @@ export default defineConfig({
     }),
     // 启动图片压缩
     pluginImageCompress(),
+    // 启动html压缩
+    pluginHtmlMinifierTerser()
   ],
   // 配置html模板
   html: {
-    favicon: path.resolve(__dirname, './src/assets/svg/vite.svg'),
-    title: 'fusionAdmin',
+    favicon: path.resolve(__dirname, './src/assets/images/favicon.ico'),
+    title: 'Fusion Admin',
     tags: [
       {
         tag: 'html',

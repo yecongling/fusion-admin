@@ -1,5 +1,5 @@
 import { Input, type InputRef } from 'antd';
-import favicon from '@/assets/svg/vite.svg';
+import favicon from '@/assets/images/icon-512.png';
 import { type RootState, setScreenLock } from '@/stores/store';
 import { useDispatch, useSelector } from 'react-redux';
 import type React from 'react';
@@ -38,7 +38,7 @@ const ScreenLock: React.FC = () => {
     <div className={style['screen-lock']}>
       <div className="screen-lock-content">
         <div className="screen-lock-title">
-          <img src={favicon} alt="" />
+          <img src={favicon} alt="" width={100}/>
           <span>系统锁屏</span>
         </div>
         <div className="screen-lock-input">
