@@ -187,7 +187,7 @@ const EndpointConfig: React.FC = () => {
   };
 
   // 编辑表格字段
-  const configColumn: TableProps['columns'] = [
+  const configColumn: TableProps<Record<string, any>>['columns'] = [
     {
       title: '名称',
       dataIndex: 'name',
@@ -220,7 +220,7 @@ const EndpointConfig: React.FC = () => {
       key: 'required',
       align: 'center',
       width: 100,
-      render(value) {
+      render(value: any) {
         return value ? '是' : '否';
       },
     },
@@ -254,6 +254,21 @@ const EndpointConfig: React.FC = () => {
       title: '操作',
       align: 'center',
       width: 160,
+    },
+  ];
+
+  const datasource = [
+    {
+      id: 1,
+      name: 'name1',
+      title: 'title1',
+      type: 'type1',
+      tips: 'tips1',
+      required: true,
+      defaultValue: 'defaultValue1',
+      allowedValue: 'allowedValue1',
+      appliesTo: 'appliesTo1',
+      description: 'description1',
     },
   ];
 
@@ -353,13 +368,29 @@ const EndpointConfig: React.FC = () => {
                   端点配置
                 </Divider>
                 <Table
-                  title={() => <div>端点配置，添加清除功能</div>}
+                  title={() => (
+                    <Button type="link" disabled={selRows.length === 0}>
+                      批量清除
+                    </Button>
+                  )}
                   bordered
                   size="middle"
+                  dataSource={datasource}
                   columns={configColumn}
                   rowSelection={{ ...rowSelection }}
                   rowKey="id"
                   scroll={{ x: 'max-content' }}
+                  footer={() => {
+                    return (
+                      <Button
+                        type="dashed"
+                        style={{ width: '100%' }}
+                        onClick={() => {}}
+                      >
+                        添加一行
+                      </Button>
+                    );
+                  }}
                 />
               </Col>
             </Row>

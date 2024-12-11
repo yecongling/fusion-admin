@@ -127,7 +127,7 @@ export const transform: AxiosTransform = {
         }
     }
     if (options.errorMessageMode === 'modal') {
-      if (code === HttpCodeEnum.RC401) {
+      if (code === HttpCodeEnum.RC401 || code === HttpCodeEnum.RC101) {
         antdUtils.modal?.confirm({
           title: '凭证失效',
           content: '当前用户身份验证凭证已过期或无效，请重新登录！',
@@ -218,11 +218,6 @@ export const transform: AxiosTransform = {
    * @param options
    */
   requestInterceptors: (config, options) => {
-    // 请求之前处理token
-    const token = sessionStorage.getItem('token');
-    if (token && options?.requestOptions?.withToken !== false) {
-      config.headers.token = token;
-    }
     const cpt = options?.requestOptions?.encrypt;
     // 进行数据加密
     if (config.data && cpt === 1) {

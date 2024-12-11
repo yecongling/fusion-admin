@@ -22,8 +22,6 @@ export interface RequestOptions {
   successMessageMode?: SuccessMessageMode;
   // 是否添加时间戳
   joinTime?: boolean;
-  //是否在标头中发送令牌
-  withToken?: boolean;
   // 是否加密数据 1 加密 0 不加密 默认1
   encrypt?: number;
 }
