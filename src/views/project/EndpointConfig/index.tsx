@@ -1,8 +1,11 @@
 import {
   AppstoreAddOutlined,
+  CloseOutlined,
+  DeleteOutlined,
   EditOutlined,
   EllipsisOutlined,
   PlusOutlined,
+  SaveOutlined,
   SettingOutlined,
 } from '@ant-design/icons';
 import { MyIcon } from '@/components/MyIcon';
@@ -23,6 +26,8 @@ import {
   Input,
   Row,
   Space,
+  Table,
+  type TableProps,
   Tooltip,
   Tree,
   theme,
@@ -31,6 +36,7 @@ import type { DataNode } from 'antd/es/tree';
 import type React from 'react';
 import { useEffect, useState } from 'react';
 import EndpointTypeModal from './EndpointTypeModal';
+import TextArea from 'antd/es/input/TextArea';
 
 const { useToken } = theme;
 
@@ -49,7 +55,8 @@ const EndpointConfig: React.FC = () => {
   const [openTypeModal, setOpenTypeModal] = useState<boolean>(false);
   // 当前编辑的类型数据
   const [typeData, setTypeData] = useState<Record<string, any> | null>(null);
-
+  // 当前选中的行数据
+  const [selRows, setSelectedRows] = useState<any[]>([]);
   useEffect(() => {
     queryData();
   }, []);
@@ -153,7 +160,7 @@ const EndpointConfig: React.FC = () => {
 
   // 树节点选中事件
   const onTreeSelect = (selectedKeys: React.Key[], info: any) => {
-    console.log(info);
+    console.log(selectedKeys, info);
   };
 
   // 新增分类
@@ -177,6 +184,89 @@ const EndpointConfig: React.FC = () => {
     // 操作成功，关闭弹窗，刷新数据
     setOpenTypeModal(false);
     queryData();
+  };
+
+  // 编辑表格字段
+  const configColumn: TableProps['columns'] = [
+    {
+      title: '名称',
+      dataIndex: 'name',
+      key: 'name',
+      width: 120,
+      fixed: 'left',
+    },
+    {
+      title: '标题',
+      dataIndex: 'title',
+      key: 'title',
+      width: 160,
+    },
+    {
+      title: '类型',
+      dataIndex: 'type',
+      key: 'type',
+      align: 'center',
+      width: 120,
+    },
+    {
+      title: '提示信息',
+      dataIndex: 'tips',
+      key: 'tips',
+      width: 220,
+    },
+    {
+      title: '必填',
+      dataIndex: 'required',
+      key: 'required',
+      align: 'center',
+      width: 100,
+      render(value) {
+        return value ? '是' : '否';
+      },
+    },
+    {
+      title: '默认值',
+      dataIndex: 'defaultValue',
+      key: 'defaultValue',
+      width: 160,
+    },
+    {
+      title: '允许值',
+      dataIndex: 'allowedValue',
+      key: 'allowedValue',
+      width: 160,
+    },
+    {
+      title: '应用端',
+      dataIndex: 'appliesTo',
+      key: 'appliesTo',
+      align: 'center',
+      width: 160,
+    },
+    {
+      title: '描述',
+      dataIndex: 'description',
+      key: 'description',
+      width: 120,
+    },
+    {
+      fixed: 'right',
+      title: '操作',
+      align: 'center',
+      width: 160,
+    },
+  ];
+
+  /**
+   * 多行选中的配置
+   */
+  const rowSelection: TableProps['rowSelection'] = {
+    // 行选中的回调
+    onChange(_selectedRowKeys, selectedRows) {
+      setSelectedRows(selectedRows);
+    },
+    columnWidth: 60,
+    fixed: true,
   };
 
   // 查询后台返回的数据需要进行处理才能丢给treeData渲染
@@ -234,26 +324,58 @@ const EndpointConfig: React.FC = () => {
                   <SettingOutlined style={{ marginRight: '8px' }} />
                   基础信息
                 </Divider>
-                <Form>
-                  <Form.Item label="类型名称">
-                    <Input placeholder="请输入类型名称" />
-                  </Form.Item>
+                <Form labelCol={{ span: 6 }}>
+                  <Row gutter={24} style={{ margin: '0' }}>
+                    <Col span={8}>
+                      <Form.Item name="configName" label="名称">
+                        <Input placeholder="请输入配置名称" />
+                      </Form.Item>
+                    </Col>
+                    <Col span={8}>
+                      <Form.Item name="icon" label="图标">
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={8}>
+                      <Form.Item name="supportedMode" label="支持模式">
+                        <Input placeholder="请输入类型名称" />
+                      </Form.Item>
+                    </Col>
+                    <Col span={8}>
+                      <Form.Item name="description" label="描述">
+                        <TextArea placeholder="描述性信息" />
+                      </Form.Item>
+                    </Col>
+                  </Row>
                 </Form>
                 <Divider orientation="left">
                   <AppstoreAddOutlined style={{ marginRight: '8px' }} />
                   端点配置
                 </Divider>
+                <Table
+                  title={() => <div>端点配置，添加清除功能</div>}
+                  bordered
+                  size="middle"
+                  columns={configColumn}
+                  rowSelection={{ ...rowSelection }}
+                  rowKey="id"
+                  scroll={{ x: 'max-content' }}
+                />
               </Col>
             </Row>
             <Row>
               <Col span={24} style={{ textAlign: 'right' }}>
-                <Divider style={{ margin: '8px 0' }} />
+                <Divider style={{ margin: '8px 0 12px 0' }} />
                 <Space>
-                  <Button>新增</Button>
-                  <Button>修改</Button>
-                  <Button type="primary">保存</Button>
-                  <Button>取消</Button>
-                  <Button danger>删除</Button>
+                  <Button icon={<PlusOutlined />}>新增</Button>
+                  <Button icon={<EditOutlined />}>修改</Button>
+                  <Button icon={<SaveOutlined />} type="primary">
+                    保存
+                  </Button>
+                  <Button icon={<CloseOutlined />}>取消</Button>
+                  <Button icon={<DeleteOutlined />} danger>
+                    删除
+                  </Button>
                 </Space>
               </Col>
             </Row>
