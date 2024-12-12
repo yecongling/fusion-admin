@@ -8,7 +8,7 @@ import {
   Space,
   Tree,
 } from 'antd';
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import type { DataNode } from 'antd/es/tree';
 import {
   addEndpointType,
@@ -51,6 +51,23 @@ const EndpointTypeTree: React.FC<EndpointTypeTreeProps> = memo(
     const [selectedNode, setSelectedNode] = useState<ConfigTypeNode | null>(
       null,
     );
+    const dropdownRef = useRef<HTMLDivElement>(null);
+    // 点击其他地方关闭菜单
+    useEffect(() => {
+      // 监听点击事件，如果点击的是dropdown，则不关闭
+      const handleClick = (event: MouseEvent) => {
+        if (
+          dropdownRef.current &&
+          !dropdownRef.current.contains(event.target as Node)
+        ) {
+          setVisible(false);
+        }
+      };
+      document.addEventListener('click', handleClick);
+      return () => {
+        document.removeEventListener('click', handleClick);
+      };
+    }, []);
 
     // 右键菜单选项
     const contextMenu: MenuProps['items'] = [
@@ -58,7 +75,9 @@ const EndpointTypeTree: React.FC<EndpointTypeTreeProps> = memo(
         key: 'add',
         label: '新增',
         icon: <PlusCircleOutlined />,
-        onClick: () => {},
+        onClick: () => {
+          setVisible(false);
+        },
       },
       {
         key: 'edit',
@@ -66,13 +85,16 @@ const EndpointTypeTree: React.FC<EndpointTypeTreeProps> = memo(
         icon: <EditOutlined />,
         onClick: () => {
           onEditType(selectedNode);
+          setVisible(false);
         },
       },
       {
         key: 'delete',
         label: '删除',
         icon: <DeleteOutlined />,
-        onClick: () => {},
+        onClick: () => {
+          setVisible(false);
+        },
       },
     ];
 
@@ -111,6 +133,7 @@ const EndpointTypeTree: React.FC<EndpointTypeTreeProps> = memo(
               addIcon(item.icon)
             );
         }
+        item.title = item.typeName;
         if (item.type === 'type') {
           expanded.push(item.key as string);
         }
@@ -124,9 +147,15 @@ const EndpointTypeTree: React.FC<EndpointTypeTreeProps> = memo(
 
     // 右键点击事件
     const handleRightClick = (event: any) => {
-      const { pageX, pageY } = event.event;
-      setContextMenuPosition({ x: pageX, y: pageY });
-      setSelectedNode(event.node); // 获取当前点击节点的 key
+      const { offsetX, offsetY } = event.event.nativeEvent;
+      setContextMenuPosition({ x: offsetX, y: offsetY });
+      const node = event.node;
+      setSelectedNode({
+        key: node.id,
+        title: node.title,
+        type: node.type,
+        typeName: node.typeName,
+      }); // 获取当前点击节点的 key
       setVisible(true); // 显示右键菜单
     };
 
@@ -181,44 +210,48 @@ const EndpointTypeTree: React.FC<EndpointTypeTreeProps> = memo(
             <Input.Search placeholder="请输入名称检索" autoFocus />
             {/* 树结构 */}
             {/* 如果没有数据则显示为空，手动添加 */}
-            {treeData.length === 0 ? (
-              <Empty description="暂无分类！">
-                <Button type="primary" onClick={onAddTypeClick}>
-                  新增分类
-                </Button>
-              </Empty>
-            ) : (
-              <DirectoryTree
-                blockNode
-                showIcon
-                defaultExpandAll
-                expandedKeys={expandedKeys}
-                treeData={treeData}
-                onSelect={onTreeSelect}
-                onRightClick={handleRightClick}
-              />
-            )}
-            {/* 右键菜单 */}
-            {visible && (
-              <Dropdown
-                menu={{ items: contextMenu }}
-                trigger={['click']}
-                open={visible}
-              >
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: contextMenuPosition.y,
-                    left: contextMenuPosition.x,
-                    zIndex: 1000,
-                    backgroundColor: '#fff',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
-                    borderRadius: 4,
-                  }}
-                  onClick={() => setVisible(false)} // 点击菜单外隐藏菜单
+            <div className="tree" style={{ position: 'relative' }}>
+              {treeData.length === 0 ? (
+                <Empty description="暂无分类！">
+                  <Button type="primary" onClick={onAddTypeClick}>
+                    新增分类
+                  </Button>
+                </Empty>
+              ) : (
+                <DirectoryTree
+                  blockNode
+                  showIcon
+                  defaultExpandAll
+                  expandedKeys={expandedKeys}
+                  treeData={treeData}
+                  onSelect={onTreeSelect}
+                  onRightClick={handleRightClick}
                 />
-              </Dropdown>
-            )}
+              )}
+              {/* 右键菜单 */}
+              {visible && (
+                <div ref={dropdownRef} className="dropdown">
+                  <Dropdown
+                    menu={{ items: contextMenu }}
+                    trigger={['click']}
+                    open={visible}
+                  >
+                    <div
+                      style={{
+                        position: 'absolute',
+                        top: contextMenuPosition.y,
+                        left: contextMenuPosition.x,
+                        zIndex: 1000,
+                        backgroundColor: '#fff',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                        borderRadius: 4,
+                      }}
+                      onClick={() => setVisible(false)} // 点击菜单外隐藏菜单
+                    />
+                  </Dropdown>
+                </div>
+              )}
+            </div>
           </Space>
         </Card>
         {/* 类型编辑窗口 */}
