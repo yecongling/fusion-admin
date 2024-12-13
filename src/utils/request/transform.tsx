@@ -114,18 +114,6 @@ export const transform: AxiosTransform = {
       }
       return rtn;
     }
-    let timeoutMsg = '';
-    switch (code) {
-      case HttpCodeEnum.RC401:
-        timeoutMsg = '接口请求超时';
-        // setToken("");
-        // window.location.href = "/login";
-        break;
-      default:
-        if (msg) {
-          timeoutMsg = msg;
-        }
-    }
     if (options.errorMessageMode === 'modal') {
       if (code === HttpCodeEnum.RC401 || code === HttpCodeEnum.RC101) {
         antdUtils.modal?.confirm({
@@ -146,9 +134,9 @@ export const transform: AxiosTransform = {
         });
       }
     } else if (options.errorMessageMode === 'message') {
-      antdUtils.message?.error(timeoutMsg);
+      antdUtils.message?.error(msg);
     }
-    throw new Error(timeoutMsg || '接口请求失败');
+    throw new Error(msg || '接口请求失败');
   },
 
   // 请求之前处理config
