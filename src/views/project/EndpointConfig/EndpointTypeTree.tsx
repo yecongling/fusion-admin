@@ -20,6 +20,7 @@ import { addIcon } from '@/utils/utils';
 import EndpointTypeModal from './EndpointTypeModal';
 import {
   DeleteOutlined,
+  DownOutlined,
   EditOutlined,
   PlusCircleOutlined,
 } from '@ant-design/icons';
@@ -73,16 +74,31 @@ const EndpointTypeTree: React.FC<EndpointTypeTreeProps> = memo(
     const contextMenu: MenuProps['items'] = [
       {
         key: 'add',
-        label: '新增',
+        label: '添加同级',
         icon: <PlusCircleOutlined />,
+        extra: <>⌘ + N</>,
         onClick: () => {
+          setTypeData(null);
+          setOpenTypeModal(true);
+          setVisible(false);
+        },
+      },
+      {
+        key: 'addSub',
+        label: '添加下级',
+        icon: <PlusCircleOutlined />,
+        extra: <>⌘ + A</>,
+        onClick: () => {
+          setTypeData({ parentId: selectedNode?.key });
+          setOpenTypeModal(true);
           setVisible(false);
         },
       },
       {
         key: 'edit',
-        label: '编辑',
+        label: '编辑分类',
         icon: <EditOutlined />,
+        extra: <>⌘ + E</>,
         onClick: () => {
           onEditType(selectedNode);
           setVisible(false);
@@ -90,7 +106,8 @@ const EndpointTypeTree: React.FC<EndpointTypeTreeProps> = memo(
       },
       {
         key: 'delete',
-        label: '删除',
+        label: '删除分类',
+        extra: <>⌘ + D</>,
         icon: <DeleteOutlined />,
         onClick: () => {
           setVisible(false);
@@ -147,8 +164,22 @@ const EndpointTypeTree: React.FC<EndpointTypeTreeProps> = memo(
 
     // 右键点击事件
     const handleRightClick = (event: any) => {
-      const { offsetX, offsetY } = event.event.nativeEvent;
-      setContextMenuPosition({ x: offsetX, y: offsetY });
+      event.event.preventDefault();
+      // 如果是右键的配置节点，则不响应, 这里类型判断有误dang，需要处理
+      // if (event.node.type !== 'type') {
+      //   return;
+      // }
+      const { clientX, clientY } = event.event;
+      const { innerWidth, innerHeight } = window;
+
+      // 计算菜单位置，避免溢出
+      const menuWidth = 160; // 假设菜单宽度
+      const menuHeight = 136; // 假设菜单高度
+      const x =
+        clientX + menuWidth > innerWidth ? clientX - menuWidth : clientX;
+      const y =
+        clientY + menuHeight > innerHeight ? clientY - menuHeight : clientY;
+      setContextMenuPosition({ x: x, y: y });
       const node = event.node;
       setSelectedNode({
         key: node.id,
@@ -197,6 +228,22 @@ const EndpointTypeTree: React.FC<EndpointTypeTreeProps> = memo(
       setOpenTypeModal(true);
     };
 
+    /**
+     * 展开节点
+     * @param keys 节点key
+     * @param info
+     */
+    const onExpand = (keys: any, info: any) => {
+      if (info.expanded) {
+        setExpandedKeys(keys);
+      } else {
+        //
+        setExpandedKeys(
+          expandedKeys.filter((key: any) => info.node.id !== key),
+        );
+      }
+    };
+
     return (
       <>
         <Card style={{ height: '100%' }} title="端点分类列表">
@@ -210,7 +257,7 @@ const EndpointTypeTree: React.FC<EndpointTypeTreeProps> = memo(
             <Input.Search placeholder="请输入名称检索" autoFocus />
             {/* 树结构 */}
             {/* 如果没有数据则显示为空，手动添加 */}
-            <div className="tree" style={{ position: 'relative' }}>
+            <div className="tree">
               {treeData.length === 0 ? (
                 <Empty description="暂无分类！">
                   <Button type="primary" onClick={onAddTypeClick}>
@@ -221,8 +268,10 @@ const EndpointTypeTree: React.FC<EndpointTypeTreeProps> = memo(
                 <DirectoryTree
                   blockNode
                   showIcon
+                  switcherIcon={<DownOutlined />}
                   defaultExpandAll
                   expandedKeys={expandedKeys}
+                  onExpand={onExpand}
                   treeData={treeData}
                   onSelect={onTreeSelect}
                   onRightClick={handleRightClick}
@@ -230,24 +279,21 @@ const EndpointTypeTree: React.FC<EndpointTypeTreeProps> = memo(
               )}
               {/* 右键菜单 */}
               {visible && (
-                <div ref={dropdownRef} className="dropdown">
+                <div
+                  ref={dropdownRef}
+                  style={{
+                    position: 'fixed',
+                    top: contextMenuPosition.y,
+                    left: contextMenuPosition.x,
+                    zIndex: 1000,
+                  }}
+                >
                   <Dropdown
                     menu={{ items: contextMenu }}
                     trigger={['click']}
                     open={visible}
                   >
-                    <div
-                      style={{
-                        position: 'absolute',
-                        top: contextMenuPosition.y,
-                        left: contextMenuPosition.x,
-                        zIndex: 1000,
-                        backgroundColor: '#fff',
-                        boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
-                        borderRadius: 4,
-                      }}
-                      onClick={() => setVisible(false)} // 点击菜单外隐藏菜单
-                    />
+                    <div />
                   </Dropdown>
                 </div>
               )}
