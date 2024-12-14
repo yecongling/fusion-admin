@@ -5,6 +5,7 @@ import {
   Empty,
   Input,
   type MenuProps,
+  Modal,
   Space,
   Tree,
 } from 'antd';
@@ -22,10 +23,10 @@ import {
   DeleteOutlined,
   DownOutlined,
   EditOutlined,
+  FolderFilled,
+  FolderOpenFilled,
   PlusCircleOutlined,
 } from '@ant-design/icons';
-
-const { DirectoryTree } = Tree;
 
 /**
  * 端点类型树
@@ -33,7 +34,7 @@ const { DirectoryTree } = Tree;
  */
 const EndpointTypeTree: React.FC<EndpointTypeTreeProps> = memo(
   ({ onSelect }) => {
-    // 鼠标hover的节点
+    const [modal, contextHolder] = Modal.useModal();
     // 树结构数据
     const [treeData, setTreeData] = useState<ConfigTypeNode[]>([]);
     // 树结构展开的节点
@@ -42,13 +43,14 @@ const EndpointTypeTree: React.FC<EndpointTypeTreeProps> = memo(
     const [openTypeModal, setOpenTypeModal] = useState<boolean>(false);
     // 当前编辑的类型数据
     const [typeData, setTypeData] = useState<Record<string, any> | null>(null);
-    // 右键菜单限制位置
+    // 右键菜单位置
     const [contextMenuPosition, setContextMenuPosition] = useState<{
       x: number;
       y: number;
     }>({ x: 0, y: 0 });
     // 菜单可见
     const [visible, setVisible] = useState<boolean>(false);
+    // 选中的节点
     const [selectedNode, setSelectedNode] = useState<ConfigTypeNode | null>(
       null,
     );
@@ -100,7 +102,8 @@ const EndpointTypeTree: React.FC<EndpointTypeTreeProps> = memo(
         icon: <EditOutlined />,
         extra: <>⌘ + E</>,
         onClick: () => {
-          onEditType(selectedNode);
+          setTypeData(selectedNode);
+          setOpenTypeModal(true);
           setVisible(false);
         },
       },
@@ -110,7 +113,18 @@ const EndpointTypeTree: React.FC<EndpointTypeTreeProps> = memo(
         extra: <>⌘ + D</>,
         icon: <DeleteOutlined />,
         onClick: () => {
-          setVisible(false);
+          modal.confirm({
+            title: '删除分类',
+            content: '确定删除该分类？',
+            okText: '确定',
+            cancelText: '取消',
+            onOk: () => {
+              console.log('删除分类', selectedNode);
+            },
+            onCancel: () => {
+              setVisible(false);
+            },
+          });
         },
       },
     ];
@@ -151,7 +165,7 @@ const EndpointTypeTree: React.FC<EndpointTypeTreeProps> = memo(
             );
         }
         item.title = item.typeName;
-        if (item.type === 'type') {
+        if (item.children?.length > 0 || item.endpointConfigs?.length > 0) {
           expanded.push(item.key as string);
         }
         // 分类节点，需要处理children数据
@@ -166,9 +180,9 @@ const EndpointTypeTree: React.FC<EndpointTypeTreeProps> = memo(
     const handleRightClick = (event: any) => {
       event.event.preventDefault();
       // 如果是右键的配置节点，则不响应, 这里类型判断有误dang，需要处理
-      // if (event.node.type !== 'type') {
-      //   return;
-      // }
+      if (event.node.isConfig) {
+        return;
+      }
       const { clientX, clientY } = event.event;
       const { innerWidth, innerHeight } = window;
 
@@ -182,21 +196,14 @@ const EndpointTypeTree: React.FC<EndpointTypeTreeProps> = memo(
       setContextMenuPosition({ x: x, y: y });
       const node = event.node;
       setSelectedNode({
-        key: node.id,
+        id: node.id,
+        key: node.key,
         title: node.title,
         type: node.type,
         typeName: node.typeName,
+        parentId: node.parentId,
       }); // 获取当前点击节点的 key
       setVisible(true); // 显示右键菜单
-    };
-
-    /**
-     * 类型编辑
-     */
-    const onEditType = (nodeData: ConfigTypeNode | null) => {
-      if (!nodeData) return;
-      setTypeData(nodeData);
-      setOpenTypeModal(true);
     };
 
     /**
@@ -219,6 +226,15 @@ const EndpointTypeTree: React.FC<EndpointTypeTreeProps> = memo(
 
     // 树节点选中事件
     const onTreeSelect = (selectedKeys: React.Key[], info: any) => {
+      const node = info.node;
+      setSelectedNode({
+        id: node.id,
+        key: node.key,
+        title: node.title,
+        type: node.type,
+        typeName: node.typeName,
+        parentId: node.parentId,
+      });
       onSelect(info);
       console.log(selectedKeys, info);
     };
@@ -254,7 +270,11 @@ const EndpointTypeTree: React.FC<EndpointTypeTreeProps> = memo(
             styles={{ item: { flex: 1, overflowY: 'auto' } }}
           >
             {/* 检索 */}
-            <Input.Search placeholder="请输入名称检索" autoFocus />
+            <Input.Search
+              placeholder="请输入名称检索"
+              autoFocus
+              onSearch={(value: string) => queryData(value)}
+            />
             {/* 树结构 */}
             {/* 如果没有数据则显示为空，手动添加 */}
             <div className="tree">
@@ -265,14 +285,31 @@ const EndpointTypeTree: React.FC<EndpointTypeTreeProps> = memo(
                   </Button>
                 </Empty>
               ) : (
-                <DirectoryTree
+                <Tree
                   blockNode
                   showIcon
                   switcherIcon={<DownOutlined />}
                   defaultExpandAll
+                  icon={(props: any) => {
+                    // 没有isConfig这个属性表明这是类型，不是配置
+                    const { isConfig } = props.data;
+                    if (!isConfig) {
+                      return props.expanded ? (
+                        <FolderOpenFilled
+                          style={{ fontSize: '16px', color: 'orange' }}
+                        />
+                      ) : (
+                        <FolderFilled
+                          style={{ fontSize: '16px', color: 'orange' }}
+                        />
+                      );
+                    }
+                    return <></>;
+                  }}
                   expandedKeys={expandedKeys}
                   onExpand={onExpand}
                   treeData={treeData}
+                  selectedKeys={selectedNode ? [selectedNode.key] : []}
                   onSelect={onTreeSelect}
                   onRightClick={handleRightClick}
                 />
@@ -307,6 +344,7 @@ const EndpointTypeTree: React.FC<EndpointTypeTreeProps> = memo(
           onOk={onTypeEditOk}
           data={typeData}
         />
+        {contextHolder}
       </>
     );
   },
@@ -318,10 +356,12 @@ export default EndpointTypeTree;
  * 树节点数据类型
  */
 interface ConfigTypeNode extends DataNode {
+  id: string;
   // 节点类型（用于区分是分类还是配置）
   type: string;
   // 类型名
   typeName: string;
+  parentId?: string;
   children?: ConfigTypeNode[];
 }
 

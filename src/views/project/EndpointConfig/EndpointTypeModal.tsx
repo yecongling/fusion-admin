@@ -1,5 +1,5 @@
 import DragModal from '@/components/modal/DragModal';
-import { Form, Input, type InputRef } from 'antd';
+import { Button, Form, Input, type InputRef } from 'antd';
 import { useEffect, useRef } from 'react';
 
 /**
@@ -16,10 +16,10 @@ const EndpointTypeModal: React.FC<EndpointTypeModalProps> = ({
 
   useEffect(() => {
     if (!open) return;
+    // 首先清空数据
+    form.resetFields();
     if (data) {
       form.setFieldsValue(data);
-    } else {
-      form.resetFields();
     }
   }, [data, form, open]);
 
@@ -58,7 +58,7 @@ const EndpointTypeModal: React.FC<EndpointTypeModalProps> = ({
       afterOpenChange={onAfterOpenChange}
       onOk={handleOk}
     >
-      <Form form={form} labelCol={{ span: 4 }}>
+      <Form form={form} labelCol={{ span: 4 }} onFinish={handleOk}>
         <Form.Item name="id" hidden>
           <Input />
         </Form.Item>
@@ -70,6 +70,11 @@ const EndpointTypeModal: React.FC<EndpointTypeModalProps> = ({
         </Form.Item>
         <Form.Item name="icon" label="图标">
           <Input />
+        </Form.Item>
+        <Form.Item label={null} hidden>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
         </Form.Item>
       </Form>
     </DragModal>

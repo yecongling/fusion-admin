@@ -1,4 +1,5 @@
-import { Button, Table, type TableProps } from 'antd';
+import useParentSize from '@/hooks/useParentSize';
+import { Button, Checkbox, Space, Table, type TableProps } from 'antd';
 import { memo, useState } from 'react';
 
 /**
@@ -9,6 +10,8 @@ const EndpointConfigTable: React.FC<EndpointConfigTableProps> = memo(
   ({ action, configData, onConfigDataChange }) => {
     // 当前选中的行数据
     const [selRows, setSelectedRows] = useState<any[]>([]);
+    // 计算表格高度
+    const { parentRef, height } = useParentSize();
     // 根据action判断是否为编辑状态
     // configData填充表格数据
 
@@ -53,7 +56,7 @@ const EndpointConfigTable: React.FC<EndpointConfigTableProps> = memo(
         align: 'center',
         width: 100,
         render(value: any) {
-          return value ? '是' : '否';
+          return <Checkbox checked={value} />;
         },
       },
       {
@@ -86,6 +89,23 @@ const EndpointConfigTable: React.FC<EndpointConfigTableProps> = memo(
         title: '操作',
         align: 'center',
         width: 160,
+        render: (_: any, record: any) => {
+          return (
+            <Space size={0}>
+              <Button
+                size="small"
+                type="link"
+                style={{ color: '#fa8c16' }}
+                onClick={() => {}}
+              >
+                编辑
+              </Button>
+              <Button size="small" variant="link" color="danger">
+                删除
+              </Button>
+            </Space>
+          );
+        },
       },
     ];
 
@@ -97,6 +117,18 @@ const EndpointConfigTable: React.FC<EndpointConfigTableProps> = memo(
         type: 'type1',
         tips: 'tips1',
         required: true,
+        defaultValue: 'defaultValue1',
+        allowedValue: 'allowedValue1',
+        appliesTo: 'appliesTo1',
+        description: 'description1',
+      },
+      {
+        id: 2,
+        name: 'name2',
+        title: 'title1',
+        type: 'type1',
+        tips: 'tips1',
+        required: false,
         defaultValue: 'defaultValue1',
         allowedValue: 'allowedValue1',
         appliesTo: 'appliesTo1',
@@ -125,7 +157,7 @@ const EndpointConfigTable: React.FC<EndpointConfigTableProps> = memo(
     };
 
     return (
-      <>
+      <div className="config-table" style={{ flex: 1 }} ref={parentRef}>
         <Table
           title={() => (
             <Button
@@ -141,7 +173,7 @@ const EndpointConfigTable: React.FC<EndpointConfigTableProps> = memo(
           columns={configColumn}
           rowSelection={{ ...rowSelection }}
           rowKey="id"
-          scroll={{ x: 'max-content' }}
+          scroll={{ x: 'max-content', y: height - 217 }}
           footer={() => {
             return (
               <Button
@@ -155,7 +187,7 @@ const EndpointConfigTable: React.FC<EndpointConfigTableProps> = memo(
             );
           }}
         />
-      </>
+      </div>
     );
   },
 );

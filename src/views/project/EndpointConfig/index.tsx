@@ -66,15 +66,12 @@ const EndpointConfig: React.FC = () => {
    */
   const saveData = () => {
     // 先进行数据校验，校验通过再进行保存
-    
-  }
+  };
 
   /**
    * 删除数据
    */
-  const deleteData = () => {
-
-  }
+  const deleteData = () => {};
 
   /**
    * 新增数据
@@ -82,8 +79,7 @@ const EndpointConfig: React.FC = () => {
   const addData = () => {
     // 首先清空所有选项
     // 然后设置action
-
-  }
+  };
 
   return (
     <>
@@ -105,7 +101,10 @@ const EndpointConfig: React.FC = () => {
             }}
           >
             <Row style={{ flex: 1, minHeight: 0, overflow: 'auto' }}>
-              <Col span={24}>
+              <Col
+                span={24}
+                style={{ display: 'flex', flexDirection: 'column', minHeight: 0 }}
+              >
                 <Divider orientation="left">
                   <SettingOutlined style={{ marginRight: '8px' }} />
                   基础信息
