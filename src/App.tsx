@@ -10,6 +10,7 @@ import { Router } from '@/router/router';
 import { getMenuListByRoleId } from '@/services/system/menu/menuApi';
 import { antdUtils } from '@/utils/antdUtil';
 
+
 /**
  * 主应用
  */
@@ -77,6 +78,11 @@ const App: React.FC = () => {
             headerPadding: '0 16px 0 0',
             headerHeight: '50px',
             headerBg: '#fff',
+          },
+          Tree: {
+            directoryNodeSelectedBg: '#e6f4ff',
+            indentSize: 12,
+            directoryNodeSelectedColor: 'rgba(0, 0, 0, 0.88)',
           },
         },
       }}
