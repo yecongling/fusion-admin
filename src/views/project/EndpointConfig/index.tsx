@@ -59,7 +59,7 @@ const EndpointConfig: React.FC = () => {
    * 配置数据发生变更
    * @param data 配置数据
    */
-  const onConfigDataChange = (data: any[]) => {};
+  const onConfigDataChange = (data: any[]) => { };
 
   /**
    * 保存数据
@@ -71,7 +71,7 @@ const EndpointConfig: React.FC = () => {
   /**
    * 删除数据
    */
-  const deleteData = () => {};
+  const deleteData = () => { };
 
   /**
    * 新增数据
@@ -151,6 +151,7 @@ const EndpointConfig: React.FC = () => {
                 <Space>
                   <Button
                     icon={<PlusOutlined />}
+                    type='primary'
                     onClick={() => setAction('add')}
                   >
                     新增
@@ -163,18 +164,20 @@ const EndpointConfig: React.FC = () => {
                   </Button>
                   <Button
                     icon={<SaveOutlined />}
-                    type="primary"
+                    type='primary'
+                    disabled={action === 'view'}
                     onClick={() => setAction('view')}
                   >
                     保存
                   </Button>
                   <Button
                     icon={<CloseOutlined />}
+                    disabled={action === "view"}
                     onClick={() => setAction('view')}
                   >
                     取消
                   </Button>
-                  <Button icon={<DeleteOutlined />} danger onClick={() => {}}>
+                  <Button icon={<DeleteOutlined />} danger disabled={configData === null || configData.node.type !== 'config'} onClick={() => { }}>
                     删除
                   </Button>
                 </Space>
