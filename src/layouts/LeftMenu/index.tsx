@@ -114,7 +114,7 @@ const LeftMenu: React.FC = memo(() => {
     }
     const title = route.meta?.title;
     if (title) {
-      document.title = `Fusion Admin - ${title}`;
+      document.title = `${title} - Fusion Admin`;
     }
     if (!collapse) {
       setOpenKeys(openKey);
