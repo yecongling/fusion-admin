@@ -1,4 +1,6 @@
+import SelectItem from '../SelectItem';
 import SwitchItem from '../SwitchItem';
+import { SUPPORT_LANGUAGES } from '@/enums/constants';
 
 /**
  * 通用
@@ -8,7 +10,7 @@ const General: React.FC = () => {
   return (
     <>
       {/* 语言 */}
-      
+      <SelectItem title="语言" items={SUPPORT_LANGUAGES} />
       {/* 动态标题 */}
       <SwitchItem title="动态标题" />
       {/* 水印 */}
