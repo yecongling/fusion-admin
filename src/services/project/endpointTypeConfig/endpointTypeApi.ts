@@ -19,6 +19,11 @@ export enum Api {
    * 修改端点类型
    */
   updateEndpointType = '/engine/endpointConfig/updateEndpointType',
+
+  /**
+   * 删除端点类型
+   */
+  deleteEndpointType = '/engine/endpointConfig/deleteEndpointType',
 }
 
 /**
@@ -53,5 +58,17 @@ export const updateEndpointType = (params: Record<string, any>) => {
   return HttpRequest.post({
     url: Api.updateEndpointType,
     data: params,
+  });
+};
+
+/**
+ * 删除端点类型
+ * @param typeId 端点类型ID
+ * @returns
+ */
+export const deleteEndpointType = (typeId: string) => {
+  return HttpRequest.delete({
+    url: Api.deleteEndpointType,
+    params: { id: typeId },
   });
 };

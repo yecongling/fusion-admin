@@ -126,11 +126,13 @@ export const transform: AxiosTransform = {
             sessionStorage.removeItem('roleId');
             window.location.href = '/login';
           },
+          okText: '确定',
         });
       } else {
         antdUtils.modal?.error({
           title: `服务异常（状态码：${code}）`,
           content: msg,
+          okText: '确定',
         });
       }
     } else if (options.errorMessageMode === 'message') {
@@ -247,6 +249,7 @@ export const transform: AxiosTransform = {
       antdUtils.modal?.error({
         title: `服务异常，状态码(${code})`,
         content: errMessage,
+        okText: '确定',
       });
     }
     return Promise.reject(error);
@@ -289,6 +292,7 @@ export const transform: AxiosTransform = {
       antdUtils.modal?.error({
         title: `服务异常（状态码：${responseCode || code}）`,
         content: errMessage,
+        okText: '确定',
       });
       return Promise.reject(error);
     }

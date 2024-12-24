@@ -5,7 +5,6 @@ import {
   Empty,
   Input,
   type MenuProps,
-  Modal,
   Space,
   Tree,
 } from 'antd';
@@ -13,6 +12,7 @@ import { memo, useEffect, useRef, useState } from 'react';
 import type { DataNode } from 'antd/es/tree';
 import {
   addEndpointType,
+  deleteEndpointType,
   queryEndpointConfigType,
   updateEndpointType,
 } from '@/services/project/endpointTypeConfig/endpointTypeApi';
@@ -27,6 +27,7 @@ import {
   FolderOpenFilled,
   PlusCircleOutlined,
 } from '@ant-design/icons';
+import { antdUtils } from '@/utils/antdUtil';
 
 /**
  * 端点类型树
@@ -34,7 +35,6 @@ import {
  */
 const EndpointTypeTree: React.FC<EndpointTypeTreeProps> = memo(
   ({ onSelect }) => {
-    const [modal, contextHolder] = Modal.useModal();
     // 树结构数据
     const [treeData, setTreeData] = useState<ConfigTypeNode[]>([]);
     // 树结构展开的节点
@@ -112,14 +112,39 @@ const EndpointTypeTree: React.FC<EndpointTypeTreeProps> = memo(
         label: '删除分类',
         extra: <>⌘ + D</>,
         icon: <DeleteOutlined />,
+        disabled: selectedNode?.type === 'isConfig',
         onClick: () => {
-          modal.confirm({
+          // 删除之前判断该分类下是否有配置信息
+          if (selectedNode) {
+            if (selectedNode.children && selectedNode.children.length > 0) {
+              antdUtils.message?.warning('该分类下存在下级分类，无法删除！');
+              return;
+            }
+            if (
+              selectedNode.endpointConfigs &&
+              selectedNode.endpointConfigs.length > 0
+            ) {
+              antdUtils.message?.warning('该分类下存在配置信息，无法删除！');
+              return;
+            }
+          }
+          antdUtils.modal?.confirm({
             title: '删除分类',
             content: '确定删除该分类？',
             okText: '确定',
             cancelText: '取消',
             onOk: () => {
-              console.log('删除分类', selectedNode);
+              // 调用删除
+              if (!selectedNode) {
+                antdUtils.modal?.error({
+                  title: '错误',
+                  content: '请选择要删除的分类！',
+                });
+                return;
+              }
+              deleteEndpointType(selectedNode.id).then(() => {
+                queryData();
+              });
             },
             onCancel: () => {
               setVisible(false);
@@ -202,6 +227,8 @@ const EndpointTypeTree: React.FC<EndpointTypeTreeProps> = memo(
         type: node.type,
         typeName: node.typeName,
         parentId: node.parentId,
+        children: node.children,
+        endpointConfigs: node.endpointConfigs,
       }); // 获取当前点击节点的 key
       setVisible(true); // 显示右键菜单
     };
@@ -234,6 +261,8 @@ const EndpointTypeTree: React.FC<EndpointTypeTreeProps> = memo(
         type: node.type,
         typeName: node.typeName,
         parentId: node.parentId,
+        children: node.children,
+        endpointConfigs: node.endpointConfigs,
       });
       onSelect(info);
       console.log(selectedKeys, info);
@@ -344,7 +373,6 @@ const EndpointTypeTree: React.FC<EndpointTypeTreeProps> = memo(
           onOk={onTypeEditOk}
           data={typeData}
         />
-        {contextHolder}
       </>
     );
   },
@@ -363,6 +391,7 @@ interface ConfigTypeNode extends DataNode {
   typeName: string;
   parentId?: string;
   children?: ConfigTypeNode[];
+  endpointConfigs?: any[];
 }
 
 type EndpointTypeTreeProps = {
