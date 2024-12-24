@@ -2,19 +2,16 @@ import type React from 'react';
 import { memo, useState } from 'react';
 import {
   Button,
-  Col,
-  ColorPicker,
   type ColorPickerProps,
   ConfigProvider,
   Drawer,
-  Row,
   Segmented,
   Space,
   Tabs,
   type TabsProps,
 } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { type RootState, setColorPrimary, setTheme } from '@/stores/store';
+import type { RootState } from '@/stores/store';
 import {
   ClearOutlined,
   CloseOutlined,
@@ -70,20 +67,12 @@ const Setting: React.FC<SettingProps> = memo(({ open, setOpen }) => {
     {
       key: 'theme',
       label: '',
-      children: (
-        <Block title="主题">
-          <Theme />
-        </Block>
-      ),
+      children: <Theme />,
     },
     {
       key: 'layout',
       label: '',
-      children: (
-        <Block title="布局">
-          <Layout />
-        </Block>
-      ),
+      children: <Layout />,
     },
     {
       key: 'shortcut',
@@ -153,10 +142,10 @@ const Setting: React.FC<SettingProps> = memo(({ open, setOpen }) => {
         closeIcon={false}
         footer={
           <Space size={16}>
-            <Button type="primary" icon={<CopyOutlined />}>
+            <Button type="primary" icon={<CopyOutlined />} disabled>
               复制偏好设置
             </Button>
-            <Button icon={<ClearOutlined />}>清空缓存 & 退出登录</Button>
+            <Button icon={<ClearOutlined />} disabled>清空缓存 & 退出登录</Button>
           </Space>
         }
         onClose={() => setOpen(false)}

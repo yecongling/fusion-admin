@@ -1,10 +1,33 @@
+import Block from '../Block';
+import Buitin from './Buitin';
+import ColorMode from './ColorMode';
+import MyTheme from './MyTheme';
+import Radius from './Radius';
+
 /**
  * 主题设置
- * @returns 
+ * @returns
  */
 const Theme: React.FC = () => {
-    return (
-        <></>
-    )
+  return (
+    <>
+      {/* 主题 */}
+      <Block title="主题">
+        <MyTheme />
+      </Block>
+      {/* 内置主题 */}
+      <Block title="内置主题">
+        <Buitin />
+      </Block>
+      {/* 圆角 */}
+      <Block title="圆角">
+        <Radius />
+      </Block>
+      {/* 颜色模式 */}
+      <Block title="颜色模式">
+        <ColorMode />
+      </Block>
+    </>
+  );
 };
 export default Theme;

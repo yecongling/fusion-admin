@@ -1,6 +1,7 @@
 import type { BasicOptions } from '@/types/global';
 import { Select } from 'antd';
 import classNames from 'classnames';
+import "./switchItem.scss";
 
 /**
  * 选择项
@@ -26,7 +27,7 @@ const SelectItem: React.FC<SelectItemProps> = (props) => {
         {title}
       </span>
       {/* Select组件 */}
-      <Select value="" options={items} placeholder={placeholder} />
+      <Select value="zh-CN" options={items} disabled={disabled} placeholder={placeholder} style={{width: '165px'}}/>
     </div>
   );
 };
