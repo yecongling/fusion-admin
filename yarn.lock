@@ -587,10 +587,10 @@
     estree-walker "^2.0.2"
     picomatch "^4.0.2"
 
-"@rsbuild/core@^1.1.12":
-  version "1.1.12"
-  resolved "https://registry.npmmirror.com/@rsbuild/core/-/core-1.1.12.tgz#4907ef39e36fe80f40c6d37c1fbd4d778eac7c83"
-  integrity sha512-9f+E47fMf51Cg4W7CF2Q4f7BRSslVV/+TRvs5ScclYanqXEFtAGV9nuecJEL6Qc9jJV61lES0esPTFdPPnWPGw==
+"@rsbuild/core@^1.1.13":
+  version "1.1.13"
+  resolved "https://registry.npmmirror.com/@rsbuild/core/-/core-1.1.13.tgz#8e6c0304582674b82613d1bb1acdaf6eb553299e"
+  integrity sha512-XBL2hrin8731W6iTGGL+x3cv07n4vm2D7u6XHRwtQkRfySzAqGx7ThlQLdNX/dJwfsoQrYQuWl/qzaljjXtGtg==
   dependencies:
     "@rspack/core" "1.1.8"
     "@rspack/lite-tapable" "~1.0.1"
