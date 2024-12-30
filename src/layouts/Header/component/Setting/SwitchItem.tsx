@@ -7,9 +7,9 @@ import './switchItem.scss';
  * @returns SwitchItem
  */
 const SwitchItem: React.FC<SwitchItemProps> = (props) => {
-  const { title, disabled, shortcut } = props;
+  const { title, disabled, shortcut, style } = props;
   return (
-    <div className="switch-item">
+    <div className="switch-item" style={style}>
       <span
         style={{
           display: 'flex',
@@ -45,4 +45,5 @@ export interface SwitchItemProps {
   disabled?: boolean;
   shortcut?: ReactNode | string;
   children?: ReactNode;
+  style?: React.CSSProperties;
 }

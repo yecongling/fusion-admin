@@ -1,5 +1,7 @@
 import { THEME_PRESET } from '@/enums/constants';
+import classNames from 'classnames';
 import "./theme.scss";
+import SwitchItem from '../SwitchItem';
 
 /**
  * 主题
@@ -12,6 +14,7 @@ const MyTheme: React.FC = () => {
         display: 'flex',
         width: '100%',
         justifyContent: 'space-between',
+        flexWrap: 'wrap',
       }}
     >
       {THEME_PRESET.map((item) => {
@@ -19,7 +22,6 @@ const MyTheme: React.FC = () => {
           <div
             key={item.name}
             style={{
-              width: '100%',
               height: '100%',
               display: 'flex',
               justifyContent: 'center',
@@ -35,15 +37,21 @@ const MyTheme: React.FC = () => {
               onClick={() => {}}
             >
               <div
-                className="outline-box-active outline-box"
+                className={classNames('outline-box', {
+                  'outline-box-active': item.selected,
+                })}
               >
                 {item.icon}
               </div>
-              <div>{item.name}</div>
+              <div style={{textAlign: 'center', fontSize: '12px', lineHeight: '16px', color: 'rgb(113, 113, 122)', marginTop: '8px'}}>{item.name}</div>
             </div>
           </div>
         );
       })}
+      {/* 深色侧边栏 */}
+      <SwitchItem style={{marginTop: '1.5rem'}} title='深色侧边栏'/>
+      {/* 深色顶栏 */}
+      <SwitchItem title='深色顶栏'/>
     </div>
   );
 };

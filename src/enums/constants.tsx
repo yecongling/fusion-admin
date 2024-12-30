@@ -22,13 +22,16 @@ export const SUPPORT_LANGUAGES: LanguageOption[] = [
 
 export type ThemeModeType = 'light' | 'dark' | 'auto';
 
+// 预设的theme
 export const THEME_PRESET: Array<{
   icon: React.ReactNode;
   name: ThemeModeType;
+  selected?: boolean
 }> = [
   {
     icon: <SunOutlined style={{fontSize: '20px', margin: '0 36px'}}/>,
     name: 'light',
+    selected: true
   },
   {
     icon:<MoonOutlined style={{fontSize: '20px', margin: '0 36px'}} />,
@@ -39,3 +42,8 @@ export const THEME_PRESET: Array<{
     name: 'auto',
   },
 ];
+
+
+
+// 内置的theme
+export const BUILTIN_THEME_PRESETS = [];
