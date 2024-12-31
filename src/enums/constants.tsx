@@ -52,7 +52,7 @@ export const BUILTIN_THEME_PRESETS: BuiltinThemePreset[] = [
     type: 'violet',
   },
   {
-    color: 'rgb(232, 74, 108);',
+    color: 'rgb(232, 74, 108)',
     type: 'pink',
   },
   {
