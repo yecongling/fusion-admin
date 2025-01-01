@@ -24,7 +24,7 @@ const Theme: React.FC = () => {
         <Radius />
       </Block>
       {/* 颜色模式 */}
-      <Block title="颜色模式">
+      <Block title="其他">
         <ColorMode />
       </Block>
     </>
