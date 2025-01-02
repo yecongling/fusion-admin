@@ -1,9 +1,6 @@
-/**
- * 内容区域
- */
-
 import ContentCompact from "../icons/ContentCompact";
 import HeaderNav from "../icons/HeaderNav";
+import "./layout.scss";
 
 /**
  * 预设内容布局
@@ -31,6 +28,9 @@ const Content: React.FC = () => {
           <div key={item.name} style={{width: '100px', cursor: 'pointer', flexDirection: 'column'}}>
             <div className="outline-box" style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
               <item.type />
+            </div>
+            <div className="layoutTitle">
+              {item.name}
             </div>
           </div>
         ))
