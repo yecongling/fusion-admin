@@ -10,6 +10,7 @@ import {
   Card,
   Col,
   ConfigProvider,
+  Dropdown,
   Form,
   Input,
   Row,
@@ -43,7 +44,74 @@ const Role: React.FC = () => {
   const [selRows, setSelectedRows] = useState<any[]>([]);
 
   // 表格的列配置
-  const columns: TableProps['columns'] = [];
+  const columns: TableProps['columns'] = [
+    {
+      title: '编码',
+      width: 160,
+      dataIndex: 'roleCode',
+      key: 'roleCode',
+    },
+    {
+      title: '名称',
+      width: 160,
+      dataIndex: 'roleName',
+      key: 'roleName',
+    },
+    {
+      title: '类型',
+      width: 120,
+      dataIndex: 'roleType',
+      key: 'roleType',
+      align: 'center',
+      render(value) {
+        switch (value) {
+          case 0:
+            return '系统角色';
+          case 1:
+            return '自定义角色';
+          default:
+            return '';
+        }
+      },
+    },
+    {
+      title: '状态',
+      width: 80,
+      dataIndex: 'status',
+      key: 'status',
+      align: 'center',
+    },
+    {
+      title: '描述',
+      width: 160,
+      dataIndex: 'remark',
+      key: 'remark',
+    },
+    {
+      title: '操作',
+      width: '10%',
+      dataIndex: 'action',
+      fixed: 'right',
+      align: 'center',
+      render(_, record) {
+        return (
+          <Space>
+            <Button type="link" size="small" onClick={() => {}}>
+              用户
+            </Button>
+            <Button type="link" size="small">
+              授权
+            </Button>
+            <Dropdown>
+              <Button type="link" size="small">
+                更多
+              </Button>
+            </Dropdown>
+          </Space>
+        );
+      },
+    },
+  ];
 
   // 检索表单提交
   const onFinish = (values: any) => {
