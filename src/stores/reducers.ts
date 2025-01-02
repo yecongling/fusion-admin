@@ -11,8 +11,6 @@ export interface GlobalState {
   menuWidth: number | string;
   // 默认颜色
   colorPrimary: string;
-  // 菜单
-  menus: any[];
   // 是否展开锁屏
   screenLock: boolean;
 }
@@ -26,8 +24,17 @@ export const initGlobalState: GlobalState = {
   menuWidth: 220,
   // 系统默认主体色
   colorPrimary: '#1677ff',
-  // 菜单
-  menus: [],
   // 默认不锁屏
   screenLock: false,
+};
+
+// 菜单状态（独立出来，不做持久化）
+export interface MenuState {
+  // 菜单
+  menus: any[];
+}
+
+export const initMenuState: MenuState = {
+  // 菜单
+  menus: [],
 };

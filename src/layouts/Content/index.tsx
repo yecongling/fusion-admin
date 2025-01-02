@@ -1,6 +1,6 @@
-import RouterBeforeEach from '@router/RouterBeforeEach';
-import { Layout, Spin } from 'antd';
-import React, { Suspense } from 'react';
+import RouterBeforeEach from '@/router/RouterBeforeEach';
+import { Layout } from 'antd';
+import type React from 'react';
 
 /**
  * 中间主内容区域
@@ -16,15 +16,7 @@ const Content: React.FC = () => {
         padding: '8px',
       }}
     >
-      <Suspense
-        fallback={
-          <div className="dis-fl jc-ct ai-ct" style={{ height: '100vh' }}>
-            <Spin size="large" />
-          </div>
-        }
-      >
-        <RouterBeforeEach />
-      </Suspense>
+      <RouterBeforeEach />
     </Layout.Content>
   );
 };

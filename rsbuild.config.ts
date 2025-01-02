@@ -3,7 +3,8 @@ import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginMockServer } from 'rspack-plugin-mock/rsbuild';
 import { pluginImageCompress } from '@rsbuild/plugin-image-compress';
-import path from 'path';
+import { pluginHtmlMinifierTerser } from 'rsbuild-plugin-html-minifier-terser';
+import path from 'node:path';
 
 export default defineConfig({
   plugins: [
@@ -27,11 +28,13 @@ export default defineConfig({
     }),
     // 启动图片压缩
     pluginImageCompress(),
+    // 启动html压缩
+    pluginHtmlMinifierTerser()
   ],
   // 配置html模板
   html: {
-    favicon: path.resolve(__dirname, './src/assets/svg/vite.svg'),
-    title: 'fusionAdmin',
+    favicon: path.resolve(__dirname, './src/assets/images/favicon.ico'),
+    title: 'Fusion Admin',
     tags: [
       {
         tag: 'html',
@@ -42,19 +45,7 @@ export default defineConfig({
   // 配置路径别名
   source: {
     alias: {
-      // '@': path.resolve(__dirname, './src'),
-      '@views': path.resolve(__dirname, './src/views'),
-      '@components': path.resolve(__dirname, './src/components'),
-      '@layouts': path.resolve(__dirname, './src/layouts'),
-      '@hooks': path.resolve(__dirname, './src/hooks'),
-      '@enums': path.resolve(__dirname, './src/enums'),
-      '@context': path.resolve(__dirname, './src/context'),
-      '@stores': path.resolve(__dirname, './src/stores'),
-      '@type': path.resolve(__dirname, './src/types'),
-      '@assets': path.resolve(__dirname, './src/assets'),
-      '@utils': path.resolve(__dirname, './src/utils'),
-      '@services': path.resolve(__dirname, './src/services'),
-      '@router': path.resolve(__dirname, './src/router'),
+      '@': path.resolve(__dirname, './src'),
     },
   },
   dev: {

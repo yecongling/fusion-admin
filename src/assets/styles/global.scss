@@ -1,3 +1,7 @@
+*, :after, :before {
+  box-sizing: border-box;
+}
+
 .trigger:hover {
   color: #1890ff !important;
 }

@@ -1,8 +1,8 @@
 import * as Icons from '@ant-design/icons';
 import { isObject } from './is';
 import React from 'react';
-import { RouteItem, RouteObject } from '@type/route';
-import { LazyLoad } from '@router/lazyLoad';
+import type { RouteItem, RouteObject } from '@/types/route';
+import { LazyLoad } from '@/router/lazyLoad';
 
 /**
  * @description 使用递归处理路由菜单，生成一维数组，做菜单权限判断
@@ -15,22 +15,22 @@ export function handleRouter(
   newArr: RouteObject[] = [],
 ) {
   if (!routerList) return newArr;
-  routerList.forEach((item: RouteItem) => {
+  for (const item of routerList) {
     const menu: RouteObject = {};
-    if (typeof item === 'object' && item.path && item.route == '1') {
-      menu['path'] = item.path;
-      menu['component'] = LazyLoad(item.component).type;
+    if (typeof item === 'object' && item.path && item.route === '1') {
+      menu.path = item.path;
+      menu.component = LazyLoad(item.component).type;
       newArr.push(menu);
     }
-    if (item.children && item.children.length) {
+    if (item.children?.length) {
       menu.children = [];
       handleRouter(item.children, newArr);
     }
-    if (item.childrenRoute && item.childrenRoute.length) {
+    if (item.childrenRoute?.length) {
       menu.children = [];
       handleRouter(item.childrenRoute, newArr);
     }
-  });
+  }
   return newArr;
 }
 
@@ -47,7 +47,7 @@ export function handleRouter(
 export function setObjToUrlParams(baseUrl: string, obj: any): string {
   let parameters = '';
   for (const key in obj) {
-    parameters += key + '=' + encodeURIComponent(obj[key]) + '&';
+    parameters += `${key}=${encodeURIComponent(obj[key])}&`;
   }
   parameters = parameters.replace(/&$/, '');
   return /\?$/.test(baseUrl)
@@ -61,9 +61,11 @@ export function deepMerge<T = object>(
 ): T {
   let key: string;
   for (key in target) {
-    src[key] = isObject(src[key])
-      ? deepMerge(src[key], target[key])
-      : (src[key] = target[key]);
+    if (isObject(src[key])) {
+      src[key] = deepMerge(src[key], target[key]);
+    } else {
+      src[key] = target[key];
+    }
   }
   return src as T;
 }
@@ -77,19 +79,17 @@ export function deepMerge<T = object>(
 export const searchRoute = (
   path: string,
   routes: RouteItem[] = [],
-): RouteItem => {
-  let result: RouteItem = {
-    component: '',
-    path: '',
-  };
+): RouteItem | null => {
   for (const item of routes) {
     if (item.path === path) return item;
     if (item.children) {
       const res = searchRoute(path, item.children);
-      if (Object.keys(res).length) result = res;
+      if (res) {
+        return res;
+      }
     }
   }
-  return result;
+  return null;
 };
 
 // 动态渲染 Icon 图标(目前仅考虑使用react-icons/ai里面的，后面这里进行扩展，动态使用react)
@@ -107,9 +107,9 @@ export const addIcon = (name: string | undefined) => {
  * @returns array
  */
 export const getOpenKeys = (path: string) => {
-  let newStr: string = '';
+  let newStr = '';
   const newArr: string[] = [];
-  const arr = path.split('/').map((i) => '/' + i);
+  const arr = path.split('/').map((i) => `/${i}`);
   for (let i = 1; i < arr.length - 1; i++) {
     newStr += arr[i];
     newArr.push(newStr);

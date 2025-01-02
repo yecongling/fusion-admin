@@ -1,7 +1,7 @@
-import { ContentTypeEnum } from '@enums/httpEnum';
+import { ContentTypeEnum } from '@/enums/httpEnum';
 import { deepMerge } from '../utils';
 import { RAxios } from './Axios';
-import { CreateAxiosOptions, transform } from './transform';
+import { type CreateAxiosOptions, transform } from './transform';
 
 /**
  * 封装axios
@@ -39,8 +39,6 @@ function createAxios(opts?: Partial<CreateAxiosOptions>) {
           joinTime: false,
           // 忽略重复请求
           ignoreCancelToken: true,
-          // 是否携带token
-          withToken: true,
           // 是否加密数据 1：加密 0：不加密(如果是开发环境下默认不加密，处理mock)
           encrypt: import.meta.env.MODE === 'development' ? 0 : 1,
         },

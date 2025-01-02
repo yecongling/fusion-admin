@@ -8,3 +8,11 @@ export interface Response {
   data: any;
   success: boolean;
 }
+
+/**
+ * 定义基础选项类型
+ */
+export interface BasicOptions {
+  label: string;
+  value: string;
+}

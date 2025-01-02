@@ -1,8 +1,9 @@
-import { Input, InputRef } from 'antd';
-import favicon from '@assets/svg/vite.svg';
-import { RootState, setScreenLock } from '@stores/store';
+import { Input, type InputRef } from 'antd';
+import favicon from '@/assets/images/icon-512.png';
+import { type RootState, setScreenLock } from '@/stores/store';
 import { useDispatch, useSelector } from 'react-redux';
-import React, { useEffect, useRef } from 'react';
+import type React from 'react';
+import { useEffect, useRef } from 'react';
 import style from './screenLock.module.scss';
 
 /**
@@ -11,7 +12,7 @@ import style from './screenLock.module.scss';
  */
 const ScreenLock: React.FC = () => {
   // 状态
-  const globalState = useSelector((state: RootState) => state.global);
+  const globalState = useSelector((state: RootState) => state.globalState);
   const dispatch = useDispatch();
   const { screenLock } = globalState;
   const pwdRef = useRef<InputRef>(null);
@@ -37,7 +38,7 @@ const ScreenLock: React.FC = () => {
     <div className={style['screen-lock']}>
       <div className="screen-lock-content">
         <div className="screen-lock-title">
-          <img src={favicon} alt="" />
+          <img src={favicon} alt="" width={100}/>
           <span>系统锁屏</span>
         </div>
         <div className="screen-lock-input">

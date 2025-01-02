@@ -4,6 +4,8 @@
 export enum HttpCodeEnum {
   RC100 = 100,
   SUCCESS = 200,
+  // 用户未登录
+  RC101 = 101,
   // 账户被禁用
   RC102 = 102,
   // 用户名不存在

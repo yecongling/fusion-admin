@@ -1,6 +1,6 @@
-import { MessageInstance } from 'antd/es/message/interface';
-import { ModalStaticFunctions } from 'antd/es/modal/confirm';
-import { NotificationInstance } from 'antd/es/notification/interface';
+import type { MessageInstance } from 'antd/es/message/interface';
+import type { ModalStaticFunctions } from 'antd/es/modal/confirm';
+import type { NotificationInstance } from 'antd/es/notification/interface';
 
 type ModalInstance = Omit<ModalStaticFunctions, 'warn'>;
 

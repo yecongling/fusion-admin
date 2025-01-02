@@ -1,5 +1,9 @@
 import { Button, Card, Col, Row, DatePicker } from 'antd';
-import React from 'react';
+import StatusLineChart from './StatusLineChart';
+import ShortCutMenu from './ShortCutMenu';
+import EndpointStatistics from './EndpointStatistics';
+import style from './home.module.scss';
+import DocumentPieChart from './DocumentPieChart';
 
 const { RangePicker } = DatePicker;
 
@@ -7,12 +11,14 @@ const { RangePicker } = DatePicker;
  * 首页
  * @returns 组件内容
  */
-const Home: React.FC = () => {
+function Home() {
   return (
     <>
       <Row gutter={8}>
         <Col span={12}>
-          <Card style={{ height: '300px' }}>欢迎</Card>
+          <Card className={style.cardTitleBar} style={{ height: '300px' }}>
+            欢迎
+          </Card>
         </Col>
         <Col span={12}>
           <Card
@@ -25,44 +31,52 @@ const Home: React.FC = () => {
               </Button>
             }
           >
-            菜单
+            <ShortCutMenu />
           </Card>
         </Col>
       </Row>
       <Row gutter={8} style={{ marginTop: '8px' }}>
         <Col span={12}>
           <Card
-            style={{ height: '300px' }}
-            styles={{ header: { borderBottom: 'none' } }}
+            styles={{
+              header: { borderBottom: 'none' },
+              body: { height: '350px', width: '100%' },
+            }}
             title="引擎状态"
           >
-            欢迎
+            <StatusLineChart />
           </Card>
         </Col>
         <Col span={12}>
           <Card
-            style={{ height: '300px' }}
-            styles={{ header: { borderBottom: 'none' } }}
-            title="terminal统计"
+            styles={{
+              header: { borderBottom: 'none' },
+              body: { height: '350px' },
+            }}
+            title="端点统计"
           >
-            菜单
+            <EndpointStatistics />
           </Card>
         </Col>
       </Row>
       <Row gutter={8} style={{ marginTop: '8px' }}>
         <Col span={8}>
           <Card
-            style={{ height: '300px' }}
-            styles={{ header: { borderBottom: 'none' } }}
+            styles={{
+              header: { borderBottom: 'none' },
+              body: { height: '450px', width: '100%' },
+            }}
             title="请求占比"
           >
-            欢迎
+            <DocumentPieChart />
           </Card>
         </Col>
         <Col span={16}>
           <Card
-            style={{ height: '300px' }}
-            styles={{ header: { borderBottom: 'none' } }}
+            styles={{
+              header: { borderBottom: 'none' },
+              body: { height: '450px', width: '100%' },
+            }}
             title="每日消息统计"
             extra={<RangePicker />}
           >
@@ -72,5 +86,5 @@ const Home: React.FC = () => {
       </Row>
     </>
   );
-};
+}
 export default Home;
