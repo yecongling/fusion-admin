@@ -22,7 +22,7 @@ import {
 } from 'antd';
 import type React from 'react';
 import { useEffect, useState } from 'react';
-import { getRoleList } from '@/services/system/role/roleApi';
+import { addRole, editRole, getRoleList } from '@/services/system/role/roleApi';
 import RoleInfoModal from './RoleInfoModal';
 
 /**
@@ -187,10 +187,10 @@ const Role: React.FC = () => {
     try {
       if (currentRow == null) {
         // 新增数据
-        // await addRole(roleData);
+        await addRole(roleData);
       } else {
         // 编辑数据
-        // await editRole(roleData);
+        await editRole(roleData);
       }
       // 操作成功，关闭弹窗，刷新数据
       setOpenEditorModal(false);

@@ -45,9 +45,21 @@ export const getRoleList = (params: any) => {
  * @param params 角色参数
  * @returns 结果
  */
-export const addRole = (params: SysRole) => {
+export const addRole = (params: Record<string, any>) => {
   return HttpRequest.post({
     url: RoleApi.addRole,
+    data: params,
+  });
+};
+
+/**
+ * 编辑角色信息
+ * @param params 角色参数
+ * @returns 结果
+ */
+export const editRole = (params: Record<string, any>) => {
+  return HttpRequest.post({
+    url: RoleApi.editRole,
     data: params,
   });
 };
