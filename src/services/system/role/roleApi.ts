@@ -28,7 +28,7 @@ export enum RoleApi {
  * @param params 角色参数
  * @returns 角色列表
  */
-export const getRoleList = (params: SysRole) => {
+export const getRoleList = (params: any) => {
   return HttpRequest.post<SysRole[]>(
     {
       url: RoleApi.getRoleList,

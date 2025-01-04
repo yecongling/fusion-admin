@@ -6,6 +6,7 @@ import {
 } from '@ant-design/icons';
 import useParentSize from '@/hooks/useParentSize';
 import {
+  App,
   Button,
   Card,
   Col,
@@ -21,12 +22,15 @@ import {
 } from 'antd';
 import type React from 'react';
 import { useEffect, useState } from 'react';
+import { getRoleList } from '@/services/system/role/roleApi';
+import RoleInfoModal from './RoleInfoModal';
 
 /**
  * 系统角色维护
  * @returns
  */
 const Role: React.FC = () => {
+  const { modal } = App.useApp();
   // 检索表单
   const [form] = Form.useForm();
   // 容器高度计算（表格）
@@ -45,6 +49,7 @@ const Role: React.FC = () => {
 
   useEffect(() => {
     // 查询角色数据
+    queryRoleData();
   }, []);
 
   // 表格的列配置
@@ -72,7 +77,7 @@ const Role: React.FC = () => {
           case 0:
             return '系统角色';
           case 1:
-            return '自定义角色';
+            return '普通角色';
           default:
             return '';
         }
@@ -117,9 +122,34 @@ const Role: React.FC = () => {
     },
   ];
 
+  /**
+   * 查询角色数据
+   * @param params 参数
+   */
+  const queryRoleData = async (params?: any) => {
+    setLoading(true);
+    // 获取表单查询条件
+    const formCon = params || form.getFieldsValue();
+    // 拼接查询条件，没有选择的条件就不拼接
+    const queryCondition: Record<string, any> = {};
+    for (const item of Object.keys(formCon)) {
+      if (formCon[item] || formCon[item] === '') {
+        queryCondition[item] = formCon[item];
+      }
+    }
+    // 调用查询
+    getRoleList(queryCondition)
+      .then((response) => {
+        setTableData(response);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   // 检索表单提交
   const onFinish = (values: any) => {
-    console.log(values);
+    queryRoleData(values);
   };
 
   /**
@@ -132,6 +162,45 @@ const Role: React.FC = () => {
     },
     columnWidth: 32,
     fixed: true,
+  };
+
+  /**
+   * 新增角色
+   */
+  const onAddRoleClick = () => {
+    setCurrentRow(null);
+    setOpenEditorModal(true);
+  };
+
+  /**
+   * 取消
+   */
+  const onCancel = () => {
+    setOpenEditorModal(false);
+  };
+
+  /**
+   * 点击确定的回调
+   * @param roleData 角色数据
+   */
+  const onEditOk = async (roleData: Record<string, any>) => {
+    try {
+      if (currentRow == null) {
+        // 新增数据
+        // await addRole(roleData);
+      } else {
+        // 编辑数据
+        // await editRole(roleData);
+      }
+      // 操作成功，关闭弹窗，刷新数据
+      setOpenEditorModal(false);
+      queryRoleData();
+    } catch (error) {
+      modal.error({
+        title: '操作失败',
+        content: `原因：${error}`,
+      });
+    }
   };
 
   return (
@@ -154,8 +223,13 @@ const Role: React.FC = () => {
           >
             <Row gutter={24}>
               <Col span={6}>
-                <Form.Item name="name" label="角色名称" colon={false}>
+                <Form.Item name="roleCode" label="角色编码" colon={false}>
                   <Input autoFocus allowClear autoComplete="off" />
+                </Form.Item>
+              </Col>
+              <Col span={6}>
+                <Form.Item name="roleName" label="角色名称" colon={false}>
+                  <Input allowClear autoComplete="off" />
                 </Form.Item>
               </Col>
               <Col span={6}>
@@ -201,7 +275,7 @@ const Role: React.FC = () => {
         >
           {/* 操作按钮 */}
           <Space>
-            <Button type="primary" icon={<PlusOutlined />}>
+            <Button type="primary" icon={<PlusOutlined />} onClick={onAddRoleClick}>
               新增
             </Button>
             <Button type="default" icon={<PlusOutlined />}>
@@ -226,6 +300,14 @@ const Role: React.FC = () => {
           />
         </Card>
       </ConfigProvider>
+
+      {/* 编辑弹窗 */}
+      <RoleInfoModal
+        visible={openEditModal}
+        currentRow={currentRow}
+        onCancel={onCancel}
+        onOk={onEditOk}
+      />
     </>
   );
 };
