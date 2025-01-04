@@ -1,6 +1,7 @@
 import type React from 'react';
 import { memo, useState } from 'react';
 import {
+  App,
   Button,
   type ColorPickerProps,
   ConfigProvider,
@@ -11,7 +12,7 @@ import {
   type TabsProps,
 } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import type { RootState } from '@/stores/store';
+import { resetPreferences, type RootState } from '@/stores/store';
 import {
   ClearOutlined,
   CloseOutlined,
@@ -36,11 +37,12 @@ export interface SettingProps {
 /* 系统配置界面 */
 const Setting: React.FC<SettingProps> = memo(({ open, setOpen }) => {
   // 从全局状态库中获取数据
-  const globalState = useSelector((state: RootState) => state.globalState);
+  const { theme } = useSelector((state: RootState) => state.prefrences);
   const dispatch = useDispatch();
-  const { theme, colorPrimary } = globalState;
+  const { colorPrimary } = theme;
   const [value, setValue] = useState<ColorPickerProps['value']>(colorPrimary);
   const [selectedkey, setSelectedKey] = useState<string>('theme');
+  const { modal, message } = App.useApp();
 
   // 分段器的值
   const segmentedItems = [
@@ -99,6 +101,20 @@ const Setting: React.FC<SettingProps> = memo(({ open, setOpen }) => {
     },
   ];
 
+  /**
+   * 重置所有偏好设置
+   */
+  const resetPreference = () => {
+    modal.confirm({
+      title: '重置偏好设置',
+      content: '重置所有偏好设置？重置后系统偏好设置将恢复为默认状态！',
+      onOk: () => {
+        dispatch(resetPreferences());
+        message.success('偏好设置已重置');
+      },
+    });
+  };
+
   return (
     <>
       <Drawer
@@ -145,7 +161,9 @@ const Setting: React.FC<SettingProps> = memo(({ open, setOpen }) => {
             <Button type="primary" icon={<CopyOutlined />} disabled>
               复制偏好设置
             </Button>
-            <Button icon={<ClearOutlined />} disabled>清空缓存 & 退出登录</Button>
+            <Button icon={<ClearOutlined />} onClick={resetPreference}>
+              重置偏好设置
+            </Button>
           </Space>
         }
         onClose={() => setOpen(false)}

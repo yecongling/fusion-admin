@@ -20,7 +20,7 @@ import {
   type TableProps,
 } from 'antd';
 import type React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 /**
  * 系统角色维护
@@ -42,6 +42,10 @@ const Role: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   // 当前选中的行数据
   const [selRows, setSelectedRows] = useState<any[]>([]);
+
+  useEffect(() => {
+    // 查询角色数据
+  }, []);
 
   // 表格的列配置
   const columns: TableProps['columns'] = [

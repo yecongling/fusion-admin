@@ -1,10 +1,12 @@
-import type {
-  BuiltinThemePreset,
-  LanguageOption,
-  ThemeModeType,
-} from '@/types/setting';
+import type { ThemeModeType } from '@/types/app';
+import type { BuiltinThemePreset } from '@/types/app';
 import { AlertOutlined, MoonOutlined, SunOutlined } from '@ant-design/icons';
 import type React from 'react';
+
+export interface LanguageOption {
+  label: string;
+  value: 'en-US' | 'zh-CN';
+}
 
 /**
  * Supported languages

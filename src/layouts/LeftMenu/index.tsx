@@ -15,7 +15,7 @@ import {
   Empty,
 } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { type RootState, setCollapse, setTheme } from '@/stores/store.ts';
+import { type RootState, updatePreferences } from '@/stores/store.ts';
 import logo from '@/assets/images/icon-192.png';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
@@ -37,10 +37,12 @@ type MenuItem = Required<MenuProps>['items'][number];
  */
 const LeftMenu: React.FC = memo(() => {
   // 从状态库中获取状态
-  const globalState = useSelector((state: RootState) => state.globalState);
-  const menuState = useSelector((state: RootState) => state.menuState);
-  const { theme, collapse, menuWidth } = globalState;
-  const { menus } = menuState;
+  const { sidebar, theme } = useSelector(
+    (state: RootState) => state.prefrences,
+  );
+  const { menus } = useSelector((state: RootState) => state.menuState);
+  const { collapsed, width } = sidebar;
+  const { mode } = theme;
   const dispatch = useDispatch();
 
   const { pathname } = useLocation();
@@ -51,7 +53,7 @@ const LeftMenu: React.FC = memo(() => {
   const [loading, setLoading] = useState(false);
   const [openKeys, setOpenKeys] = useState<string[]>([]);
 
-  const titleColor = theme === 'dark' ? '#fff' : '#1890ff';
+  const titleColor = mode === 'dark' ? '#fff' : '#1890ff';
 
   const getItem = (
     label: React.ReactNode,
@@ -116,10 +118,10 @@ const LeftMenu: React.FC = memo(() => {
     if (title) {
       document.title = `${title} - Fusion Admin`;
     }
-    if (!collapse) {
+    if (!collapsed) {
       setOpenKeys(openKey);
     }
-  }, [pathname, collapse, menus]);
+  }, [pathname, collapsed, menus]);
 
   // 设置当前展开的 subMenu
   const onOpenChange = (openKeys: string[]) => {
@@ -150,9 +152,9 @@ const LeftMenu: React.FC = memo(() => {
         boxShadow: '0 2px 5px 0 rgba(0, 0, 0, 0.08)',
       }}
       collapsible
-      width={menuWidth}
-      theme={theme}
-      collapsed={collapse}
+      width={width}
+      theme={mode}
+      collapsed={collapsed}
     >
       <div className="dis-fl jc-sb ai-ct toolbox">
         <Link to="/" style={{ width: '100%' }}>
@@ -161,7 +163,7 @@ const LeftMenu: React.FC = memo(() => {
             style={{ justifyContent: 'space-around' }}
           >
             <Image width={25} src={logo} preview={false} />
-            {collapse ? (
+            {collapsed ? (
               ''
             ) : (
               <p
@@ -182,7 +184,7 @@ const LeftMenu: React.FC = memo(() => {
         {menuList.length > 0 ? (
           <Menu
             mode="inline"
-            theme={theme}
+            theme={mode}
             defaultSelectedKeys={[pathname]}
             openKeys={openKeys}
             items={menuList}
@@ -197,14 +199,14 @@ const LeftMenu: React.FC = memo(() => {
       <div
         className="collapse"
         style={{
-          height: collapse ? '140px' : '40px',
+          height: collapsed ? '140px' : '40px',
           display: 'flex',
           alignContent: 'center',
           justifyContent: 'center',
         }}
       >
         <Space
-          direction={collapse ? 'vertical' : 'horizontal'}
+          direction={collapsed ? 'vertical' : 'horizontal'}
           align="center"
           style={{ justifyContent: 'center' }}
         >
@@ -212,29 +214,30 @@ const LeftMenu: React.FC = memo(() => {
             theme={{
               components: {
                 Segmented: {
-                  itemHoverColor:
-                    theme === 'dark' ? '#eee' : 'rgba(0,0,0,0.88)',
-                  itemColor: theme === 'dark' ? '#fff' : 'rgba(0, 0, 0, 0.65)',
-                  itemSelectedBg: theme === 'dark' ? '#1677ff' : '#fff',
+                  itemHoverColor: mode === 'dark' ? '#eee' : 'rgba(0,0,0,0.88)',
+                  itemColor: mode === 'dark' ? '#fff' : 'rgba(0, 0, 0, 0.65)',
+                  itemSelectedBg: mode === 'dark' ? '#1677ff' : '#fff',
                   itemSelectedColor:
-                    theme === 'dark' ? '#fff' : 'rgba(0,0,0,0.88)',
-                  trackBg: theme === 'dark' ? '#001529' : '#f5f5f5',
+                    mode === 'dark' ? '#fff' : 'rgba(0,0,0,0.88)',
+                  trackBg: mode === 'dark' ? '#001529' : '#f5f5f5',
                 },
               },
             }}
           >
             <Segmented
-              onChange={(value) => dispatch(setTheme(value as any))}
-              vertical={collapse}
+              onChange={(value) =>
+                dispatch(updatePreferences('theme', 'mode', value))
+              }
+              vertical={collapsed}
               size="small"
               options={[
                 {
-                  label: collapse ? '' : 'light',
+                  label: collapsed ? '' : 'light',
                   value: 'light',
                   icon: <SunOutlined />,
                 },
                 {
-                  label: collapse ? '' : 'dark',
+                  label: collapsed ? '' : 'dark',
                   value: 'dark',
                   icon: <MoonOutlined />,
                 },
@@ -249,7 +252,7 @@ const LeftMenu: React.FC = memo(() => {
               shape="circle"
               icon={
                 <QuestionCircleOutlined
-                  style={{ color: theme === 'dark' ? 'white' : 'black' }}
+                  style={{ color: mode === 'dark' ? 'white' : 'black' }}
                 />
               }
             />
@@ -264,17 +267,19 @@ const LeftMenu: React.FC = memo(() => {
               fontSize: '16px',
             }}
             icon={
-              collapse ? (
+              collapsed ? (
                 <MenuUnfoldOutlined
-                  style={{ color: theme === 'dark' ? 'white' : 'black' }}
+                  style={{ color: mode === 'dark' ? 'white' : 'black' }}
                 />
               ) : (
                 <MenuFoldOutlined
-                  style={{ color: theme === 'dark' ? 'white' : 'black' }}
+                  style={{ color: mode === 'dark' ? 'white' : 'black' }}
                 />
               )
             }
-            onClick={() => dispatch(setCollapse(!collapse))}
+            onClick={() =>
+              dispatch(updatePreferences('sidebar', 'collapsed', !collapsed))
+            }
             className="btnbor"
           />
         </Space>

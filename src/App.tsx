@@ -1,15 +1,12 @@
-import { type RootState, setMenus } from '@/stores/store';
-import { ConfigProvider, Spin, App as AntdApp } from 'antd';
+import { setMenus } from '@/stores/store';
+import { Spin, App as AntdApp } from 'antd';
 import type React from 'react';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import zhCN from 'antd/locale/zh_CN';
-import 'dayjs/locale/zh-cn';
 import { Router } from '@/router/router';
 import { getMenuListByRoleId } from '@/services/system/menu/menuApi';
 import { antdUtils } from '@/utils/antdUtil';
-
 
 /**
  * 主应用
@@ -17,8 +14,6 @@ import { antdUtils } from '@/utils/antdUtil';
 const App: React.FC = () => {
   // 触发更新的钩子函数
   const dispatch = useDispatch();
-  // 获取数据的钩子函数
-  const global = useSelector((state: RootState) => state.globalState);
   // 应用加载中
   const [loading, setLoading] = useState<boolean>(false);
   // 路由跳转
@@ -68,32 +63,13 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <ConfigProvider
-      theme={{
-        token: {
-          colorPrimary: global.colorPrimary,
-        },
-        components: {
-          Layout: {
-            headerPadding: '0 16px 0 0',
-            headerHeight: '50px',
-            headerBg: '#fff',
-          },
-          Tree: {
-            directoryNodeSelectedBg: '#e6f4ff',
-            indentSize: 12,
-            directoryNodeSelectedColor: 'rgba(0, 0, 0, 0.88)',
-          },
-        },
-      }}
-      locale={zhCN}
-    >
+    <>
       {loading ? (
         <Spin percent="auto" fullscreen style={{ fontSize: 48 }} />
       ) : (
         <Router />
       )}
-    </ConfigProvider>
+    </>
   );
 };
 export default App;
