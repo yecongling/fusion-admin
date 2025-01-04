@@ -244,7 +244,7 @@ const Login: React.FC = () => {
                           padding: '2px',
                         }}
                       >
-                        <Image src={code} preview={false} />
+                        <Image src={code} preview={false} width="100%" height="100%"/>
                       </Button>
                     </Col>
                   </Row>

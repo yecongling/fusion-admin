@@ -18,6 +18,7 @@ import {
   Select,
   Space,
   Table,
+  Tag,
   type TableProps,
 } from 'antd';
 import type React from 'react';
@@ -74,9 +75,9 @@ const Role: React.FC = () => {
       align: 'center',
       render(value) {
         switch (value) {
-          case 0:
+          case '0':
             return '系统角色';
-          case 1:
+          case '1':
             return '普通角色';
           default:
             return '';
@@ -89,6 +90,9 @@ const Role: React.FC = () => {
       dataIndex: 'status',
       key: 'status',
       align: 'center',
+      render(value) {
+        return value ? <Tag color='success'>启用</Tag> : <Tag color='error'>停用</Tag>;
+      },
     },
     {
       title: '描述',
@@ -281,7 +285,7 @@ const Role: React.FC = () => {
             <Button type="default" icon={<PlusOutlined />}>
               批量导入
             </Button>
-            <Button type="default" danger icon={<DeleteOutlined />}>
+            <Button type="default" danger icon={<DeleteOutlined />} disabled={selRows.length === 0}>
               批量删除
             </Button>
           </Space>
