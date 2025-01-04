@@ -1,7 +1,31 @@
+import SelectItem from '../SelectItem';
+import SwitchItem from '../SwitchItem';
+
 /**
  * @description: 底部组件
  */
 const Widget: React.FC = () => {
-  return <div className="widget">小组件</div>;
+  return (
+    <>
+      {/* 启用全局搜索 */}
+      <SwitchItem title="启用全局搜索" disabled />
+      {/* 启用主题切换 */}
+      <SwitchItem title="启用主题切换" disabled />
+      {/* 启用语言切换 */}
+      <SwitchItem title="启用语言切换" disabled />
+      {/* 启用全屏 */}
+      <SwitchItem title="启用全屏" disabled />
+      {/* 启用通知 */}
+      <SwitchItem title="启用通知" disabled />
+      {/* 启用锁屏 */}
+      <SwitchItem title="启用锁屏" disabled />
+      {/* 启用侧边栏切换 */}
+      <SwitchItem title="启用侧边栏切换" disabled />
+      {/* 启用刷新 */}
+      <SwitchItem title="启用刷新" disabled />
+      {/* 偏好设置位置 */}
+      <SelectItem title="偏好设置位置" disabled />
+    </>
+  );
 };
 export default Widget;

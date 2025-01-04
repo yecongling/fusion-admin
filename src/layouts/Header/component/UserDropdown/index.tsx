@@ -11,8 +11,6 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import { logout } from '@/services/login/loginApi';
-import { useDispatch } from 'react-redux';
-import { clearCache } from '@/stores/store';
 import type { ReactNode } from 'react';
 import React from 'react';
 
@@ -27,7 +25,6 @@ const UserDropdown: React.FC = () => {
   const { modal } = App.useApp();
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   // 菜单栏
   const items: MenuProps['items'] = [
@@ -94,7 +91,7 @@ const UserDropdown: React.FC = () => {
             sessionStorage.removeItem('roleId');
             sessionStorage.removeItem('isLogin');
             sessionStorage.removeItem('loginUser');
-            dispatch(clearCache());
+
             // 修改回document.title
             document.title = 'Fusion Admin - 登录';
             // 退出到登录页面

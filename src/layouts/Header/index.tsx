@@ -10,13 +10,13 @@ import { Badge, Dropdown, Input, Layout, Space, Tooltip } from 'antd';
 import type React from 'react';
 import { memo, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setScreenLock } from '@/stores/store';
 
 import MessageBox from './component/MessageBox';
 import FullScreen from './component/FullScreen';
 import Setting from './component/Setting';
 import BreadcrumbNav from './component/BreadcrumbNav';
 import UserDropdown from './component/UserDropdown';
+import { updatePreferences } from '@/stores/store';
 /**
  * 顶部布局内容
  */
@@ -68,7 +68,7 @@ const Header: React.FC = memo(() => {
             <LockOutlined
               style={{ cursor: 'pointer', fontSize: '18px' }}
               onClick={() => {
-                dispatch(setScreenLock(true));
+                dispatch(updatePreferences('widget', 'lockScreen', true));
               }}
             />
           </Tooltip>

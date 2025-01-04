@@ -27,7 +27,7 @@ const SelectItem: React.FC<SelectItemProps> = (props) => {
         {title}
       </span>
       {/* Select组件 */}
-      <Select value="zh-CN" options={items} disabled={disabled} placeholder={placeholder} style={{width: '165px'}}/>
+      <Select options={items} disabled={disabled} placeholder={placeholder} style={{width: '165px'}}/>
     </div>
   );
 };

@@ -16,7 +16,7 @@ const SideBar: React.FC = () => {
       {/* 自动激活子菜单 */}
       <SwitchItem title="自动激活子菜单" />
       {/* 宽度 */}
-      <NumberItem />
+      <NumberItem title="宽度"/>
     </>
   );
 };

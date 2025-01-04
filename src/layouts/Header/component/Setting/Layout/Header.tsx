@@ -2,6 +2,7 @@ import type { BasicOptions } from '@/types/global';
 import SelectItem from '../SelectItem';
 import SwitchItem from '../SwitchItem';
 
+// 模式选择
 const modeItems: BasicOptions[] = [
   {
     label: 'static',
@@ -31,6 +32,8 @@ const Header = () => {
       <SwitchItem title="显示顶栏" />
       {/* 模式 */}
       <SelectItem title="模式" items={modeItems} />
+      {/* 菜单位置 */}
+      <SelectItem title="菜单位置" />
     </>
   );
 };

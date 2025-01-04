@@ -34,7 +34,7 @@ const SwitchItem: React.FC<SwitchItemProps> = (props) => {
         </span>
       )}
       {/* 切换 */}
-      <Switch disabled={disabled} checked/>
+      <Switch disabled={disabled}/>
     </div>
   );
 };
