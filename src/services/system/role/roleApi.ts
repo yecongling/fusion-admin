@@ -21,6 +21,11 @@ export enum RoleApi {
    * 编辑角色
    */
   editRole = "/system/role/editRole",
+
+  /**
+   * 改变角色状态
+   */
+  changeStatus = "/system/role/changeStatus",
 }
 
 /**
@@ -60,6 +65,18 @@ export const addRole = (params: Record<string, any>) => {
 export const editRole = (params: Record<string, any>) => {
   return HttpRequest.post({
     url: RoleApi.editRole,
+    data: params,
+  });
+};
+
+/**
+ * 更新角色状态
+ * @param params 角色参数
+ * @returns 结果
+ */
+export const changStatus = (params: Record<string, any>) => {
+  return HttpRequest.patch({
+    url: RoleApi.changeStatus,
     data: params,
   });
 };
