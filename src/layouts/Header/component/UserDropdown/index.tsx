@@ -13,6 +13,8 @@ import {
 import { logout } from '@/services/login/loginApi';
 import type { ReactNode } from 'react';
 import React from 'react';
+import { updatePreferences } from '@/stores/store';
+import { useDispatch } from 'react-redux';
 
 const { useToken } = theme;
 
@@ -21,6 +23,7 @@ const { useToken } = theme;
  * @returns
  */
 const UserDropdown: React.FC = () => {
+  const dispatch = useDispatch();
   const { token } = useToken();
   const { modal } = App.useApp();
 
@@ -65,6 +68,9 @@ const UserDropdown: React.FC = () => {
       key: 'lock',
       label: '锁屏',
       icon: <LockOutlined />,
+      onClick: () => {
+        dispatch(updatePreferences('widget', 'lockScreenStatus', true));
+      },
     },
     {
       type: 'divider',

@@ -68,7 +68,7 @@ const Header: React.FC = memo(() => {
             <LockOutlined
               style={{ cursor: 'pointer', fontSize: '18px' }}
               onClick={() => {
-                dispatch(updatePreferences('widget', 'lockScreen', true));
+                dispatch(updatePreferences('widget', 'lockScreenStatus', true));
               }}
             />
           </Tooltip>
