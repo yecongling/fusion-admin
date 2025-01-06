@@ -108,7 +108,7 @@ export type RoleInfoModalProps = {
   // 弹窗需要的数据
   currentRow: Record<string, any> | null;
   // 点击确定的回调
-  onOk: any;
+  onOk: (params: Record<string, string | number | boolean>) => void;
   // 点击取消的回调
-  onCancel: any;
+  onCancel: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
