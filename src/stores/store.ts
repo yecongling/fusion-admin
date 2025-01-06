@@ -37,7 +37,7 @@ export const persistor = persistStore(store);
 export const { setMenus } = menuSlice.actions;
 
 // 导出全局设置的更新函数
-export const { updateSetting, resetPreferences } = preferencesSlice.actions;
+export const { updateSetting, resetPreferences, setPreferences } = preferencesSlice.actions;
 
 // 自定义接受三个独立参数的action
 export const updatePreferences = (category: Category, key: any, value: any) =>

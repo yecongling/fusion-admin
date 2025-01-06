@@ -33,5 +33,18 @@ export const preferencesSlice = createSlice({
     resetPreferences() {
       return defaultPreferences;
     },
+
+    /**
+     * 设置整个状态对象（针对后续状态对象跟着操作员走，存储于数据库中）
+     * @param state 原有状态
+     * @param action 整个状态对象
+     * @returns 新的对象
+     */
+    setPreferences(state: Preferences, action: { payload: Preferences }) {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    },
   },
 });
