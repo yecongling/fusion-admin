@@ -135,8 +135,8 @@ const Login: React.FC = () => {
         <div className={styles['login-box']}>
           {/* 左边图案和标题 */}
           <div className={styles['login-left']}>
-            <div className="logo" style={{ marginTop: '60px' }}>
-              <img className="login-icon" width="70" src={logo} alt="logo" />
+            <div className="logo mt-[60]">
+              <img className="login-icon my-0 mx-auto" width="70" src={logo} alt="logo" />
             </div>
             <div className="title">
               <p style={{ fontSize: '20px', margin: 0 }}>
