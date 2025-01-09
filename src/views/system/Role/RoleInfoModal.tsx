@@ -3,14 +3,14 @@ import { Form, Input, type InputRef, Select, Switch } from 'antd';
 import { useEffect, useRef } from 'react';
 
 const RoleInfoModal: React.FC<RoleInfoModalProps> = ({
-  visible,
-  currentRow,
+  params,
   onOk,
   onCancel,
 }) => {
   // 表单实例
   const [form] = Form.useForm();
   const roleCodeRef = useRef<InputRef>(null);
+  const { visible, currentRow } = params;
 
   useEffect(() => {
     if (!visible) return;
@@ -103,10 +103,13 @@ const RoleInfoModal: React.FC<RoleInfoModalProps> = ({
 export default RoleInfoModal;
 
 export type RoleInfoModalProps = {
-  // 弹窗可见性
-  visible: boolean;
-  // 弹窗需要的数据
-  currentRow: Record<string, any> | null;
+  params: {
+    // 弹窗可见性
+    visible: boolean;
+    // 弹窗需要的数据
+    currentRow: Record<string, any> | null;
+  };
+
   // 点击确定的回调
   onOk: (params: Record<string, string | number | boolean>) => void;
   // 点击取消的回调

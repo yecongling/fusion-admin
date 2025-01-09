@@ -1,5 +1,8 @@
 import {
   DeleteOutlined,
+  EditOutlined,
+  ExclamationCircleFilled,
+  MoreOutlined,
   PlusOutlined,
   RedoOutlined,
   SearchOutlined,
@@ -14,6 +17,7 @@ import {
   Dropdown,
   Form,
   Input,
+  type MenuProps,
   Row,
   Select,
   Space,
@@ -23,8 +27,14 @@ import {
 } from 'antd';
 import type React from 'react';
 import { useEffect, useState } from 'react';
-import { addRole, editRole, getRoleList } from '@/services/system/role/roleApi';
+import {
+  addRole,
+  deleteRole,
+  editRole,
+  getRoleList,
+} from '@/services/system/role/roleApi';
 import RoleInfoModal from './RoleInfoModal';
+import RoleMenuDrawer from './RoleMenuDrawer';
 
 /**
  * 系统角色维护
@@ -36,22 +46,58 @@ const Role: React.FC = () => {
   const [form] = Form.useForm();
   // 容器高度计算（表格）
   const { parentRef, height } = useParentSize();
-  // 编辑弹窗窗口打开关闭
-  const [openEditModal, setOpenEditorModal] = useState<boolean>(false);
 
   // 表格数据
   const [tableData, setTableData] = useState<any[]>([]);
-  // 当前编辑的行数据
-  const [currentRow, setCurrentRow] = useState(null);
   // 表格加载状态
   const [loading, setLoading] = useState<boolean>(false);
   // 当前选中的行数据
   const [selRows, setSelectedRows] = useState<any[]>([]);
 
+  // 将当前编辑行和窗口开关合并为一个状态对象
+  const [params, setParams] = useState<{ visible: boolean; currentRow: any }>({
+    visible: false,
+    currentRow: null,
+  });
+
+  // 抽屉窗口打开关闭
+  const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
+
   useEffect(() => {
     // 查询角色数据
     queryRoleData();
   }, []);
+
+  // 更多操作中的选项
+  const more: (row: any) => MenuProps['items'] = (row) => [
+    {
+      key: 'edit',
+      label: '编辑',
+      icon: <EditOutlined />,
+      onClick: () => {
+        // 编辑选中的行数据
+        setParams({ visible: true, currentRow: row });
+      },
+    },
+    {
+      key: 'delete',
+      label: '删除',
+      icon: <DeleteOutlined />,
+      onClick: () => {
+        // 删除选中的行数据
+        modal.confirm({
+          title: '删除角色',
+          icon: <ExclamationCircleFilled />,
+          content: '确定删除该角色吗？数据删除后将无法恢复！',
+          onOk() {
+            deleteRole(row).then(() => {
+              // 刷新表格数据
+            });
+          },
+        });
+      },
+    },
+  ];
 
   // 表格的列配置
   const columns: TableProps['columns'] = [
@@ -75,9 +121,9 @@ const Role: React.FC = () => {
       align: 'center',
       render(value) {
         switch (value) {
-          case '0':
+          case 0:
             return '系统角色';
-          case '1':
+          case 1:
             return '普通角色';
           default:
             return '';
@@ -91,7 +137,11 @@ const Role: React.FC = () => {
       key: 'status',
       align: 'center',
       render(value) {
-        return value ? <Tag color='success'>启用</Tag> : <Tag color='error'>停用</Tag>;
+        return value ? (
+          <Tag color="success">启用</Tag>
+        ) : (
+          <Tag color="error">停用</Tag>
+        );
       },
     },
     {
@@ -102,23 +152,37 @@ const Role: React.FC = () => {
     },
     {
       title: '操作',
-      width: '10%',
+      width: '12%',
       dataIndex: 'action',
       fixed: 'right',
       align: 'center',
       render(_, record) {
         return (
-          <Space>
+          <Space size={0}>
+            <Button
+              type="link"
+              size="small"
+              onClick={() => {
+                setParams({ visible: true, currentRow: record });
+              }}
+            >
+              详情
+            </Button>
             <Button type="link" size="small" onClick={() => {}}>
               用户
             </Button>
-            <Button type="link" size="small">
+            <Button
+              type="link"
+              size="small"
+              onClick={() => {
+                setDrawerOpen(true);
+                setParams({ visible: false, currentRow: record });
+              }}
+            >
               授权
             </Button>
-            <Dropdown>
-              <Button type="link" size="small">
-                更多
-              </Button>
+            <Dropdown menu={{ items: more(record) }}>
+              <Button type="link" size="small" icon={<MoreOutlined />} />
             </Dropdown>
           </Space>
         );
@@ -169,18 +233,35 @@ const Role: React.FC = () => {
   };
 
   /**
+   * 表格行双击显示预览
+   */
+  const onRow = (record: any) => {
+    return {
+      onDoubleClick: () => {
+        setParams({ visible: true, currentRow: record });
+      },
+    };
+  };
+
+  /**
    * 新增角色
    */
   const onAddRoleClick = () => {
-    setCurrentRow(null);
-    setOpenEditorModal(true);
+    setParams({ visible: true, currentRow: null });
   };
 
   /**
    * 取消
    */
   const onCancel = () => {
-    setOpenEditorModal(false);
+    setParams({ visible: false, currentRow: null });
+  };
+
+  /**
+   * 隐藏抽屉
+   */
+  const hideDrawer = () => {
+    setDrawerOpen(false);
   };
 
   /**
@@ -189,7 +270,7 @@ const Role: React.FC = () => {
    */
   const onEditOk = async (roleData: Record<string, any>) => {
     try {
-      if (currentRow == null) {
+      if (params.currentRow == null) {
         // 新增数据
         await addRole(roleData);
       } else {
@@ -197,7 +278,7 @@ const Role: React.FC = () => {
         await editRole(roleData);
       }
       // 操作成功，关闭弹窗，刷新数据
-      setOpenEditorModal(false);
+      setParams({ visible: false, currentRow: null });
       queryRoleData();
     } catch (error) {
       modal.error({
@@ -279,19 +360,29 @@ const Role: React.FC = () => {
         >
           {/* 操作按钮 */}
           <Space>
-            <Button type="primary" icon={<PlusOutlined />} onClick={onAddRoleClick}>
+            <Button
+              type="primary"
+              icon={<PlusOutlined />}
+              onClick={onAddRoleClick}
+            >
               新增
             </Button>
             <Button type="default" icon={<PlusOutlined />}>
               批量导入
             </Button>
-            <Button type="default" danger icon={<DeleteOutlined />} disabled={selRows.length === 0}>
+            <Button
+              type="default"
+              danger
+              icon={<DeleteOutlined />}
+              disabled={selRows.length === 0}
+            >
               批量删除
             </Button>
           </Space>
           {/* 表格数据 */}
           <Table
             size="small"
+            onRow={onRow}
             style={{ marginTop: '8px' }}
             bordered
             pagination={false}
@@ -306,11 +397,13 @@ const Role: React.FC = () => {
       </ConfigProvider>
 
       {/* 编辑弹窗 */}
-      <RoleInfoModal
-        visible={openEditModal}
-        currentRow={currentRow}
-        onCancel={onCancel}
-        onOk={onEditOk}
+      <RoleInfoModal params={params} onCancel={onCancel} onOk={onEditOk} />
+      {/* 权限分配抽屉 */}
+      <RoleMenuDrawer
+        roleId={params.currentRow?.id}
+        onOk={hideDrawer}
+        open={drawerOpen}
+        onCancel={hideDrawer}
       />
     </>
   );

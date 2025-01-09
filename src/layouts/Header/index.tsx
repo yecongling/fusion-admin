@@ -42,14 +42,14 @@ const Header: React.FC = memo(() => {
   return (
     <>
       <Layout.Header
-        className="ant-layout-header dis-fl jc-sb"
+        className="ant-layout-header flex justify-between"
         style={{
           borderBottom: ' 1px solid #e9edf0',
         }}
       >
         {/* 面包屑 */}
         <BreadcrumbNav />
-        <Space size="large" className="dis-fl js-sb ai-ct toolbox">
+        <Space size="large" className="flex justify-between items-center toolbox">
           <Input
             variant="filled"
             placeholder="输入内容查询"

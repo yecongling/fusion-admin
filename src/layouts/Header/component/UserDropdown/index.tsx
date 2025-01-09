@@ -126,10 +126,7 @@ const UserDropdown: React.FC = () => {
   const renderDropdown = (menus: ReactNode) => {
     return (
       <div className="dropdownContent" style={contentStyle}>
-        <div
-          className="avatar"
-          style={{ display: 'flex', alignItems: 'center', padding: '0.75rem' }}
-        >
+        <div className="avatar flex items-center p-3">
           <Avatar size="large" src={avatar} />
         </div>
         <Divider style={{ margin: '2px 0' }} />
@@ -148,17 +145,7 @@ const UserDropdown: React.FC = () => {
         placement="bottomLeft"
         overlayStyle={{ width: 240 }}
       >
-        <div
-          className="login-user"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            height: 50,
-            transition: 'all 0.3s',
-          }}
-        >
+        <div className="login-user flex items-center cursor-pointer justify-between h-[50] transition-all duration-300">
           <Avatar size="default" src={avatar} />
           <span style={{ margin: '0 0 0 6px' }}>
             {sessionStorage.getItem('loginUser') || 'username'}

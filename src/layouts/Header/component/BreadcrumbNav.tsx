@@ -31,7 +31,7 @@ const BreadcrumbNav: React.FC = () => {
     <>
       <Breadcrumb
         items={items}
-        className="dis-fl js-sb ai-ct"
+        className="flex justify-between items-center"
         style={{ marginLeft: '10px' }}
       />
     </>

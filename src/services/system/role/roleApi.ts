@@ -26,6 +26,11 @@ export enum RoleApi {
    * 改变角色状态
    */
   changeStatus = "/system/role/changeStatus",
+
+  /**
+   * 删除角色
+   */
+  deleteRole = "/system/role/deleteRole",
 }
 
 /**
@@ -78,5 +83,17 @@ export const changStatus = (params: Record<string, any>) => {
   return HttpRequest.patch({
     url: RoleApi.changeStatus,
     data: params,
+  });
+};
+
+/**
+ * 删除角色
+ * @param params 角色参数
+ * @returns 结果
+ */
+export const deleteRole = (params: Record<string, any>) => {
+  return HttpRequest.delete({
+    url: RoleApi.deleteRole,
+    params,
   });
 };
