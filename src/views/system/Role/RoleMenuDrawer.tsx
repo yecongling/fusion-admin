@@ -8,7 +8,7 @@ import {
   FolderOpenFilled,
 } from '@ant-design/icons';
 import { App, Button, Drawer, Space, Tree, type TreeProps } from 'antd';
-import { type Key, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 /**
  * 角色菜单授权界面
@@ -72,13 +72,9 @@ const RoleMenuDrawer: React.FC<RoleMenuDrawerProps> = ({
    */
   const handleOk = (e: React.MouseEvent<HTMLButtonElement>) => {
     // 保存分配的菜单数据
-    assignRoleMenu({ roleId: roleId, menuIds: checked }).then((resp) => {
-      if (resp.success) {
-        // 关闭弹窗
-        onOk(e);
-      } else {
-        message.error('分配菜单权限失败');
-      }
+    assignRoleMenu({ roleId: roleId, menuIds: checked }).then(() => {
+      // 关闭弹窗
+      onOk(e);
     });
   };
 
