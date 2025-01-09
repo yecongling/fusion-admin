@@ -31,6 +31,16 @@ export enum RoleApi {
    * 删除角色
    */
   deleteRole = "/system/role/deleteRole",
+
+  /**
+   * 获取角色菜单
+   */
+  getRoleMenu = "/system/role/getRoleMenu",
+
+  /**
+   * 给角色分配菜单
+   */
+  assignRoleMenu = "/system/role/assignRoleMenu",
 }
 
 /**
@@ -95,5 +105,34 @@ export const deleteRole = (params: Record<string, any>) => {
   return HttpRequest.delete({
     url: RoleApi.deleteRole,
     params,
+  });
+};
+
+/**
+ * 获取角色菜单权限
+ * @param params 角色参数
+ * @returns 结果
+ */
+export const getRoleMenu = (roleId: string) => {
+  return HttpRequest.get(
+    {
+      url: RoleApi.getRoleMenu,
+      params: { roleId },
+    },
+    {
+      successMessageMode: "none",
+    }
+  );
+};
+
+/**
+ * 分配角色菜单权限
+ * @param params 角色参数
+ * @returns 结果
+ */
+export const assignRoleMenu = (params: any) => {
+  return HttpRequest.post({
+    url: RoleApi.assignRoleMenu,
+    data: params,
   });
 };

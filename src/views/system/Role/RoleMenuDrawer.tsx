@@ -1,6 +1,14 @@
-import { CloseOutlined } from '@ant-design/icons';
-import { Button, Drawer, Space } from 'antd';
-import { useEffect } from 'react';
+import { MyIcon } from '@/components/MyIcon';
+import { assignRoleMenu, getRoleMenu } from '@/services/system/role/roleApi';
+import { addIcon } from '@/utils/utils';
+import {
+  CloseOutlined,
+  DownOutlined,
+  FolderFilled,
+  FolderOpenFilled,
+} from '@ant-design/icons';
+import { App, Button, Drawer, Space, Tree, type TreeProps } from 'antd';
+import { type Key, useEffect, useState } from 'react';
 
 /**
  * 角色菜单授权界面
@@ -12,19 +20,77 @@ const RoleMenuDrawer: React.FC<RoleMenuDrawerProps> = ({
   onOk,
   onCancel,
 }) => {
+  const { message } = App.useApp();
+  // 树组件的数据
+  const [treeData, setTreeData] = useState<any[]>([]);
+  // 选中的节点
+  const [checked, setChecked] = useState<string[]>([]);
+  // 展开的节点
+  const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
 
   useEffect(() => {
     if (!open) return;
     // 调用获取所有菜单接口方法（里面包含获取选中的菜单key）
-
+    getRoleMenu(roleId).then((resp: any) => {
+      // 内部包含menuList和menuIds
+      const expanded: string[] = [];
+      const data = transformData(resp.menuList, expanded);
+      setTreeData(data);
+      setChecked(resp.menuIds);
+      setExpandedKeys(expanded);
+    });
   }, [open]);
+
+  /**
+   * 数据转换
+   * @param data 原始数据
+   * @param expanded 需要展开的数据
+   */
+  const transformData = (data: any, expanded: string[]) => {
+    return data.map((item: any) => {
+      if (item.icon) {
+        item.icon =
+          item.icon.indexOf('fusion') > -1 ? (
+            <MyIcon type={item.icon} />
+          ) : (
+            addIcon(item.icon)
+          );
+      }
+      if (item.children?.length > 0) {
+        expanded.push(item.id);
+      }
+      if (item.children) {
+        transformData(item.children, expanded);
+      }
+      return item;
+    });
+  };
+
   /**
    * 点击确定的时候的操作
    * @param e
    */
   const handleOk = (e: React.MouseEvent<HTMLButtonElement>) => {
-    onOk(e);
+    // 保存分配的菜单数据
+    assignRoleMenu({ roleId: roleId, menuIds: checked }).then((resp) => {
+      if (resp.success) {
+        // 关闭弹窗
+        onOk(e);
+      } else {
+        message.error('分配菜单权限失败');
+      }
+    });
   };
+
+  /**
+   * 处理节点选中
+   * @param checkedKeys 选中的节点
+   * @param e
+   */
+  const handleChecked: TreeProps['onCheck'] = (checkedKeysValue) => {
+    setChecked(checkedKeysValue as string[]);
+  };
+
   return (
     <Drawer
       title="授权菜单"
@@ -43,7 +109,30 @@ const RoleMenuDrawer: React.FC<RoleMenuDrawerProps> = ({
         </Space>
       }
     >
-      <div>菜单</div>
+      <Tree
+        blockNode
+        checkable
+        showIcon
+        switcherIcon={<DownOutlined />}
+        defaultExpandAll
+        expandedKeys={expandedKeys}
+        fieldNames={{ title: 'name', key: 'id', children: 'children' }}
+        icon={(props: any) => {
+          // 没有isLeaf这个属性表明是一级菜单
+          const { isLeaf } = props.data;
+          if (!isLeaf) {
+            return props.expanded ? (
+              <FolderOpenFilled style={{ fontSize: '16px', color: 'orange' }} />
+            ) : (
+              <FolderFilled style={{ fontSize: '16px', color: 'orange' }} />
+            );
+          }
+          return <></>;
+        }}
+        treeData={treeData}
+        checkedKeys={checked}
+        onCheck={handleChecked}
+      />
     </Drawer>
   );
 };
