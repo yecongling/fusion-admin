@@ -22,7 +22,7 @@ const RoleInfoModal: React.FC<RoleInfoModalProps> = ({
       // 清空表单数据，表示新增
       form.resetFields();
     }
-  }, [currentRow, form, visible]);
+  }, [currentRow, visible]);
 
   /**
    * 弹窗打开关闭的回调（打开后默认聚焦到名称输入框）
@@ -43,6 +43,10 @@ const RoleInfoModal: React.FC<RoleInfoModalProps> = ({
   const checkUnique = async (_rule: any, value: string) => {
     // 如果为空值，跳过校验
     if (!value) {
+      return Promise.resolve();
+    }
+    // 如果角色编码没有进行修改，则不需要做唯一性校验
+    if (currentRow && currentRow.roleCode === value) {
       return Promise.resolve();
     }
     const res = await checkRoleCodeExist({ roleCode: value });

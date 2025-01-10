@@ -73,7 +73,7 @@ const Role: React.FC = () => {
     {
       key: 'edit',
       label: '编辑',
-      icon: <EditOutlined />,
+      icon: <EditOutlined className='text-orange-400'/>,
       onClick: () => {
         // 编辑选中的行数据
         setParams({ visible: true, currentRow: row });
@@ -82,7 +82,7 @@ const Role: React.FC = () => {
     {
       key: 'delete',
       label: '删除',
-      icon: <DeleteOutlined />,
+      icon: <DeleteOutlined className='text-red-400'/>,
       onClick: () => {
         // 删除选中的行数据
         modal.confirm({
@@ -92,6 +92,7 @@ const Role: React.FC = () => {
           onOk() {
             deleteRole(row).then(() => {
               // 刷新表格数据
+              queryRoleData();
             });
           },
         });
@@ -181,7 +182,7 @@ const Role: React.FC = () => {
             >
               授权
             </Button>
-            <Dropdown menu={{ items: more(record) }}>
+            <Dropdown menu={{ items: more(record) }} placement='bottom' trigger={['click']}>
               <Button type="link" size="small" icon={<MoreOutlined />} />
             </Dropdown>
           </Space>
