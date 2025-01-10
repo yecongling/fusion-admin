@@ -28,7 +28,7 @@ import {
   SunOutlined,
 } from '@ant-design/icons';
 import type { RouteItem } from '@/types/route';
-import { addIcon, getOpenKeys, searchRoute } from '@/utils/utils';
+import { getIcon, getOpenKeys, searchRoute } from '@/utils/utils';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -81,7 +81,7 @@ const LeftMenu: React.FC = memo(() => {
       // 下面判断代码解释 *** !item?.children?.length   ==>   (!item.children || item.children.length === 0)
       if (!item?.children?.length) {
         newArr.push(
-          getItem(item.meta?.title, item.path, addIcon(item.meta?.icon)),
+          getItem(item.meta?.title, item.path, getIcon(item.meta?.icon)),
         );
         continue;
       }
@@ -89,7 +89,7 @@ const LeftMenu: React.FC = memo(() => {
         getItem(
           item.meta?.title,
           item.path,
-          addIcon(item.meta?.icon),
+          getIcon(item.meta?.icon),
           deepLoopFloat(item.children),
         ),
       );

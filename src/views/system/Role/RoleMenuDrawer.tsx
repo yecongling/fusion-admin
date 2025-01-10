@@ -1,6 +1,5 @@
-import { MyIcon } from '@/components/MyIcon';
 import { assignRoleMenu, getRoleMenu } from '@/services/system/role/roleApi';
-import { addIcon } from '@/utils/utils';
+import { getIcon } from '@/utils/utils';
 import {
   CloseOutlined,
   DownOutlined,
@@ -48,12 +47,7 @@ const RoleMenuDrawer: React.FC<RoleMenuDrawerProps> = ({
   const transformData = (data: any, expanded: string[]) => {
     return data.map((item: any) => {
       if (item.icon) {
-        item.icon =
-          item.icon.indexOf('fusion') > -1 ? (
-            <MyIcon type={item.icon} />
-          ) : (
-            addIcon(item.icon)
-          );
+        item.icon = getIcon(item.icon);
       }
       if (item.children?.length > 0) {
         expanded.push(item.id);
