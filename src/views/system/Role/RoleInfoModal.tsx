@@ -1,4 +1,5 @@
 import DragModal from '@/components/modal/DragModal';
+import { checkRoleCodeExist } from '@/services/system/role/roleApi';
 import { Form, Input, type InputRef, Select, Switch } from 'antd';
 import { useEffect, useRef } from 'react';
 
@@ -34,13 +35,30 @@ const RoleInfoModal: React.FC<RoleInfoModalProps> = ({
   };
 
   /**
+   * 角色编码唯一性校验
+   * @param _rule 规则
+   * @param value 值
+   * @returns 结果
+   */
+  const checkUnique = async (_rule: any, value: string) => {
+    // 如果为空值，跳过校验
+    if (!value) {
+      return Promise.resolve();
+    }
+    const res = await checkRoleCodeExist({ roleCode: value });
+    if (res) {
+      return Promise.reject('角色编码已存在');
+    }
+    return Promise.resolve();
+  };
+
+  /**
    * 点击确认的时候先做数据校验
    */
   const handleOk = () => {
     form
       .validateFields()
       .then(() => {
-        // 清除所有错误
         onOk(form.getFieldsValue());
       })
       .catch((errorInfo) => {
@@ -66,7 +84,10 @@ const RoleInfoModal: React.FC<RoleInfoModalProps> = ({
         <Form.Item
           label="角色编码"
           name="roleCode"
-          rules={[{ required: true, message: '请输入角色编码' }]}
+          rules={[
+            { required: true, message: '请输入角色编码' }, // 必填规则
+            { validator: checkUnique }, // 唯一性校验
+          ]}
         >
           <Input ref={roleCodeRef} placeholder="请输入角色编码" />
         </Form.Item>

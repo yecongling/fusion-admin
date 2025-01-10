@@ -7,7 +7,7 @@ import {
   FolderFilled,
   FolderOpenFilled,
 } from '@ant-design/icons';
-import { App, Button, Drawer, Space, Tree, type TreeProps } from 'antd';
+import { Button, Drawer, Space, Tree, type TreeProps } from 'antd';
 import { useEffect, useState } from 'react';
 
 /**
@@ -20,7 +20,6 @@ const RoleMenuDrawer: React.FC<RoleMenuDrawerProps> = ({
   onOk,
   onCancel,
 }) => {
-  const { message } = App.useApp();
   // 树组件的数据
   const [treeData, setTreeData] = useState<any[]>([]);
   // 选中的节点

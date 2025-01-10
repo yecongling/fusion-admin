@@ -41,6 +41,11 @@ export enum RoleApi {
    * 给角色分配菜单
    */
   assignRoleMenu = "/system/role/assignRoleMenu",
+
+  /**
+   * 校验角色编码是否重复
+   */
+  checkRoleCodeExist = "/system/role/checkRoleCodeExist",
 }
 
 /**
@@ -135,4 +140,21 @@ export const assignRoleMenu = (params: any) => {
     url: RoleApi.assignRoleMenu,
     data: params,
   });
+};
+
+/**
+ * 验证角色编码是否存在
+ * @param params 角色编码
+ * @returns 结果
+ */
+export const checkRoleCodeExist = (params: any) => {
+  return HttpRequest.get(
+    {
+      url: RoleApi.checkRoleCodeExist,
+      params,
+    },
+    {
+      successMessageMode: "none",
+    }
+  );
 };
