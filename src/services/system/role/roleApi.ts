@@ -38,9 +38,19 @@ export enum RoleApi {
   getRoleMenu = "/system/role/getRoleMenu",
 
   /**
+   * 获取角色用户
+   */
+  getRoleUser = "/system/role/getRoleUser",
+
+  /**
    * 给角色分配菜单
    */
   assignRoleMenu = "/system/role/assignRoleMenu",
+
+  /**
+   * 给角色分配用户
+   */
+  assignRoleUser = "/system/role/assignRoleUser",
 
   /**
    * 校验角色编码是否重复
@@ -142,6 +152,34 @@ export const assignRoleMenu = (params: any) => {
   });
 };
 
+/**
+ * 分配角色用户
+ * @param params 角色参数
+ * @returns 结果
+ */
+export const assignRoleUser = (params: any) => {
+  return HttpRequest.post({
+    url: RoleApi.assignRoleUser,
+    data: params,
+  });
+};
+
+/**
+ * 获取角色用户
+ * @param params 角色参数
+ * @returns 结果
+ */
+export const getRoleUser = (roleId: string) => {
+  return HttpRequest.get(
+    {
+      url: RoleApi.getRoleUser,
+      params: { roleId },
+    },
+    {
+      successMessageMode: "none",
+    }
+  );
+};
 /**
  * 验证角色编码是否存在
  * @param params 角色编码

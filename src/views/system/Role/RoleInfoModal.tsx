@@ -93,14 +93,18 @@ const RoleInfoModal: React.FC<RoleInfoModalProps> = ({
             { validator: checkUnique }, // 唯一性校验
           ]}
         >
-          <Input ref={roleCodeRef} placeholder="请输入角色编码" />
+          <Input
+            ref={roleCodeRef}
+            placeholder="请输入角色编码"
+            autoComplete="off"
+          />
         </Form.Item>
         <Form.Item
           name="roleName"
           label="角色名称"
           rules={[{ required: true, message: '请输入角色名称' }]}
         >
-          <Input placeholder="请输入角色名称" />
+          <Input placeholder="请输入角色名称" autoComplete="off" />
         </Form.Item>
         <Form.Item name="roleType" label="角色类型">
           <Select

@@ -35,6 +35,7 @@ import {
 } from '@/services/system/role/roleApi';
 import RoleInfoModal from './RoleInfoModal';
 import RoleMenuDrawer from './RoleMenuDrawer';
+import RoleUserDrawer from './RoleUserDrawer';
 
 /**
  * 系统角色维护
@@ -62,6 +63,8 @@ const Role: React.FC = () => {
 
   // 抽屉窗口打开关闭
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
+  // 角色用户分配抽屉
+  const [drawerOpenUser, setDrawerOpenUser] = useState<boolean>(false);
 
   useEffect(() => {
     // 查询角色数据
@@ -73,7 +76,7 @@ const Role: React.FC = () => {
     {
       key: 'edit',
       label: '编辑',
-      icon: <EditOutlined className='text-orange-400'/>,
+      icon: <EditOutlined className="text-orange-400" />,
       onClick: () => {
         // 编辑选中的行数据
         setParams({ visible: true, currentRow: row });
@@ -82,7 +85,7 @@ const Role: React.FC = () => {
     {
       key: 'delete',
       label: '删除',
-      icon: <DeleteOutlined className='text-red-400'/>,
+      icon: <DeleteOutlined className="text-red-400" />,
       onClick: () => {
         // 删除选中的行数据
         modal.confirm({
@@ -153,7 +156,7 @@ const Role: React.FC = () => {
     },
     {
       title: '操作',
-      width: '12%',
+      width: '14%',
       dataIndex: 'action',
       fixed: 'right',
       align: 'center',
@@ -169,20 +172,31 @@ const Role: React.FC = () => {
             >
               详情
             </Button>
-            <Button type="link" size="small" onClick={() => {}}>
+            <Button
+              type="link"
+              size="small"
+              onClick={() => {
+                setParams({ visible: false, currentRow: record });
+                setDrawerOpenUser(true);
+              }}
+            >
               用户
             </Button>
             <Button
               type="link"
               size="small"
               onClick={() => {
-                setDrawerOpen(true);
                 setParams({ visible: false, currentRow: record });
+                setDrawerOpen(true);
               }}
             >
-              授权
+              授权菜单
             </Button>
-            <Dropdown menu={{ items: more(record) }} placement='bottom' trigger={['click']}>
+            <Dropdown
+              menu={{ items: more(record) }}
+              placement="bottom"
+              trigger={['click']}
+            >
               <Button type="link" size="small" icon={<MoreOutlined />} />
             </Dropdown>
           </Space>
@@ -263,6 +277,7 @@ const Role: React.FC = () => {
    */
   const hideDrawer = () => {
     setDrawerOpen(false);
+    setDrawerOpenUser(false);
   };
 
   /**
@@ -405,6 +420,12 @@ const Role: React.FC = () => {
         onOk={hideDrawer}
         open={drawerOpen}
         onCancel={hideDrawer}
+      />
+      {/* 用户分配抽屉 */}
+      <RoleUserDrawer
+        roleId={params.currentRow?.id}
+        onCancel={hideDrawer}
+        open={drawerOpenUser}
       />
     </>
   );
