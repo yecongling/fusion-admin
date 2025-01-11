@@ -2,6 +2,7 @@ import { QuestionCircleFilled, SettingOutlined } from '@ant-design/icons';
 import DragModal from '@/components/modal/DragModal';
 import { getDirectory } from '@/services/system/menu/menuApi';
 import {
+  Dropdown,
   Form,
   Input,
   InputNumber,
@@ -13,6 +14,7 @@ import {
 } from 'antd';
 import type React from 'react';
 import { useEffect, useRef, useState } from 'react';
+import IconPanel from '@/components/IconPanel';
 
 /**
  * 菜单信息编辑弹窗
@@ -76,6 +78,16 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
         form.scrollToField(errorInfo.errorFields[0].name);
         form.focusField(errorInfo.errorFields[0].name);
       });
+  };
+
+  /**
+   * 选中的图标
+   * @param icon 图标名称
+   */
+  const onSelectIcon = (icon: string) => {
+    if (icon) {
+      form.setFieldsValue({ icon });
+    }
   };
 
   return (
@@ -170,7 +182,16 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
           <Input
             allowClear
             autoComplete="off"
-            addonAfter={<SettingOutlined />}
+            addonAfter={
+              <Dropdown
+                trigger={['click']}
+                placement='bottom'
+                dropdownRender={() => <IconPanel onSelect={onSelectIcon} />}
+                overlayClassName="w-[360] h-[300] bg-white overflow-y-auto p-2 shadow-xl"
+              >
+                <SettingOutlined />
+              </Dropdown>
+            }
           />
         </Form.Item>
         <Form.Item name="sortNo" label="排序">
