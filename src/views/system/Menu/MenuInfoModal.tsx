@@ -184,12 +184,12 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
             autoComplete="off"
             addonAfter={
               <Dropdown
-                trigger={['click']}
+                trigger={['hover']}
                 placement='bottom'
                 dropdownRender={() => <IconPanel onSelect={onSelectIcon} />}
                 overlayClassName="w-[360] h-[300] bg-white overflow-y-auto p-2 shadow-xl"
               >
-                <SettingOutlined />
+                <SettingOutlined className='cursor-pointer'/>
               </Dropdown>
             }
           />
