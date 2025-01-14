@@ -406,7 +406,7 @@ const Role: React.FC = () => {
             columns={columns}
             loading={loading}
             rowKey="id"
-            scroll={{ y: height - 128 }}
+            scroll={{ x: 'max-content', y: height - 128 }}
             rowSelection={{ ...rowSelection }}
           />
         </Card>

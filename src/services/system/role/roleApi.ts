@@ -43,6 +43,11 @@ export enum RoleApi {
   getRoleUser = "/system/role/getRoleUser",
 
   /**
+   * 获取不在该角色下的所有可用用户
+   */
+  getUserNotInRoleByPage = "/system/role/getUserNotInRoleByPage",
+
+  /**
    * 给角色分配菜单
    */
   assignRoleMenu = "/system/role/assignRoleMenu",
@@ -174,6 +179,23 @@ export const getRoleUser = (roleId: string) => {
     {
       url: RoleApi.getRoleUser,
       params: { roleId },
+    },
+    {
+      successMessageMode: "none",
+    }
+  );
+};
+
+/**
+ * 获取不在该角色下的所有可用用户
+ * @param params 角色参数和分页参数
+ * @returns 结果
+ */
+export const getUserNotInRoleByPage = (params: any) => {
+  return HttpRequest.get(
+    {
+      url: RoleApi.getUserNotInRoleByPage,
+      params,
     },
     {
       successMessageMode: "none",
