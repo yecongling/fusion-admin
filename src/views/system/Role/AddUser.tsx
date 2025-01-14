@@ -124,7 +124,9 @@ const AddUser: React.FC<AddUserProps> = ({ open, onOk, onCancel, roleId }) => {
   /**
    * 点击确定的操作
    */
-  const handleOk = () => {};
+  const handleOk = () => {
+
+  };
 
   return (
     <DragModal
@@ -138,12 +140,21 @@ const AddUser: React.FC<AddUserProps> = ({ open, onOk, onCancel, roleId }) => {
           <Row gutter={12}>
             <Col span={6}>
               <Form.Item className="mb-0" label="用户名" name="username">
-                <Input placeholder="请输入用户名" autoFocus allowClear />
+                <Input
+                  placeholder="请输入用户名"
+                  autoFocus
+                  allowClear
+                  autoComplete="off"
+                />
               </Form.Item>
             </Col>
             <Col span={6}>
               <Form.Item className="mb-0" label="真实姓名" name="realName">
-                <Input placeholder="请输入真实姓名" allowClear />
+                <Input
+                  placeholder="请输入真实姓名"
+                  allowClear
+                  autoComplete="off"
+                />
               </Form.Item>
             </Col>
             <Col span={6}>
@@ -186,6 +197,7 @@ const AddUser: React.FC<AddUserProps> = ({ open, onOk, onCancel, roleId }) => {
           size="small"
           title={() => '用户列表'}
           bordered
+          rowKey="id"
           columns={columns}
           pagination={{
             pageSize: pagination.pageSize,
@@ -211,6 +223,7 @@ export interface AddUserProps {
   open: boolean;
   // 当前角色
   roleId: string;
-  onOk: (params: string[]) => void;
+  // 点击确定(选中的数量)
+  onOk: (params: number) => void;
   onCancel: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }

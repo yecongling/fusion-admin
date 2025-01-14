@@ -174,11 +174,11 @@ export const assignRoleUser = (params: any) => {
  * @param params 角色参数
  * @returns 结果
  */
-export const getRoleUser = (roleId: string) => {
-  return HttpRequest.get(
+export const getRoleUser = (params: any) => {
+  return HttpRequest.post(
     {
       url: RoleApi.getRoleUser,
-      params: { roleId },
+      data: params,
     },
     {
       successMessageMode: "none",

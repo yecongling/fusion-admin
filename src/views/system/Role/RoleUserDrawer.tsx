@@ -40,15 +40,41 @@ const RoleUserDrawer: React.FC<RoleUserDrawerProps> = ({
   const [form] = Form.useForm();
   // 当前选中的行数据
   const [selRows, setSelectedRows] = useState<any[]>([]);
+  // 数据总条数
+  const [total, setTotal] = useState<number>(0);
+  // 分页参数
+  const [pagination, setPagination] = useState<{
+    pageNumber: number;
+    pageSize: number;
+  }>({
+    pageNumber: 1,
+    pageSize: 20,
+  });
 
   useEffect(() => {
     if (!open) return;
     // 获取当前角色已经分配的用户
-    getRoleUser(roleId).then((res) => {
+    getRoleUserByPage();
+  }, [open, pagination]);
+
+  /**
+   * 分页查询数据
+   * @param params 查询参数
+   */
+  const getRoleUserByPage = () => {
+    getRoleUser({
+      roleId,
+      // 表单数据
+      searchParams: form.getFieldsValue(),
+      pageNum: pagination.pageNumber,
+      pageSize: pagination.pageSize,
+    }).then((resp) => {
       // 设置表格数据
-      setTableData(res);
+      setTableData(resp.data);
+      // 设置数据总条数
+      resp.total && setTotal(resp.total);
     });
-  }, [open]);
+  };
 
   /**
    * 定义表格的列
@@ -104,6 +130,18 @@ const RoleUserDrawer: React.FC<RoleUserDrawerProps> = ({
   ];
 
   /**
+   * 分页改变事件
+   * @param page 页数
+   * @param pageSize 每页数量
+   */
+  const onPageSizeChange = (page: number, pageSize: number) => {
+    setPagination({
+      pageNumber: page,
+      pageSize: pageSize,
+    });
+  };
+
+  /**
    * 表单检索
    * @param values
    */
@@ -140,8 +178,17 @@ const RoleUserDrawer: React.FC<RoleUserDrawerProps> = ({
 
   /**
    * 处理确定按钮的点击事件
+   * @param count 选中的数量
    */
-  const handleOk = () => {};
+  const handleOk = (count: number) => {
+    // 如果选中的数量为0，则直接关闭弹窗，不刷新表格，否则刷新表格
+    if (count === 0) {
+      cancelAddUser();
+      return;
+    }
+    getRoleUserByPage();
+    cancelAddUser();
+  };
 
   return (
     <>
@@ -173,7 +220,7 @@ const RoleUserDrawer: React.FC<RoleUserDrawerProps> = ({
                 <Form.Item
                   className="mb-0"
                   name="realName"
-                  label="姓名"
+                  label="实际名"
                   colon={false}
                 >
                   <Input allowClear autoComplete="off" />
@@ -237,6 +284,18 @@ const RoleUserDrawer: React.FC<RoleUserDrawerProps> = ({
             dataSource={tableData}
             bordered
             rowKey="id"
+            pagination={{
+              pageSize: pagination.pageSize,
+              current: pagination.pageNumber,
+              showQuickJumper: true,
+              hideOnSinglePage: false,
+              showSizeChanger: true,
+              showTotal: (total) => `共 ${total} 条`,
+              total: total,
+              onChange(page, pageSize) {
+                onPageSizeChange(page, pageSize);
+              },
+            }}
             scroll={{ x: 'max-content' }}
             rowSelection={{ ...rowSelection }}
           />
