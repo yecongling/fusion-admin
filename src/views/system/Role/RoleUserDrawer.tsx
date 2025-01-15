@@ -1,6 +1,8 @@
 import { assignRoleUser, getRoleUser } from '@/services/system/role/roleApi';
 import {
   CloseOutlined,
+  DeleteOutlined,
+  ExclamationCircleFilled,
   ManOutlined,
   PlusOutlined,
   RedoOutlined,
@@ -8,19 +10,21 @@ import {
   WomanOutlined,
 } from '@ant-design/icons';
 import {
+  App,
   Button,
   Card,
   Col,
   Drawer,
   Form,
   Input,
+  type InputRef,
   Row,
   Select,
   Space,
   Table,
   type TableProps,
 } from 'antd';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import AddUser from './AddUser';
 
 /**
@@ -32,6 +36,7 @@ const RoleUserDrawer: React.FC<RoleUserDrawerProps> = ({
   roleId,
   onCancel,
 }) => {
+  const { modal } = App.useApp();
   // 用户表格数据
   const [tableData, setTableData] = useState<any[]>([]);
   // 添加用户弹窗的打开关闭
@@ -42,6 +47,8 @@ const RoleUserDrawer: React.FC<RoleUserDrawerProps> = ({
   const [selRows, setSelectedRows] = useState<any[]>([]);
   // 数据总条数
   const [total, setTotal] = useState<number>(0);
+  // 第一个检索框
+  const ref = useRef<InputRef>(null);
   // 分页参数
   const [pagination, setPagination] = useState<{
     pageNumber: number;
@@ -55,6 +62,7 @@ const RoleUserDrawer: React.FC<RoleUserDrawerProps> = ({
     if (!open) return;
     // 获取当前角色已经分配的用户
     getRoleUserByPage();
+    setSelectedRows([]);
   }, [open, pagination]);
 
   /**
@@ -73,6 +81,7 @@ const RoleUserDrawer: React.FC<RoleUserDrawerProps> = ({
       setTableData(resp.data);
       // 设置数据总条数
       resp.total && setTotal(resp.total);
+      ref.current?.focus();
     });
   };
 
@@ -110,7 +119,11 @@ const RoleUserDrawer: React.FC<RoleUserDrawerProps> = ({
       width: 80,
       align: 'center',
       render: (text) => {
-        return text === 1 ? <ManOutlined /> : <WomanOutlined />;
+        return text === 1 ? (
+          <ManOutlined className="text-blue-400" />
+        ) : (
+          <WomanOutlined className="text-pink-400" />
+        );
       },
     },
     {
@@ -119,10 +132,15 @@ const RoleUserDrawer: React.FC<RoleUserDrawerProps> = ({
       width: 80,
       fixed: 'right',
       align: 'center',
-      render: (text, record) => {
+      render: (_text, record) => {
         return (
-          <Button type="link" danger size="small" onClick={() => {}}>
-            移除用户
+          <Button
+            type="link"
+            danger
+            size="small"
+            onClick={() => deleteBatch(record.id)}
+          >
+            移除
           </Button>
         );
       },
@@ -143,10 +161,9 @@ const RoleUserDrawer: React.FC<RoleUserDrawerProps> = ({
 
   /**
    * 表单检索
-   * @param values
    */
-  const onFinish = (values: any) => {
-    console.log('values', values);
+  const onFinish = () => {
+    getRoleUserByPage();
   };
 
   /**
@@ -174,6 +191,35 @@ const RoleUserDrawer: React.FC<RoleUserDrawerProps> = ({
    */
   const cancelAddUser = () => {
     setOpenAddUser(false);
+    ref.current?.focus();
+  };
+
+  /**
+   * 批量删除用户
+   * @param id 用户ID
+   */
+  const deleteBatch = (id?: string) => {
+    // 删除操作需要二次确定
+    modal.confirm({
+      title: '批量删除',
+      icon: <ExclamationCircleFilled />,
+      content: '确定批量删除用户吗？数据删除后将无法恢复！',
+      onOk() {
+        // 调用删除接口，删除成功后刷新页面数据
+        const ids = selRows.map((item: any) => item.id);
+        id && ids.push(id);
+        assignRoleUser({
+          roleId,
+          ids,
+          operate: 'delete',
+        }).then(() => {
+          // 刷新表格数据
+          getRoleUserByPage();
+          // 清空选择项
+          setSelectedRows([]);
+        });
+      },
+    });
   };
 
   /**
@@ -213,7 +259,7 @@ const RoleUserDrawer: React.FC<RoleUserDrawerProps> = ({
                   label="用户名"
                   colon={false}
                 >
-                  <Input autoFocus allowClear autoComplete="off" />
+                  <Input autoFocus allowClear autoComplete="off" ref={ref} />
                 </Form.Item>
               </Col>
               <Col span={6}>
@@ -274,7 +320,14 @@ const RoleUserDrawer: React.FC<RoleUserDrawerProps> = ({
             <Button type="primary" onClick={addUser} icon={<PlusOutlined />}>
               添加用户
             </Button>
-            <Button disabled={selRows.length === 0}>批量操作</Button>
+            <Button
+              icon={<DeleteOutlined />}
+              danger
+              disabled={selRows.length === 0}
+              onClick={() => deleteBatch()}
+            >
+              批量删除
+            </Button>
           </Space>
           {/* 表格数据 */}
           <Table

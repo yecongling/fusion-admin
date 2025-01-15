@@ -11,7 +11,7 @@ const RoleInfoModal: React.FC<RoleInfoModalProps> = ({
   // 表单实例
   const [form] = Form.useForm();
   const roleCodeRef = useRef<InputRef>(null);
-  const { visible, currentRow } = params;
+  const { visible, currentRow, view } = params;
 
   useEffect(() => {
     if (!visible) return;
@@ -77,11 +77,17 @@ const RoleInfoModal: React.FC<RoleInfoModalProps> = ({
       width="40%"
       open={visible}
       title={currentRow ? '编辑角色' : '新增角色'}
+      okButtonProps={{ className: view ? 'hidden' : '' }}
       onOk={handleOk}
       onCancel={onCancel}
       afterOpenChange={onAfterOpenChange}
     >
-      <Form form={form} labelCol={{ span: 3 }} initialValues={{ status: true }}>
+      <Form
+        form={form}
+        labelCol={{ span: 3 }}
+        initialValues={{ status: true }}
+        disabled={view}
+      >
         <Form.Item name="id" hidden>
           <Input disabled />
         </Form.Item>
@@ -137,6 +143,7 @@ export type RoleInfoModalProps = {
     visible: boolean;
     // 弹窗需要的数据
     currentRow: Record<string, any> | null;
+    view: boolean;
   };
 
   // 点击确定的回调

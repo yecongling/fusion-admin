@@ -56,9 +56,14 @@ const Role: React.FC = () => {
   const [selRows, setSelectedRows] = useState<any[]>([]);
 
   // 将当前编辑行和窗口开关合并为一个状态对象
-  const [params, setParams] = useState<{ visible: boolean; currentRow: any }>({
+  const [params, setParams] = useState<{
+    visible: boolean;
+    currentRow: any;
+    view: boolean;
+  }>({
     visible: false,
     currentRow: null,
+    view: false,
   });
 
   // 抽屉窗口打开关闭
@@ -79,7 +84,7 @@ const Role: React.FC = () => {
       icon: <EditOutlined className="text-orange-400" />,
       onClick: () => {
         // 编辑选中的行数据
-        setParams({ visible: true, currentRow: row });
+        setParams({ visible: true, currentRow: row, view: false });
       },
     },
     {
@@ -167,7 +172,7 @@ const Role: React.FC = () => {
               type="link"
               size="small"
               onClick={() => {
-                setParams({ visible: true, currentRow: record });
+                setParams({ visible: true, currentRow: record, view: true });
               }}
             >
               详情
@@ -176,7 +181,7 @@ const Role: React.FC = () => {
               type="link"
               size="small"
               onClick={() => {
-                setParams({ visible: false, currentRow: record });
+                setParams({ visible: false, currentRow: record, view: false });
                 setDrawerOpenUser(true);
               }}
             >
@@ -186,7 +191,7 @@ const Role: React.FC = () => {
               type="link"
               size="small"
               onClick={() => {
-                setParams({ visible: false, currentRow: record });
+                setParams({ visible: false, currentRow: record, view: false });
                 setDrawerOpen(true);
               }}
             >
@@ -253,7 +258,7 @@ const Role: React.FC = () => {
   const onRow = (record: any) => {
     return {
       onDoubleClick: () => {
-        setParams({ visible: true, currentRow: record });
+        setParams({ visible: true, currentRow: record, view: true });
       },
     };
   };
@@ -262,14 +267,14 @@ const Role: React.FC = () => {
    * 新增角色
    */
   const onAddRoleClick = () => {
-    setParams({ visible: true, currentRow: null });
+    setParams({ visible: true, currentRow: null, view: false });
   };
 
   /**
    * 取消
    */
   const onCancel = () => {
-    setParams({ visible: false, currentRow: null });
+    setParams({ visible: false, currentRow: null, view: false });
   };
 
   /**
@@ -294,7 +299,7 @@ const Role: React.FC = () => {
         await editRole(roleData);
       }
       // 操作成功，关闭弹窗，刷新数据
-      setParams({ visible: false, currentRow: null });
+      setParams({ visible: false, currentRow: null, view: false });
       queryRoleData();
     } catch (error) {
       modal.error({

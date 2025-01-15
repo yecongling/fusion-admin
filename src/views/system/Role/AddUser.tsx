@@ -1,5 +1,8 @@
 import DragModal from '@/components/modal/DragModal';
-import { getUserNotInRoleByPage } from '@/services/system/role/roleApi';
+import {
+  assignRoleUser,
+  getUserNotInRoleByPage,
+} from '@/services/system/role/roleApi';
 import {
   SearchOutlined,
   RedoOutlined,
@@ -12,13 +15,14 @@ import {
   Col,
   Form,
   Input,
+  type InputRef,
   Row,
   Select,
   Space,
   Table,
   type TableProps,
 } from 'antd';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 /**
  * 添加用户弹窗
@@ -32,6 +36,7 @@ const AddUser: React.FC<AddUserProps> = ({ open, onOk, onCancel, roleId }) => {
   const [tableData, setTableData] = useState<any[]>([]);
   // 数据总条数
   const [total, setTotal] = useState<number>(0);
+  const ref = useRef<InputRef>(null);
   // 分页参数
   const [pagination, setPagination] = useState<{
     pageNumber: number;
@@ -44,15 +49,34 @@ const AddUser: React.FC<AddUserProps> = ({ open, onOk, onCancel, roleId }) => {
   useEffect(() => {
     if (!open) return;
     // 获取没有当前角色权限的所有用户
+    getUserData();
+    // 重置选中的行
+    setSelectedRows([]);
+  }, [open, pagination]);
+
+  /**
+   * 获取用户数据
+   */
+  const getUserData = () => {
     getUserNotInRoleByPage({
       roleId,
+      // 表单数据
+      searchParams: form.getFieldsValue(),
       pageNum: pagination.pageNumber,
       pageSize: pagination.pageSize,
     }).then((resp) => {
       setTableData(resp.data);
       resp.total && setTotal(resp.total);
+      ref.current?.focus();
     });
-  }, [open, pagination]);
+  };
+
+  /**
+   * 检索表单提交
+   */
+  const onFinish = () => {
+    getUserData();
+  };
 
   /**
    * 定义表格的列
@@ -125,7 +149,21 @@ const AddUser: React.FC<AddUserProps> = ({ open, onOk, onCancel, roleId }) => {
    * 点击确定的操作
    */
   const handleOk = () => {
-
+    if (selRows.length === 0) {
+      onOk(0);
+      return;
+    }
+    const userIds = selRows.map((item: any) => item.id);
+    // 分配用户
+    assignRoleUser({
+      roleId,
+      ids: userIds,
+      operate: 'add',
+    }).then(() => {
+      onOk(selRows.length);
+      // 清空选择项
+      setSelectedRows([]);
+    });
   };
 
   return (
@@ -134,9 +172,10 @@ const AddUser: React.FC<AddUserProps> = ({ open, onOk, onCancel, roleId }) => {
       onCancel={onCancel}
       title="添加用户"
       width={{ xl: 800, xxl: 1000 }}
+      onOk={handleOk}
     >
       <Card>
-        <Form form={form}>
+        <Form form={form} onFinish={onFinish}>
           <Row gutter={12}>
             <Col span={6}>
               <Form.Item className="mb-0" label="用户名" name="username">
@@ -145,6 +184,7 @@ const AddUser: React.FC<AddUserProps> = ({ open, onOk, onCancel, roleId }) => {
                   autoFocus
                   allowClear
                   autoComplete="off"
+                  ref={ref}
                 />
               </Form.Item>
             </Col>

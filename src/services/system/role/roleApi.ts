@@ -192,10 +192,10 @@ export const getRoleUser = (params: any) => {
  * @returns 结果
  */
 export const getUserNotInRoleByPage = (params: any) => {
-  return HttpRequest.get(
+  return HttpRequest.post(
     {
       url: RoleApi.getUserNotInRoleByPage,
-      params,
+      data: params,
     },
     {
       successMessageMode: "none",
