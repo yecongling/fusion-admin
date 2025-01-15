@@ -9,7 +9,7 @@ import type React from 'react';
 const Content: React.FC = () => {
   return (
     <Layout.Content
-      className="dis-fl fd-c"
+      className="flex flex-col"
       style={{
         overflowY: 'auto',
         overflowX: 'hidden',

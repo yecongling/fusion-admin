@@ -20,5 +20,5 @@ echarts.use([
   SVGRenderer,
   CanvasRenderer,
 ]);
-// 导出配置的echart实例
+// 导出配置的echarts实例
 export default echarts;

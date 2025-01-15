@@ -18,7 +18,7 @@ export default () => {
         <rect
           id="svg_1"
           fill="currentColor"
-          fill-opacity="0.02"
+          fillOpacity="0.02"
           height="66"
           rx="4"
           stroke="null"
@@ -55,7 +55,7 @@ export default () => {
         <rect
           id="svg_13"
           fill="currentColor"
-          fill-opacity="0.08"
+          fillOpacity="0.08"
           height="21.51892"
           rx="2"
           stroke="null"
@@ -67,14 +67,14 @@ export default () => {
           id="svg_14"
           d="m19.4393,15.74245c0,-1.08676 0.79001,-2 1.73013,-2l23.18605,0c0.94011,0 1.73013,0.91324 1.73013,2l0,17.24865c0,1.08676 -0.79001,2 -1.73013,2l-23.18605,0c-0.94011,0 -1.73013,-0.91324 -1.73013,-2l0,-17.24865z"
           fill="currentColor"
-          fill-opacity="0.08"
+          fillOpacity="0.08"
           opacity="undefined"
           stroke="null"
         />
         <rect
           id="svg_15"
           fill="currentColor"
-          fill-opacity="0.08"
+          fillOpacity="0.08"
           height="21.65405"
           rx="2"
           stroke="null"
@@ -125,7 +125,7 @@ export default () => {
         <rect
           id="svg_5"
           fill="currentColor"
-          fill-opacity="0.08"
+          fillOpacity="0.08"
           height="56.81191"
           stroke="null"
           width="15.44642"
@@ -136,7 +136,7 @@ export default () => {
           id="svg_2"
           d="m2.38669,15.38074c0,-0.20384 0.27195,-0.37513 0.59557,-0.37513l7.98149,0c0.32362,0 0.59557,0.17129 0.59557,0.37513l0,3.23525c0,0.20384 -0.27195,0.37513 -0.59557,0.37513l-7.98149,0c-0.32362,0 -0.59557,-0.17129 -0.59557,-0.37513l0,-3.23525z"
           fill="currentColor"
-          fill-opacity="0.08"
+          fillOpacity="0.08"
           opacity="undefined"
           stroke="null"
         />
@@ -144,7 +144,7 @@ export default () => {
           id="svg_6"
           d="m2.38669,28.43336c0,-0.20384 0.27195,-0.37513 0.59557,-0.37513l7.98149,0c0.32362,0 0.59557,0.17129 0.59557,0.37513l0,3.23525c0,0.20384 -0.27195,0.37513 -0.59557,0.37513l-7.98149,0c-0.32362,0 -0.59557,-0.17129 -0.59557,-0.37513l0,-3.23525z"
           fill="currentColor"
-          fill-opacity="0.08"
+          fillOpacity="0.08"
           opacity="undefined"
           stroke="null"
         />
@@ -152,7 +152,7 @@ export default () => {
           id="svg_7"
           d="m2.17616,41.27545c0,-0.20384 0.27195,-0.37513 0.59557,-0.37513l7.98149,0c0.32362,0 0.59557,0.17129 0.59557,0.37513l0,3.23525c0,0.20384 -0.27195,0.37513 -0.59557,0.37513l-7.98149,0c-0.32362,0 -0.59557,-0.17129 -0.59557,-0.37513l0,-3.23525z"
           fill="currentColor"
-          fill-opacity="0.08"
+          fillOpacity="0.08"
           opacity="undefined"
           stroke="null"
         />
@@ -160,7 +160,7 @@ export default () => {
           id="svg_9"
           d="m2.17616,54.32806c0,-0.20384 0.27195,-0.37513 0.59557,-0.37513l7.98149,0c0.32362,0 0.59557,0.17129 0.59557,0.37513l0,3.23525c0,0.20384 -0.27195,0.37513 -0.59557,0.37513l-7.98149,0c-0.32362,0 -0.59557,-0.17129 -0.59557,-0.37513l0,-3.23525z"
           fill="currentColor"
-          fill-opacity="0.08"
+          fillOpacity="0.08"
           opacity="undefined"
           stroke="null"
         />

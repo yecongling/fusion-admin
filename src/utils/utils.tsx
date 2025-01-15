@@ -1,3 +1,4 @@
+import { MyIcon } from '../components/MyIcon/index';
 import * as Icons from '@ant-design/icons';
 import { isObject } from './is';
 import React from 'react';
@@ -92,8 +93,25 @@ export const searchRoute = (
   return null;
 };
 
-// 动态渲染 Icon 图标(目前仅考虑使用react-icons/ai里面的，后面这里进行扩展，动态使用react)
+// 动态渲染 Icon 图标(目前使用antd的图标库和自定义的图标库-iconfont)
 const customIcons: { [key: string]: any } = Icons;
+
+/**
+ * 图标库
+ * @param name 图表名
+ */
+export const getIcon = (name: string | undefined) => {
+  if (name && name.indexOf('fusion') > -1) {
+    return <MyIcon type={`${name}`} />;
+  }
+  return addIcon(name);
+};
+
+/**
+ * 使用antd的图标库
+ * @param name 图标名
+ * @returns
+ */
 export const addIcon = (name: string | undefined) => {
   if (!name || !customIcons[name]) {
     return null;

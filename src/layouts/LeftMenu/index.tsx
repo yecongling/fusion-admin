@@ -28,7 +28,7 @@ import {
   SunOutlined,
 } from '@ant-design/icons';
 import type { RouteItem } from '@/types/route';
-import { addIcon, getOpenKeys, searchRoute } from '@/utils/utils';
+import { getIcon, getOpenKeys, searchRoute } from '@/utils/utils';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -81,7 +81,7 @@ const LeftMenu: React.FC = memo(() => {
       // 下面判断代码解释 *** !item?.children?.length   ==>   (!item.children || item.children.length === 0)
       if (!item?.children?.length) {
         newArr.push(
-          getItem(item.meta?.title, item.path, addIcon(item.meta?.icon)),
+          getItem(item.meta?.title, item.path, getIcon(item.meta?.icon)),
         );
         continue;
       }
@@ -89,7 +89,7 @@ const LeftMenu: React.FC = memo(() => {
         getItem(
           item.meta?.title,
           item.path,
-          addIcon(item.meta?.icon),
+          getIcon(item.meta?.icon),
           deepLoopFloat(item.children),
         ),
       );
@@ -156,16 +156,11 @@ const LeftMenu: React.FC = memo(() => {
       theme={mode}
       collapsed={collapsed}
     >
-      <div className="dis-fl jc-sb ai-ct toolbox">
+      <div className="flex justify-between items-center toolbox">
         <Link to="/" style={{ width: '100%' }}>
-          <div
-            className="hd-64 mgr-01 dis-fl ai-ct jc-ct"
-            style={{ justifyContent: 'space-around' }}
-          >
+          <div className="h-16 flex items-center justify-center">
             <Image width={25} src={logo} preview={false} />
-            {collapsed ? (
-              ''
-            ) : (
+            {!collapsed && (
               <p
                 style={{
                   fontWeight: 'bold',
@@ -197,18 +192,15 @@ const LeftMenu: React.FC = memo(() => {
       </Spin>
       <Divider style={{ margin: '8px 0' }} />
       <div
-        className="collapse"
+        className="flex justify-center content-center"
         style={{
           height: collapsed ? '140px' : '40px',
-          display: 'flex',
-          alignContent: 'center',
-          justifyContent: 'center',
         }}
       >
         <Space
           direction={collapsed ? 'vertical' : 'horizontal'}
           align="center"
-          style={{ justifyContent: 'center' }}
+          className="justify-center"
         >
           <ConfigProvider
             theme={{

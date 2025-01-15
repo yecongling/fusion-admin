@@ -18,7 +18,7 @@ export default () => {
         <rect
           id="svg_1"
           fill="currentColor"
-          fill-opacity="0.02"
+          fillOpacity="0.02"
           height="66"
           rx="4"
           stroke="null"
@@ -55,7 +55,7 @@ export default () => {
         <rect
           id="svg_13"
           fill="currentColor"
-          fill-opacity="0.08"
+          fillOpacity="0.08"
           height="21.51892"
           rx="2"
           stroke="null"
@@ -67,14 +67,14 @@ export default () => {
           id="svg_14"
           d="m16.4123,15.53192c0,-1.08676 0.74096,-2 1.62271,-2l21.74653,0c0.88175,0 1.62271,0.91324 1.62271,2l0,17.24865c0,1.08676 -0.74096,2 -1.62271,2l-21.74653,0c-0.88175,0 -1.62271,-0.91324 -1.62271,-2l0,-17.24865z"
           fill="currentColor"
-          fill-opacity="0.08"
+          fillOpacity="0.08"
           opacity="undefined"
           stroke="null"
         />
         <rect
           id="svg_15"
           fill="currentColor"
-          fill-opacity="0.08"
+          fillOpacity="0.08"
           height="21.65405"
           rx="2"
           stroke="null"

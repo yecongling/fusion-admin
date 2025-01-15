@@ -6,6 +6,7 @@ import { persistor, store } from '@/stores/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Spin } from 'antd';
 import GlobalConfigProvider from './GlobalConfigProvider';
+import "./index.css";
 
 const container = document.getElementById('root');
 if (container) {

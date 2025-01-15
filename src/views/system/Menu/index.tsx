@@ -266,7 +266,10 @@ const Menu: React.FC = () => {
       closeEditModal();
       queryMenuData();
     } catch (error) {
-      console.log(error);
+      modal.error({
+        title: '操作失败',
+        content: `原因：${error}`,
+      });
     }
   };
 
