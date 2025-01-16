@@ -38,7 +38,7 @@ type MenuItem = Required<MenuProps>['items'][number];
 const LeftMenu: React.FC = memo(() => {
   // 从状态库中获取状态
   const { sidebar, theme } = useSelector(
-    (state: RootState) => state.prefrences,
+    (state: RootState) => state.preferences,
   );
   const { menus } = useSelector((state: RootState) => state.menuState);
   const { collapsed, width } = sidebar;

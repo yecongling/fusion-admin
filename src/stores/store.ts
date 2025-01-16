@@ -8,7 +8,7 @@ import { type Category, preferencesSlice } from "./preferencesReducers";
 // 组合reducer（这里还可以添加其他的reducer）
 const rootReducer = combineReducers({
   menuState: menuSlice.reducer,
-  prefrences: preferencesSlice.reducer,
+  preferences: preferencesSlice.reducer,
 });
 
 // 持久化存储配置

@@ -1,14 +1,14 @@
-import SwitchItem from "../SwitchItem";
+import SwitchItem from '../SwitchItem';
 
 /**
  * 版权
- * @returns 
+ * @returns
  */
 const CopyRight: React.FC = () => {
   return (
     <>
       {/* 启用版权 */}
-      <SwitchItem title="启用版权" />
+      <SwitchItem title="启用版权" category="copyright" pKey="enable" />
     </>
   );
 };
