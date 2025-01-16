@@ -26,7 +26,7 @@ const getPreferenceValue = <T extends Category, K extends SettingKey<T>>(
  * @returns SwitchItem
  */
 const SwitchItem: React.FC<SwitchItemProps> = (props) => {
-  const { title, disabled, shortcut, style, category, pKey } = props;
+  const { title, disabled = true, shortcut, style, category, pKey } = props;
 
   // 从全局状态库中获取配置
   const preferences = useSelector((state: RootState) => state.preferences);
