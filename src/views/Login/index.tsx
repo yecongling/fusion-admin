@@ -79,8 +79,9 @@ const Login: React.FC = () => {
         // 登录成功
         case HttpCodeEnum.SUCCESS:
           {
-            // 没有配置首页地址默认跳到404（为了避免没有菜单的时候确跳到指定页面了）
-            const { token, roleId, homePath = '/404' } = data;
+            // 没有配置首页地址默认跳到第一个菜单
+            const { token, roleId } = data;
+            let { homePath } = data;
             sessionStorage.setItem('token', token);
             sessionStorage.setItem('isLogin', 'true');
             sessionStorage.setItem('roleId', roleId);
@@ -89,6 +90,14 @@ const Login: React.FC = () => {
             // 登录成功根据角色获取菜单
             const menu = await getMenuListByRoleId({ roleId });
             dispatch(setMenus(menu));
+            // 判断是否配置了默认跳转的首页地址
+            if (!homePath) {
+              // 获取第一个是路由的地址
+              const firstRoute = menu.find((item: any) => item.route === '1');
+              if (firstRoute) {
+                homePath = firstRoute.path;
+              }
+            }
             // 跳转到首页
             navigate(homePath);
             antdUtils.notification?.success({
@@ -136,7 +145,12 @@ const Login: React.FC = () => {
           {/* 左边图案和标题 */}
           <div className={styles['login-left']}>
             <div className="logo mt-[60]">
-              <img className="login-icon my-0 mx-auto" width="70" src={logo} alt="logo" />
+              <img
+                className="login-icon my-0 mx-auto"
+                width="70"
+                src={logo}
+                alt="logo"
+              />
             </div>
             <div className="title">
               <p style={{ fontSize: '20px', margin: 0 }}>
@@ -244,7 +258,12 @@ const Login: React.FC = () => {
                           padding: '2px',
                         }}
                       >
-                        <Image src={code} preview={false} width="100%" height="100%"/>
+                        <Image
+                          src={code}
+                          preview={false}
+                          width="100%"
+                          height="100%"
+                        />
                       </Button>
                     </Col>
                   </Row>
