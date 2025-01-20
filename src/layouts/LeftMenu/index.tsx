@@ -41,6 +41,7 @@ const LeftMenu: React.FC = memo(() => {
     (state: RootState) => state.preferences,
   );
   const { menus } = useSelector((state: RootState) => state.menuState);
+  const { navigation } = useSelector((state: RootState) => state.preferences);
   const { collapsed, width } = sidebar;
   const { mode } = theme;
   const dispatch = useDispatch();
@@ -181,7 +182,7 @@ const LeftMenu: React.FC = memo(() => {
             mode="inline"
             theme={mode}
             defaultSelectedKeys={[pathname]}
-            openKeys={openKeys}
+            openKeys={navigation.accordion ? openKeys : undefined}
             items={menuList}
             onClick={clickMenu}
             onOpenChange={onOpenChange}
