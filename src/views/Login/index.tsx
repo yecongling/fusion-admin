@@ -102,7 +102,7 @@ const Login: React.FC = () => {
             navigate(homePath);
             antdUtils.notification?.success({
               message: '登录成功',
-              description: '欢迎来到Fuson Admin!',
+              description: '欢迎来到Fusion Admin!',
             });
           }
           break;
