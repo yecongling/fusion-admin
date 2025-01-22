@@ -69,7 +69,7 @@ const ProjectCard: React.FC<ProjectCardProps> = (props) => {
         </Button>
       </div>
       <div className="dropdownItems">
-        <Dropdown menu={{ items: dropdownItems }} trigger={['click']}>
+        <Dropdown menu={{ items: dropdownItems }} trigger={['click']} placement='bottomRight'>
           <Button type="text" icon={<EllipsisOutlined />} />
         </Dropdown>
       </div>
