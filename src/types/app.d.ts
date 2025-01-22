@@ -2,7 +2,7 @@
  * 主题模式
  * @default light
  */
-export type ThemeModeType = "light" | "dark";
+export type ThemeModeType = "light" | "dark" | "auto";
 
 /**
  * 内容紧凑类型

@@ -1,5 +1,17 @@
-import { Card, Segmented, type SegmentedProps, Input } from 'antd';
+import {
+  Card,
+  Segmented,
+  type SegmentedProps,
+  Input,
+} from 'antd';
 import { useEffect, useState } from 'react';
+import './design.scss';
+import {
+  PlusOutlined,
+} from '@ant-design/icons';
+import { useSelector } from 'react-redux';
+import type { RootState } from '@/stores/store';
+import ProjectCard from './ProjectCard';
 
 const { Search } = Input;
 
@@ -8,7 +20,8 @@ const { Search } = Input;
  */
 const Design: React.FC = () => {
   // 选中的分类
-  const [type, setType] = useState<string>('');
+  const [type, setType] = useState<string>('1');
+  const { theme } = useSelector((state: RootState) => state.preferences);
 
   // 分段控制器选项
   const segmentedOptions: SegmentedProps['options'] = [
@@ -30,60 +43,95 @@ const Design: React.FC = () => {
   const [projects, setProjects] = useState<any[]>([
     {
       id: 1,
-      name: '项目1'
-    }
+      name: '项目1',
+    },
+    {
+      id: 2,
+      name: '项目2',
+    },
+    {
+      id: 3,
+      name: '项目3',
+    },
+    {
+      id: 4,
+      name: '项目4',
+    },
+    {
+      id: 5,
+      name: '项目5',
+    },
+    {
+      id: 6,
+      name: '项目6',
+    },
+    {
+      id: 7,
+      name: '项目7',
+    },
   ]);
 
+  // 根据类型进行检索
   useEffect(() => {
     queryProject();
-  }, []);
+  }, [type]);
 
   /**
    * 查询项目
    * @param projectName 项目名称
    */
-  const queryProject = (projectName?: string) => {
-
-  }
+  const queryProject = (projectName?: string) => {};
 
   /**
    * 分段控制器切换
    * @param value 值
    */
   const onSegmentedChange = (value: string) => {
-    console.log('Value:', value);
+    setType(value);
   };
+
   return (
-    <Card className="w-full h-full">
-      <h2 className="mb-2 text-lg font-bold">项目列表</h2>
+    <div className="flex-1 pt-6 pr-6 pl-6 overflow-scroll bg-[#f5f6f7]">
+      <div className="mb-[20px] text-[18px] font-bold">项目列表</div>
       {/* 卡片列表和筛选框 */}
-      <div className="flex flex-row justify-between">
+      <div className="flex flex-row justify-between mb-[20px]">
         <Segmented<any>
           options={segmentedOptions}
           onChange={onSegmentedChange}
+          value={type}
         />
-        <div className='w-[300]'>
+        <div className="w-[300]">
           {/* 检索 */}
-          <Search
-            placeholder="请输入检索内容"
-          />
+          <Search placeholder="请输入检索内容" />
         </div>
       </div>
       {/* 项目列表 */}
-      <div className='flex flex-wrap mt-2'>
+      <div className="flex flex-wrap mt-2">
+        {/* 新建项目 */}
+        <Card
+          styles={{ body: { padding: '0px' } }}
+          className="projectList addProject"
+        >
+          <p>
+            <PlusOutlined
+              className="text-[64px]"
+              style={{ color: theme.colorPrimary }}
+            />
+            <span className="addTitle">新增项目</span>
+          </p>
+        </Card>
+        {/* 项目列表 */}
         {projects.map((item) => (
-          <div key={item.id} className="w-[300px] h-[200px] mr-4 mb-4">
-            <div className="w-full h-full p-4 bg-white rounded-lg shadow-md">
-              <div className="flex flex-col justify-between h-full">
-                <div>
-                  <h3 className="text-lg font-bold">{item.name}</h3>
-                </div>
-              </div>
-            </div>
-          </div>
+          <ProjectCard
+            key={item.id}
+            id={item.id}
+            name={item.name}
+            cover={item.cover}
+            type={item.type}
+          />
         ))}
       </div>
-    </Card>
+    </div>
   );
 };
 export default Design;
