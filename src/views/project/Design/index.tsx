@@ -1,14 +1,7 @@
-import {
-  Card,
-  Segmented,
-  type SegmentedProps,
-  Input,
-} from 'antd';
+import { Card, Segmented, type SegmentedProps, Input } from 'antd';
 import { useEffect, useState } from 'react';
 import './design.scss';
-import {
-  PlusOutlined,
-} from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/stores/store';
 import ProjectCard from './ProjectCard';
