@@ -83,6 +83,13 @@ const Design: React.FC = () => {
     setType(value);
   };
 
+  /**
+   * 新增项目
+   */
+  const addProject = () => {
+
+  }
+
   return (
     <div className="flex-1 pt-6 pr-6 pl-6 overflow-scroll bg-[#f5f6f7]">
       <div className="mb-[20px] text-[18px] font-bold">项目列表</div>
