@@ -18,7 +18,7 @@ export default defineConfig({
     pluginSass({
       // sass文件默认注入全局的变量文件
       sassLoaderOptions: {
-        additionalData: `@use 'src/assets/styles/variables.scss' as *;`,
+        additionalData: `@use 'src/styles/variables.scss' as *;`,
       },
     }),
     // mock 插件
