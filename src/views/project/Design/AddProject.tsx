@@ -12,11 +12,12 @@ const AddProject: React.FC<AddProjectProps> = (props) => {
    */
   const handleOk = () => {
     // 先保存数据
+
     // 然后调用ok
     onOk?.();
   };
   return (
-    <DragModal onCancel={onCancel} onOk={handleOk} open={open}>
+    <DragModal title="新增项目" onCancel={onCancel} onOk={handleOk} open={open}>
       项目类型
     </DragModal>
   );
@@ -38,4 +39,9 @@ export interface AddProjectProps {
    * @returns
    */
   onCancel?: () => void;
+
+  /**
+   * 项目类型
+   */
+  type?: string;
 }
