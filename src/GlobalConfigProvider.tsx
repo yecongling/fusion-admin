@@ -9,7 +9,7 @@ import 'dayjs/locale/zh-cn';
  */
 const GlobalConfigProvider = () => {
   // 获取数据的钩子函数
-  const { theme } = useSelector((state: RootState) => state.prefrences);
+  const { theme } = useSelector((state: RootState) => state.preferences);
   return (
     <ConfigProvider
       theme={{

@@ -37,23 +37,29 @@ type MenuItem = Required<MenuProps>['items'][number];
  */
 const LeftMenu: React.FC = memo(() => {
   // 从状态库中获取状态
-  const { sidebar, theme } = useSelector(
-    (state: RootState) => state.prefrences,
+  const { sidebar, theme, navigation } = useSelector(
+    (state: RootState) => state.preferences,
   );
   const { menus } = useSelector((state: RootState) => state.menuState);
-  const { collapsed, width } = sidebar;
-  const { mode } = theme;
   const dispatch = useDispatch();
-
   const { pathname } = useLocation();
-
   const navigate = useNavigate();
   // 定义一些状态变量
   const [menuList, setMenuList] = useState<MenuItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [openKeys, setOpenKeys] = useState<string[]>([]);
 
-  const titleColor = mode === 'dark' ? '#fff' : '#1890ff';
+  const { collapsed, width } = sidebar;
+  let { mode } = theme;
+  if (mode === 'auto') {
+    mode = window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light';
+  }
+  // 是否暗黑模式
+  const isDark = mode === 'dark';
+
+  const titleColor = isDark ? '#fff' : '#1890ff';
 
   const getItem = (
     label: React.ReactNode,
@@ -111,22 +117,16 @@ const LeftMenu: React.FC = memo(() => {
     const openKey = getOpenKeys(pathname);
     // 判断如果是二级路由，不在左边菜单那种的就不去更新
     const route = searchRoute(pathname, menus);
-    if (!route || Object.keys(route).length === 0) {
-      return;
-    }
-    const title = route.meta?.title;
-    if (title) {
-      document.title = `${title} - Fusion Admin`;
-    }
-    if (!collapsed) {
-      setOpenKeys(openKey);
+    if (route && Object.keys(route).length) {
+      const title = route.meta?.title;
+      if (title) document.title = `${title} - Fusion Admin`;
+      if (!collapsed) setOpenKeys(openKey);
     }
   }, [pathname, collapsed, menus]);
 
   // 设置当前展开的 subMenu
   const onOpenChange = (openKeys: string[]) => {
-    if (openKeys.length === 0 || openKeys.length === 1)
-      return setOpenKeys(openKeys);
+    if (openKeys.length < 1) return setOpenKeys(openKeys);
     const latestOpenKey = openKeys[openKeys.length - 1];
     if (latestOpenKey.includes(openKeys[0])) return setOpenKeys(openKeys);
     setOpenKeys([latestOpenKey]);
@@ -181,7 +181,7 @@ const LeftMenu: React.FC = memo(() => {
             mode="inline"
             theme={mode}
             defaultSelectedKeys={[pathname]}
-            openKeys={openKeys}
+            openKeys={navigation.accordion ? openKeys : undefined}
             items={menuList}
             onClick={clickMenu}
             onOpenChange={onOpenChange}
@@ -206,12 +206,11 @@ const LeftMenu: React.FC = memo(() => {
             theme={{
               components: {
                 Segmented: {
-                  itemHoverColor: mode === 'dark' ? '#eee' : 'rgba(0,0,0,0.88)',
-                  itemColor: mode === 'dark' ? '#fff' : 'rgba(0, 0, 0, 0.65)',
-                  itemSelectedBg: mode === 'dark' ? '#1677ff' : '#fff',
-                  itemSelectedColor:
-                    mode === 'dark' ? '#fff' : 'rgba(0,0,0,0.88)',
-                  trackBg: mode === 'dark' ? '#001529' : '#f5f5f5',
+                  itemHoverColor: isDark ? '#eee' : 'rgba(0,0,0,0.88)',
+                  itemColor: isDark ? '#fff' : 'rgba(0, 0, 0, 0.65)',
+                  itemSelectedBg: isDark ? '#1677ff' : '#fff',
+                  itemSelectedColor: isDark ? '#fff' : 'rgba(0,0,0,0.88)',
+                  trackBg: isDark ? '#001529' : '#f5f5f5',
                 },
               },
             }}
@@ -244,7 +243,7 @@ const LeftMenu: React.FC = memo(() => {
               shape="circle"
               icon={
                 <QuestionCircleOutlined
-                  style={{ color: mode === 'dark' ? 'white' : 'black' }}
+                  style={{ color: isDark ? 'white' : 'black' }}
                 />
               }
             />
@@ -261,11 +260,11 @@ const LeftMenu: React.FC = memo(() => {
             icon={
               collapsed ? (
                 <MenuUnfoldOutlined
-                  style={{ color: mode === 'dark' ? 'white' : 'black' }}
+                  style={{ color: isDark ? 'white' : 'black' }}
                 />
               ) : (
                 <MenuFoldOutlined
-                  style={{ color: mode === 'dark' ? 'white' : 'black' }}
+                  style={{ color: isDark ? 'white' : 'black' }}
                 />
               )
             }

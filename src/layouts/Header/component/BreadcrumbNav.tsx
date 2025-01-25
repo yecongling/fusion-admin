@@ -5,6 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import type { RouteItem } from '@/types/route';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/stores/store';
+import { getIcon } from '@/utils/utils';
 
 /**
  * 面包屑
@@ -17,14 +18,20 @@ const BreadcrumbNav: React.FC = () => {
   const menuState = useSelector((state: RootState) => state.menuState);
   const { menus } = menuState;
   const [items, setItems] = useState<Record<string, any>[]>([]);
+  // 从全局状态中获取配置是否开启面包屑、图标
+  const { breadcrumb } = useSelector((state: RootState) => state.preferences);
   useEffect(() => {
     // 将menu里面的内容和path进行对照获取
-    const breadItems = patchBreadcrumb(menus, location.pathname);
+    const breadItems = patchBreadcrumb(
+      menus,
+      location.pathname,
+      breadcrumb.showIcon,
+    );
     if (breadItems.length > 0) {
       setItems(breadItems);
     }
     // 设置面包屑内容
-  }, [location.pathname, menus]);
+  }, [location.pathname, menus, breadcrumb]);
 
   // 组件的DOM内容
   return (
@@ -48,6 +55,7 @@ export default BreadcrumbNav;
 function patchBreadcrumb(
   routerList: RouteItem[],
   pathname: string,
+  joinIcon: boolean,
 ): Record<string, any>[] {
   const result: Record<string, any>[] = [];
   if (routerList) {
@@ -61,16 +69,24 @@ function patchBreadcrumb(
       ) {
         const pth: Record<string, any> = {};
         pth.title = (
-          <span style={{ padding: '0 4px' }}>{item.meta?.title}</span>
+          <>
+            {joinIcon && item.meta?.icon && getIcon(item.meta.icon)}
+            <span style={{ padding: '0 4px' }}>{item.meta?.title}</span>
+          </>
         );
         pth.key = item.path;
         if (pathname === item.path) {
-          pth.title = <Link to={item.path}>{item.meta?.title}</Link>;
+          pth.title = (
+            <>
+              {joinIcon && item.meta?.icon && getIcon(item.meta.icon)}
+              <Link to={item.path}>{item.meta?.title}</Link>
+            </>
+          );
         }
         result.push(pth);
       }
       if (item.children && item.children.length > 0) {
-        const rst = patchBreadcrumb(item.children, pathname);
+        const rst = patchBreadcrumb(item.children, pathname, joinIcon);
         if (rst.length > 0) {
           return [...result, ...rst];
         }

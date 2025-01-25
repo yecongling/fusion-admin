@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client';
-import '@/assets/styles/global.scss'; // 引入 Sass 文件
+import '@/styles/global.scss'; // 引入 Sass 文件
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { persistor, store } from '@/stores/store';
