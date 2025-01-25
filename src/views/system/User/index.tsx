@@ -218,7 +218,7 @@ const User: React.FC = () => {
           <Form form={form}>
             <Row gutter={24}>
               <Col span={6}>
-                <Form.Item name="username" label="账号" colon={false}>
+                <Form.Item name="username" label="用户名" colon={false}>
                   <Input autoFocus allowClear autoComplete="off" />
                 </Form.Item>
               </Col>
