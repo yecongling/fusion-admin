@@ -1,7 +1,6 @@
 import { Navigate, useRoutes } from 'react-router-dom';
 import { LazyLoad } from './lazyLoad';
-import React, { type ReactNode, Suspense, useMemo } from 'react';
-import { Skeleton } from 'antd';
+import React, { type ReactNode, useMemo } from 'react';
 import type { RouteObject } from '@/types/route';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorFallback } from './ErrorBoundary';
@@ -54,11 +53,7 @@ const generateRouter = (routers: RouteObject[]) => {
     if (item.index) {
       return item;
     }
-    item.element = (
-      <Suspense fallback={<Skeleton />}>
-        <item.component />
-      </Suspense>
-    );
+    item.element = <item.component />;
     if (item.children) {
       item.children = generateRouter(item.children);
       if (item.children.length) {

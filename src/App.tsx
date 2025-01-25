@@ -1,7 +1,7 @@
 import { setMenus } from '@/stores/store';
-import { Spin, App as AntdApp } from 'antd';
+import { Spin, App as AntdApp, Skeleton } from 'antd';
 import type React from 'react';
-import { useEffect, useState } from 'react';
+import { Suspense, useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Router } from '@/router/router';
@@ -25,10 +25,21 @@ const App: React.FC = () => {
   /**
    * 查询用户的菜单信息
    */
-  const getMenuData = async () => {
+  const getMenuData = useCallback(async () => {
     const roleId = sessionStorage.getItem('roleId') || '';
-    return await getMenuListByRoleId({ roleId });
-  };
+    try {
+      const menu = await getMenuListByRoleId({ roleId });
+      dispatch(setMenus(menu)); // 更新 Redux 状态
+    } catch (e: unknown) {
+      notification.error({
+        message: '菜单加载失败',
+        description: `原因：${e instanceof Error ? e.message : '未知错误'}`,
+        duration: 0,
+      });
+    } finally {
+      setLoading(false);
+    }
+  }, [dispatch]);
 
   // 组件挂载完成后加载用户菜单
   useEffect(() => {
@@ -41,33 +52,18 @@ const App: React.FC = () => {
     if (isLogin === 'false' || !isLogin || location.pathname === '/login') {
       navigate('/login');
     } else {
-      setLoading(true);
-      try {
-        // 模拟从后台获取数据
-        getMenuData()
-          .then((menu) => {
-            return dispatch(setMenus(menu));
-          })
-          .finally(() => {
-            setLoading(false);
-          });
-      } catch (e) {
-        notification.error({
-          message: '菜单加载失败',
-          description: `原因：${e}`,
-          duration: 0,
-        });
-        setLoading(false);
-      }
+      getMenuData();
     }
-  }, []);
+  }, [getMenuData, location.pathname, navigate]);
 
   return (
     <>
       {loading ? (
-        <Spin percent="auto" fullscreen style={{ fontSize: 48 }} />
+        <Spin size="large" fullscreen style={{ fontSize: 48 }} />
       ) : (
-        <Router />
+        <Suspense fallback={<Skeleton />}>
+          <Router />
+        </Suspense>
       )}
     </>
   );

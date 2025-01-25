@@ -6,17 +6,19 @@ import {
   SearchOutlined,
   SettingOutlined,
 } from '@ant-design/icons';
-import { Badge, Dropdown, Input, Layout, Space, Tooltip } from 'antd';
-import type React from 'react';
+import { Badge, Dropdown, Input, Layout, Skeleton, Space, Tooltip } from 'antd';
+import React, { Suspense } from 'react';
 import { memo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import MessageBox from './component/MessageBox';
 import FullScreen from './component/FullScreen';
-import Setting from './component/Setting';
 import BreadcrumbNav from './component/BreadcrumbNav';
 import UserDropdown from './component/UserDropdown';
 import { type RootState, updatePreferences } from '@/stores/store';
+
+const Setting = React.lazy(() => import('./component/Setting'));
+
 /**
  * 顶部布局内容
  */
@@ -101,7 +103,9 @@ const Header: React.FC = memo(() => {
         </Space>
       </Layout.Header>
       {/* 系统设置界面 */}
-      <Setting open={openSetting} setOpen={setOpenSetting} />
+      <Suspense fallback={<Skeleton />}>
+        <Setting open={openSetting} setOpen={setOpenSetting} />
+      </Suspense>
     </>
   );
 });
