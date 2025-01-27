@@ -545,10 +545,10 @@
     estree-walker "^2.0.2"
     picomatch "^4.0.2"
 
-"@rsbuild/core@^1.2.2":
-  version "1.2.2"
-  resolved "https://registry.npmmirror.com/@rsbuild/core/-/core-1.2.2.tgz#cf05a07328d2cca0aaaa709bb3ffb7e45ab080fd"
-  integrity sha512-PQ1ax5Z6yMvbgsBXa8bcNUiz+NVVf2PdrXj5A/xfqnnviZRjV/jCxQFWjw8ajAbJcmLxBcWYJnj4npz6g+FAAA==
+"@rsbuild/core@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.npmmirror.com/@rsbuild/core/-/core-1.2.3.tgz#5eb05c75d3ff908b5cae9f499903aea20db94b62"
+  integrity sha512-lUCt8gQe9E2PI3srcEJ1Na3GQYmsYuvAqK0f/k00HM0pEjrbOFC9Xq2kR85UoXHFqlTCIw/fLLDe91PKRCbKAw==
   dependencies:
     "@rspack/core" "1.2.2"
     "@rspack/lite-tapable" "~1.0.1"
