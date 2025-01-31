@@ -54,7 +54,7 @@ const App: React.FC = () => {
     } else {
       getMenuData();
     }
-  }, [getMenuData, location.pathname, navigate]);
+  }, []);
 
   return (
     <>

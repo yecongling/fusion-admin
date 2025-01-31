@@ -28,7 +28,7 @@ const RouterBeforeEach: React.FC = () => {
         navigate('/404');
       }
     }
-  }, []);
+  }, [location.pathname]);
   return <Outlet />;
 };
 export default RouterBeforeEach;
