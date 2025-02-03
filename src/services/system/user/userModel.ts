@@ -40,7 +40,7 @@ export interface UserModel {
   /**
    * 状态
    */
-  status: string;
+  status: number;
 
   /**
    * 删除标志
@@ -51,6 +51,11 @@ export interface UserModel {
    * 创建者
    */
   createBy: string;
+
+  /**
+   * 生日
+   */
+  birthday: string;
 
   /**
    * 创建时间

@@ -80,7 +80,7 @@ export interface IUserService {
    * @param user 用户信息
    * @returns 创建结果
    */
-  createUser(user: UserModel): Promise<boolean>;
+  createUser(user: Partial<UserModel>): Promise<boolean>;
 
   /**
    * 删除用户
@@ -101,7 +101,7 @@ export interface IUserService {
    * @param user 用户信息
    * @returns 更新结果
    */
-  updateUser(user: UserModel): Promise<boolean>;
+  updateUser(user: Partial<UserModel>): Promise<boolean>;
 
   /**
    * 查询用户
@@ -113,6 +113,8 @@ export interface IUserService {
     pageParams: PageQueryParams,
     searchParams?: UserSearchParams
   ): Promise<Record<string, any>>;
+
+  updateUserStatus(id: string, status: number): Promise<boolean>;
 }
 
 /**
@@ -196,5 +198,18 @@ export const userService: IUserService = {
       }
     );
     return response;
+  },
+
+  /**
+   * 更新用户状态
+   * @param id 用户ID
+   * @param status 用户状态
+   * @returns 更新结果
+   */
+  async updateUserStatus(id: string, status: number): Promise<boolean> {
+    const response = await fetch(`${UserAction.modifyUser}/${id}/${status}`, {
+      method: "PUT",
+    });
+    return response.ok;
   },
 };
