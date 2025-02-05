@@ -20,7 +20,7 @@ interface UserInfoModalProps {
  * @param onOk 弹窗确认回调
  * @param onCancel 弹窗取消回调
  * @param userInfo 用户信息
- * @returns 
+ * @returns
  */
 const UserInfoModal: React.FC<UserInfoModalProps> = ({
   visible,
@@ -47,6 +47,9 @@ const UserInfoModal: React.FC<UserInfoModalProps> = ({
     }
   }, [userInfo, form]);
 
+  /**
+   * 确认回调
+   */
   const handleOk = () => {
     form.validateFields().then((values) => {
       const submitData = {
@@ -58,6 +61,9 @@ const UserInfoModal: React.FC<UserInfoModalProps> = ({
     });
   };
 
+  /**
+   * 取消回调
+   */
   const handleCancel = () => {
     form.resetFields();
     setImageUrl(undefined);
@@ -174,10 +180,7 @@ const UserInfoModal: React.FC<UserInfoModalProps> = ({
           <Form.Item
             label="密码"
             name="password"
-            rules={[
-              { required: true },
-              { min: 6, message: '密码至少6个字符' },
-            ]}
+            rules={[{ required: true }, { min: 6, message: '密码至少6个字符' }]}
           >
             <Input.Password placeholder="请输入密码" />
           </Form.Item>

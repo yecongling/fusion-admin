@@ -7,15 +7,7 @@ import {
   LockOutlined,
   PlusOutlined,
 } from '@ant-design/icons';
-import {
-  Button,
-  Card,
-  Space,
-  Table,
-  Upload,
-  message,
-  Modal,
-} from 'antd';
+import { Button, Card, Space, Table, Upload, message, Modal } from 'antd';
 import type React from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { UserSearchParams } from './types';
@@ -28,7 +20,7 @@ const { confirm } = Modal;
 
 /**
  * 用户管理
- * @returns 
+ * @returns
  */
 const User: React.FC = () => {
   // 编辑窗口的打开状态
@@ -55,18 +47,21 @@ const User: React.FC = () => {
   });
 
   // 查询用户数据
-  const getUserList = useCallback(async (params: UserSearchParams) => {
-    try {
-      setLoading(true);
-      const res = await userService.queryUsers({ ...pagination, ...params });
-      setTableData(res.data);
-      setTotal(res.total || 0);
-    } catch (error) {
-      message.error('获取用户列表失败');
-    } finally {
-      setLoading(false);
-    }
-  }, [pagination]);
+  const getUserList = useCallback(
+    async (params: UserSearchParams) => {
+      try {
+        setLoading(true);
+        const res = await userService.queryUsers({ ...pagination, ...params });
+        setTableData(res.data);
+        setTotal(res.total || 0);
+      } catch (error) {
+        message.error('获取用户列表失败');
+      } finally {
+        setLoading(false);
+      }
+    },
+    [pagination],
+  );
 
   // 首次加载和分页变化时获取数据
   useEffect(() => {
@@ -75,7 +70,7 @@ const User: React.FC = () => {
 
   // 处理搜索
   const handleSearch = (values: UserSearchParams) => {
-    setPagination(prev => ({ ...prev, pageNum: 1 }));
+    setPagination((prev) => ({ ...prev, pageNum: 1 }));
     getUserList(values);
   };
 
@@ -115,9 +110,9 @@ const User: React.FC = () => {
       icon: <ExclamationCircleFilled />,
       content: '此操作将永久删除选中的用户，是否继续？',
       onOk() {
-        const ids = selectedRows.map(row => row.id);
+        const ids = selectedRows.map((row) => row.id);
         // 调用批量删除接口
-        Promise.all(ids.map(id => userService.deleteUser(id)))
+        Promise.all(ids.map((id) => userService.deleteUser(id)))
           .then(() => {
             message.success('批量删除成功');
             setSelectedRows([]);
@@ -133,7 +128,10 @@ const User: React.FC = () => {
   // 处理用户状态更新
   const handleStatusChange = async (record: UserModel) => {
     try {
-      await userService.updateUserStatus(record.id, record.status === 1 ? 0 : 1);
+      await userService.updateUserStatus(
+        record.id,
+        record.status === 1 ? 0 : 1,
+      );
       message.success('状态更新成功');
       getUserList({} as UserSearchParams);
     } catch (error) {
@@ -145,7 +143,7 @@ const User: React.FC = () => {
   const handleModalOk = async (values: Partial<UserModel>) => {
     try {
       if (currentRow?.id) {
-        await userService.updateUser({id: currentRow.id, ...values});
+        await userService.updateUser({ id: currentRow.id, ...values });
         message.success('更新成功');
       } else {
         await userService.createUser(values);
@@ -159,39 +157,41 @@ const User: React.FC = () => {
   };
 
   // 表格列配置
-  const columns = useMemo(() => getColumns(
-    handleEdit,
-    handleDetail,
-    (record) => [
-      {
-        key: 'updatePwd',
-        label: '修改密码',
-        icon: <EditOutlined className="text-orange-400!" />,
-        onClick: () => {/* 实现修改密码逻辑 */},
-      },
-      {
-        key: 'freeze',
-        label: record.status === 1 ? '冻结' : '解冻',
-        icon: <LockOutlined className="text-orange-400!" />,
-        onClick: () => handleStatusChange(record),
-      },
-      {
-        key: 'delete',
-        label: '删除',
-        icon: <DeleteOutlined className="text-red-400!" />,
-        onClick: () => {
-          confirm({
-            title: '删除用户',
-            icon: <ExclamationCircleFilled />,
-            content: '确定删除该用户吗？数据删除后将无法恢复！',
-            onOk() {
-              handleDelete(record.id);
-            },
-          });
+  const columns = useMemo(
+    () =>
+      getColumns(handleEdit, handleDetail, (record) => [
+        {
+          key: 'updatePwd',
+          label: '修改密码',
+          icon: <EditOutlined className="text-orange-400!" />,
+          onClick: () => {
+            /* 实现修改密码逻辑 */
+          },
         },
-      },
-    ]
-  ), []);
+        {
+          key: 'freeze',
+          label: record.status === 1 ? '冻结' : '解冻',
+          icon: <LockOutlined className="text-orange-400!" />,
+          onClick: () => handleStatusChange(record),
+        },
+        {
+          key: 'delete',
+          label: '删除',
+          icon: <DeleteOutlined className="text-red-400!" />,
+          onClick: () => {
+            confirm({
+              title: '删除用户',
+              icon: <ExclamationCircleFilled />,
+              content: '确定删除该用户吗？数据删除后将无法恢复！',
+              onOk() {
+                handleDelete(record.id);
+              },
+            });
+          },
+        },
+      ]),
+    [],
+  );
 
   return (
     <>
@@ -213,7 +213,7 @@ const User: React.FC = () => {
             accept=".xlsx"
             showUploadList={false}
             action="/api/user/import"
-            onChange={info => {
+            onChange={(info) => {
               if (info.file.status === 'done') {
                 message.success('导入成功');
                 getUserList({} as UserSearchParams);
