@@ -24,7 +24,7 @@ import {
   Table,
   type TableProps,
 } from 'antd';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import AddUser from './AddUser';
 
 /**
@@ -63,13 +63,13 @@ const RoleUserDrawer: React.FC<RoleUserDrawerProps> = ({
     // 获取当前角色已经分配的用户
     getRoleUserByPage();
     setSelectedRows([]);
-  }, [open, pagination]);
+  }, [open]);
 
   /**
    * 分页查询数据
    * @param params 查询参数
    */
-  const getRoleUserByPage = () => {
+  const getRoleUserByPage = useCallback(() => {
     getRoleUser({
       roleId,
       // 表单数据
@@ -83,7 +83,7 @@ const RoleUserDrawer: React.FC<RoleUserDrawerProps> = ({
       resp.total && setTotal(resp.total);
       ref.current?.focus();
     });
-  };
+  }, [pagination]);
 
   /**
    * 定义表格的列
