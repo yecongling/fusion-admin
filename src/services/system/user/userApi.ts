@@ -1,5 +1,6 @@
 import { HttpRequest } from "@/utils/request";
 import type { UserModel } from "./userModel";
+import type { PageQueryParams } from "@/types/global";
 
 /**
  * 用户信息操作枚举
@@ -36,20 +37,7 @@ export enum UserAction {
   getUserList = "/system/user/queryUserList",
 }
 
-/**
- * 分页查询参数
- */
-export interface PageQueryParams {
-  /**
-   * 当前页码
-   */
-  pageNum: number;
 
-  /**
-   * 每页显示数量
-   */
-  pageSize: number;
-}
 
 /**
  * 用户信息查询参数

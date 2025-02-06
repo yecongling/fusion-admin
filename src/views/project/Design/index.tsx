@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import type { RootState } from '@/stores/store';
 import ProjectCard from './ProjectCard';
 import { getProjectList } from '@/services/project/design/designApi';
-import AddProject from './AddProject';
+import ProjectInfoModal from './ProjectInfoModal';
 
 const { Search } = Input;
 
@@ -90,7 +90,7 @@ const Design: React.FC = () => {
 
   return (
     <>
-      <div className="flex-1 pt-6 pr-6 pl-6 overflow-scroll bg-[#f5f6f7]">
+      <div className="flex-1 pt-6 pr-6 pl-6 overflow-y-scroll bg-[#f5f6f7]">
         <div className="mb-[20px] text-[18px] font-bold">项目列表</div>
         {/* 卡片列表和筛选框 */}
         <div className="flex flex-row justify-between mb-[20px]">
@@ -133,7 +133,7 @@ const Design: React.FC = () => {
         </div>
       </div>
       {/* 新增弹窗 */}
-      <AddProject
+      <ProjectInfoModal
         open={openAddProject}
         type={type}
         onOk={onModalOk}

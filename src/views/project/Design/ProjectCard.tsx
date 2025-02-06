@@ -8,12 +8,13 @@ import {
 } from '@ant-design/icons';
 import { Card, Button, Dropdown, type MenuProps } from 'antd';
 import './design.scss';
+import { memo } from 'react';
 
 /**
  * 项目组件
  * @returns
  */
-const ProjectCard: React.FC<ProjectCardProps> = (props) => {
+const ProjectCard: React.FC<ProjectCardProps> = memo((props) => {
   const { id, name } = props;
 
   /**
@@ -69,13 +70,17 @@ const ProjectCard: React.FC<ProjectCardProps> = (props) => {
         </Button>
       </div>
       <div className="dropdownItems">
-        <Dropdown menu={{ items: dropdownItems }} trigger={['click']} placement='bottomRight'>
+        <Dropdown
+          menu={{ items: dropdownItems }}
+          trigger={['click']}
+          placement="bottomRight"
+        >
           <Button type="text" icon={<EllipsisOutlined />} />
         </Dropdown>
       </div>
     </Card>
   );
-};
+});
 export default ProjectCard;
 
 /**
