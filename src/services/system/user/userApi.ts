@@ -21,6 +21,11 @@ export enum UserAction {
   deleteUsers = "/system/user/deleteUsers",
 
   /**
+   * 逻辑删除用户
+   */
+  logicDeleteUsers = "/system/user/logicDeleteUsers",
+
+  /**
    * 更新用户
    */
   modifyUser = "/system/user/updateUser",
@@ -139,10 +144,13 @@ export const userService: IUserService = {
    * @returns 删除结果
    */
   async deleteUser(id: string): Promise<boolean> {
-    const response = await fetch(`${UserAction.deleteUser}/${id}`, {
-      method: "DELETE",
+    const response = await HttpRequest.post({
+      url: UserAction.deleteUser,
+      data: {
+        id,
+      },
     });
-    return response.ok;
+    return response;
   },
 
   /**
@@ -151,12 +159,9 @@ export const userService: IUserService = {
    * @returns 删除结果
    */
   async deleteUsers(ids: string[]): Promise<boolean> {
-    const response = await fetch(UserAction.deleteUser, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(ids),
+    const response = await HttpRequest.post({
+      url: UserAction.deleteUsers,
+      data: ids,
     });
     return response.ok;
   },
@@ -167,12 +172,9 @@ export const userService: IUserService = {
    * @returns 更新结果
    */
   async updateUser(user: UserModel): Promise<boolean> {
-    const response = await fetch(UserAction.modifyUser, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
+    const response = await HttpRequest.post({
+      url: UserAction.modifyUser,
+      data: user,
     });
     return response.ok;
   },

@@ -54,8 +54,6 @@ const User: React.FC = () => {
         const res = await userService.queryUsers({ ...pagination, ...params });
         setTableData(res.data);
         setTotal(res.total || 0);
-      } catch (error) {
-        message.error('获取用户列表失败');
       } finally {
         setLoading(false);
       }
