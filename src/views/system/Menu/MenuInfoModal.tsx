@@ -70,8 +70,10 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
       .validateFields()
       .then(() => {
         // 清除所有错误
-
-        onOk(form.getFieldsValue());
+        // 处理数据（boolean）
+        const data = form.getFieldsValue();
+        data.status = data.status ? 1 : 0;
+        onOk(data);
       })
       .catch((errorInfo) => {
         // 滚动并聚焦到第一个错误字段

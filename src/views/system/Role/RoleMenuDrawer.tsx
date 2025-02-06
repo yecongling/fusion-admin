@@ -120,6 +120,7 @@ const RoleMenuDrawer: React.FC<RoleMenuDrawerProps> = ({
         }}
         treeData={treeData}
         checkedKeys={checked}
+        checkStrictly
         onCheck={handleChecked}
       />
     </Drawer>
