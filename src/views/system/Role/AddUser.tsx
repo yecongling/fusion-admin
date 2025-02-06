@@ -174,7 +174,7 @@ const AddUser: React.FC<AddUserProps> = ({ open, onOk, onCancel, roleId }) => {
       width={{ xl: 800, xxl: 1000 }}
       onOk={handleOk}
     >
-      <Card>
+      <Card className='mb-2!'>
         <Form form={form} onFinish={onFinish}>
           <Row gutter={12}>
             <Col span={6}>
