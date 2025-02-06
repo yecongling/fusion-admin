@@ -12,7 +12,7 @@
   "dependencies": {
     "@ant-design/icons": "^5.6.0",
     "@reduxjs/toolkit": "^2.5.0",
-    "antd": "^5.23.3",
+    "antd": "^5.23.4",
     "axios": "^1.7.9",
     "classnames": "^2.5.1",
     "crypto-js": "^4.2.0",
