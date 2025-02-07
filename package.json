@@ -37,7 +37,7 @@
     "@rsbuild/core": "^1.2.4",
     "@rsbuild/plugin-image-compress": "^1.1.0",
     "@rsbuild/plugin-react": "^1.1.0",
-    "@rsbuild/plugin-sass": "^1.2.0",
+    "@rsbuild/plugin-sass": "^1.2.1",
     "@tailwindcss/postcss": "^4.0.0",
     "@types/crypto-js": "^4.2.2",
     "@types/lodash-es": "^4.17.12",
