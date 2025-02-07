@@ -19,11 +19,11 @@ export interface Project {
   // 备注
   remark?: string;
   // 创建时间
-  createTime: string;
+  createTime?: string;
   // 更新时间
-  updateTime: string;
+  updateTime?: string;
   // 创建人
-  createBy: string;
+  createBy?: string;
   // 更新人
-  updateBy: string;
+  updateBy?: string;
 }

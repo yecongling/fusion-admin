@@ -9,14 +9,16 @@ import {
 import { Card, Button, Dropdown, type MenuProps } from 'antd';
 import './design.scss';
 import { memo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import type { Project } from './types';
 
 /**
  * 项目组件
  * @returns
  */
 const ProjectCard: React.FC<ProjectCardProps> = memo((props) => {
-  const { id, name } = props;
-
+  const { id, name, onEditProject } = props;
+  const navigate = useNavigate();
   /**
    * 下拉菜单
    */
@@ -46,6 +48,22 @@ const ProjectCard: React.FC<ProjectCardProps> = memo((props) => {
       },
     },
   ];
+
+  /**
+   * 项目流程设计
+   */
+  const designProject = () => {
+    // 跳转到流程设计界面
+    navigate(`/project/designer/${id}`);
+  };
+
+  /**
+   * 编辑项目
+   */
+  const editProject = () => {
+    onEditProject?.(id);
+  };
+
   return (
     <Card
       key={id}
@@ -58,13 +76,14 @@ const ProjectCard: React.FC<ProjectCardProps> = memo((props) => {
       <div className="h-[166px] px-3 relative">内容</div>
       <div className="h-10 py-[10px] px-3 text-[12px] text-[#646a73]">底部</div>
       <div className="operateButton">
-        <Button className="w-[85px]" icon={<EditOutlined />}>
+        <Button className="w-[85px]" icon={<EditOutlined />} onClick={editProject}>
           编辑
         </Button>
         <Button
           className="w-[85px]"
           type="primary"
           icon={<NodeIndexOutlined />}
+          onClick={designProject}
         >
           设计
         </Button>
@@ -98,9 +117,15 @@ export interface ProjectCardProps {
   /**
    * 项目封面
    */
-  cover?: string;
+  background?: string;
   /**
    * 项目类型
    */
-  type?: string;
+  type?: number;
+
+  /**
+   * 编辑项目
+   * @param projectId 项目id
+   */
+  onEditProject?: (projectId: string) => void;
 }
