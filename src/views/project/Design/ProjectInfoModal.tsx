@@ -47,18 +47,27 @@ const ProjectInfoModal: React.FC<ProjectInfoModalProps> = (props) => {
       onCancel={onCancel}
       onOk={handleOk}
       open={open}
+      width={650}
     >
-      <Form form={form} initialValues={{ type: '1' }}>
+      <Form form={form} initialValues={{ type: '1' }} labelCol={{ span: 3 }}>
         {/* 项目ID */}
         <Form.Item name="id" hidden>
           <Input />
         </Form.Item>
         {/* 项目名称 */}
-        <Form.Item label="项目名称" name="name">
+        <Form.Item
+          label="项目名称"
+          name="name"
+          rules={[{ required: true, message: '项目名称必填' }]}
+        >
           <Input ref={inputRef} autoComplete="off" allowClear autoFocus />
         </Form.Item>
         {/* 项目类型 */}
-        <Form.Item label="项目类型" name="type">
+        <Form.Item
+          label="项目类型"
+          name="type"
+          rules={[{ required: true, message: '请选择项目类型' }]}
+        >
           <Select
             options={[
               { label: '集成项目', value: '1' },
@@ -69,7 +78,11 @@ const ProjectInfoModal: React.FC<ProjectInfoModalProps> = (props) => {
           />
         </Form.Item>
         {/* 日志级别 */}
-        <Form.Item label="日志级别" name="logLevel">
+        <Form.Item
+          label="日志级别"
+          name="logLevel"
+          rules={[{ required: true, message: '请选择日志级别' }]}
+        >
           <Select
             options={[
               { label: 'INFO', value: '1' },
@@ -80,7 +93,11 @@ const ProjectInfoModal: React.FC<ProjectInfoModalProps> = (props) => {
           />
         </Form.Item>
         {/* 优先级 */}
-        <Form.Item label="优先级" name="priority">
+        <Form.Item
+          label="优先级"
+          name="priority"
+          rules={[{ required: true, message: '请选择优先级' }]}
+        >
           <Select
             options={[
               { label: '高', value: '1' },

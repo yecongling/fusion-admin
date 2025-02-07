@@ -10,7 +10,6 @@ import { Card, Button, Dropdown, type MenuProps } from 'antd';
 import './design.scss';
 import { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import type { Project } from './types';
 
 /**
  * 项目组件
