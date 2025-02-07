@@ -51,14 +51,21 @@ const UserInfoModal: React.FC<UserInfoModalProps> = ({
    * 确认回调
    */
   const handleOk = () => {
-    form.validateFields().then((values) => {
-      const submitData = {
-        ...values,
-        birthday: values.birthday?.format('YYYY-MM-DD'),
-        avatar: imageUrl,
-      };
-      onOk(submitData);
-    });
+    form
+      .validateFields()
+      .then((values) => {
+        const submitData = {
+          ...values,
+          birthday: values.birthday?.format('YYYY-MM-DD'),
+          avatar: imageUrl,
+        };
+        onOk(submitData);
+      })
+      .catch((errorInfo) => {
+        // 滚动并聚焦到第一个错误字段
+        form.scrollToField(errorInfo.errorFields[0].name);
+        form.focusField(errorInfo.errorFields[0].name);
+      });
   };
 
   /**

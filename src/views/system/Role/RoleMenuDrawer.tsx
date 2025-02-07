@@ -77,7 +77,7 @@ const RoleMenuDrawer: React.FC<RoleMenuDrawerProps> = ({
    * @param e
    */
   const handleChecked: TreeProps['onCheck'] = (checkedKeysValue) => {
-    setChecked(checkedKeysValue as string[]);
+    setChecked((checkedKeysValue as any).checked);
   };
 
   return (

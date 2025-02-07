@@ -113,7 +113,7 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
         form={form}
         initialValues={{
           menuType: 1,
-          isRoute: true,
+          route: true,
           hidden: false,
           internalOrExternal: false,
           status: true,
@@ -199,7 +199,7 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
         <Form.Item name="sortNo" label="排序">
           <InputNumber min={0} autoComplete="off" />
         </Form.Item>
-        <Form.Item name="isRoute" label="是否路由菜单">
+        <Form.Item name="route" label="是否路由菜单">
           <Switch checkedChildren="是" unCheckedChildren="否" />
         </Form.Item>
         <Form.Item name="hidden" label="隐藏路由">
