@@ -5,11 +5,13 @@ import {
   CopyOutlined,
   DeleteOutlined,
   ExportOutlined,
+  FileOutlined,
 } from '@ant-design/icons';
 import { Card, Button, Dropdown, type MenuProps } from 'antd';
 import './design.scss';
 import { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import bg from '@/assets/images/titlebar.jpg';
 
 /**
  * 项目组件
@@ -69,13 +71,28 @@ const ProjectCard: React.FC<ProjectCardProps> = memo((props) => {
       styles={{ body: { padding: '0px' } }}
       className="projectList"
     >
-      <div className="px-3 pt-[14px] pb-3 h-[50px] flex items-center">
-        {name}
+      <div className="px-3 pt-[14px] pb-2 h-[50px] flex items-center">
+        <FileOutlined
+          className="text-[18px] mr-2"
+          style={{ color: '#1677ff' }}
+        />
+        <span className='text-[16px] font-bold'>{name}</span>
       </div>
-      <div className="h-[166px] px-3 relative">内容</div>
-      <div className="h-10 py-[10px] px-3 text-[12px] text-[#646a73]">底部</div>
+      <div className="h-[166px] px-3 relative">
+        <div
+          className="bg-cover bg-center w-full h-full"
+          style={{ backgroundImage: `url(${bg})` }}
+        >
+          项目封面
+        </div>
+      </div>
+      <div className="h-10 px-3">底部</div>
       <div className="operateButton">
-        <Button className="w-[85px]" icon={<EditOutlined />} onClick={editProject}>
+        <Button
+          className="w-[85px]"
+          icon={<EditOutlined />}
+          onClick={editProject}
+        >
           编辑
         </Button>
         <Button
