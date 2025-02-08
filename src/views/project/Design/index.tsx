@@ -1,5 +1,11 @@
-import { Card, Segmented, type SegmentedProps, Input } from 'antd';
-import { useEffect, useState } from 'react';
+import {
+  Card,
+  Segmented,
+  type SegmentedProps,
+  Input,
+  type InputRef,
+} from 'antd';
+import { useEffect, useRef, useState } from 'react';
 import './design.scss';
 import { PlusOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
@@ -20,6 +26,7 @@ const Design: React.FC = () => {
   const { theme } = useSelector((state: RootState) => state.preferences);
   // 新增弹窗
   const [openAddProject, setOpenAddProject] = useState<boolean>(false);
+  const searchRef = useRef<InputRef>(null);
 
   // 分段控制器选项
   const segmentedOptions: SegmentedProps['options'] = [
@@ -35,6 +42,10 @@ const Design: React.FC = () => {
       label: '接口项目',
       value: '2',
     },
+    {
+      label: '三方项目',
+      value: '3',
+    },
   ];
 
   // 项目列表数据
@@ -45,6 +56,7 @@ const Design: React.FC = () => {
   // 根据类型进行检索
   useEffect(() => {
     queryProject();
+    searchRef.current?.focus();
   }, [type]);
 
   /**
@@ -132,7 +144,11 @@ const Design: React.FC = () => {
           />
           <div className="w-[300]">
             {/* 检索 */}
-            <Search placeholder="请输入检索内容" onSearch={queryProject} />
+            <Search
+              placeholder="请输入检索内容"
+              ref={searchRef}
+              onSearch={queryProject}
+            />
           </div>
         </div>
         {/* 项目列表 */}
