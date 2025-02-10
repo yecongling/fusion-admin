@@ -1,4 +1,4 @@
-import { assignRoleUser, getRoleUser } from '@/services/system/role/roleApi';
+import { assignRoleUser, getRoleUser } from '@/api/system/role/roleApi';
 import {
   CloseOutlined,
   DeleteOutlined,

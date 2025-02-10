@@ -1,4 +1,4 @@
-import { assignRoleMenu, getRoleMenu } from '@/services/system/role/roleApi';
+import { assignRoleMenu, getRoleMenu } from '@/api/system/role/roleApi';
 import { getIcon } from '@/utils/utils';
 import {
   CloseOutlined,

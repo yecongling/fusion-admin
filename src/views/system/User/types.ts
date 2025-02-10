@@ -1,4 +1,4 @@
-import type { UserModel } from '@/services/system/user/userModel';
+import type { UserModel } from '@/api/system/user/userModel';
 
 /**
  * 查询参数

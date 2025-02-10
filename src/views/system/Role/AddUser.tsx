@@ -2,7 +2,7 @@ import DragModal from '@/components/modal/DragModal';
 import {
   assignRoleUser,
   getUserNotInRoleByPage,
-} from '@/services/system/role/roleApi';
+} from '@/api/system/role/roleApi';
 import {
   SearchOutlined,
   RedoOutlined,

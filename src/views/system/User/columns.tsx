@@ -1,4 +1,4 @@
-import type { UserModel } from '@/services/system/user/userModel';
+import type { UserModel } from '@/api/system/user/userModel';
 import { ManOutlined, WomanOutlined, MoreOutlined } from '@ant-design/icons';
 import { Button, Space, Tag, Image, Dropdown, type TableProps, type MenuProps } from 'antd';
 

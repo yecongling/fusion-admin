@@ -11,7 +11,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/stores/store';
 import ProjectCard from './ProjectCard';
-import { projectService } from '@/services/project/design/designApi';
+import { projectService } from '@/api/project/design/designApi';
 import ProjectInfoModal from './ProjectInfoModal';
 import type { Project } from './types';
 

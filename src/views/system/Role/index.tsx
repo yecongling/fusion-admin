@@ -32,7 +32,7 @@ import {
   deleteRole,
   editRole,
   getRoleList,
-} from '@/services/system/role/roleApi';
+} from '@/api/system/role/roleApi';
 import RoleInfoModal from './RoleInfoModal';
 import RoleMenuDrawer from './RoleMenuDrawer';
 import RoleUserDrawer from './RoleUserDrawer';

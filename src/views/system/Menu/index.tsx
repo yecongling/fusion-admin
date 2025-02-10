@@ -11,7 +11,7 @@ import {
   deleteMenuBatch,
   getAllMenus,
   updateMenu,
-} from '@/services/system/menu/menuApi';
+} from '@/api/system/menu/menuApi';
 import {
   App,
   Button,

@@ -1,5 +1,5 @@
 import useParentSize from '@/hooks/useParentSize';
-import { userService } from '@/services/system/user/userApi';
+import { userService } from '@/api/system/user/userApi';
 import {
   DeleteOutlined,
   EditOutlined,
@@ -14,7 +14,7 @@ import type { UserSearchParams } from './types';
 import { getColumns } from './columns';
 import SearchForm from './SearchForm';
 import UserInfoModal from './UserInfoModal';
-import type { UserModel } from '@/services/system/user/userModel';
+import type { UserModel } from '@/api/system/user/userModel';
 
 const { confirm } = Modal;
 
