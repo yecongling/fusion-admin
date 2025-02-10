@@ -145,7 +145,7 @@ const LeftMenu: React.FC = memo(() => {
     <Layout.Sider
       trigger={null}
       collapsedWidth={48}
-      className="scroll ant-menu"
+      className="ant-menu"
       style={{
         overflowX: 'hidden',
         zIndex: 999,
@@ -169,7 +169,7 @@ const LeftMenu: React.FC = memo(() => {
                   color: titleColor,
                 }}
               >
-                FusionAdmin
+                Fusion
               </p>
             )}
           </div>
@@ -271,7 +271,6 @@ const LeftMenu: React.FC = memo(() => {
             onClick={() =>
               dispatch(updatePreferences('sidebar', 'collapsed', !collapsed))
             }
-            className="btnbor"
           />
         </Space>
       </div>
