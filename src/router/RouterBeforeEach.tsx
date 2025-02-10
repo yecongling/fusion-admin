@@ -1,7 +1,6 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import type React from 'react';
 import { useEffect } from 'react';
-import { checkRouterAuth } from './checkRouterAuth';
 
 /**
  * 前置路由拦截（判定用户是否 处于登录状态）
@@ -21,14 +20,8 @@ const RouterBeforeEach: React.FC = () => {
     } else if (bLogin === 'false' || !bLogin || location.pathname === '/') {
       // 未登录状态或登录状态已失效，则跳转到登录页面
       navigate('/login', { replace: true });
-    } else {
-      // 检测当前路径
-      const obj = checkRouterAuth(location.pathname);
-      if (!obj && location.pathname !== '404') {
-        navigate('/404');
-      }
     }
-  }, []);
+  }, [location.pathname]);
   return <Outlet />;
 };
 export default RouterBeforeEach;

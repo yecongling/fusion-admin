@@ -5,7 +5,7 @@ import { Suspense, useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Router } from '@/router/router';
-import { getMenuListByRoleId } from '@/services/system/menu/menuApi';
+import { getMenuListByRoleId } from '@/api/system/menu/menuApi';
 import { antdUtils } from '@/utils/antdUtil';
 
 /**
@@ -54,7 +54,7 @@ const App: React.FC = () => {
     } else {
       getMenuData();
     }
-  }, [getMenuData, location.pathname, navigate]);
+  }, []);
 
   return (
     <>

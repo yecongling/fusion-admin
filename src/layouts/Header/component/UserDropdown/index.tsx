@@ -10,7 +10,7 @@ import {
   SyncOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { logout } from '@/services/login/loginApi';
+import { logout } from '@/api/login/loginApi';
 import type { ReactNode } from 'react';
 import React from 'react';
 import { updatePreferences } from '@/stores/store';
@@ -99,7 +99,7 @@ const UserDropdown: React.FC = () => {
             sessionStorage.removeItem('loginUser');
 
             // 修改回document.title
-            document.title = 'Fusion Admin - 登录';
+            document.title = 'Fusion - 登录';
             // 退出到登录页面
             navigate('/login');
           },

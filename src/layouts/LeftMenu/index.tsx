@@ -81,7 +81,7 @@ const LeftMenu: React.FC = memo(() => {
   const deepLoopFloat = (menuList: RouteItem[], newArr: MenuItem[] = []) => {
     for (const item of menuList) {
       // 如果不能显示的菜单不显示
-      if (item?.meta?.menuType === 2) {
+      if (item?.meta?.menuType === 2 || item?.hidden) {
         continue;
       }
       // 下面判断代码解释 *** !item?.children?.length   ==>   (!item.children || item.children.length === 0)
@@ -119,7 +119,7 @@ const LeftMenu: React.FC = memo(() => {
     const route = searchRoute(pathname, menus);
     if (route && Object.keys(route).length) {
       const title = route.meta?.title;
-      if (title) document.title = `${title} - Fusion Admin`;
+      if (title) document.title = `${title} - Fusion`;
       if (!collapsed) setOpenKeys(openKey);
     }
   }, [pathname, collapsed, menus]);

@@ -74,6 +74,8 @@ export interface RouteItem {
   name?: string;
   // 别名
   alias?: string | string[];
+  // 隐藏
+  hidden?: boolean;
   // 一级直达
   redirect?: string;
   // 大小写敏感

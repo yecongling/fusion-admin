@@ -16,3 +16,19 @@ export interface BasicOptions {
   label: string;
   value: string;
 }
+
+
+/**
+ * 分页查询参数
+ */
+export interface PageQueryParams {
+  /**
+   * 当前页码
+   */
+  pageNum: number;
+
+  /**
+   * 每页显示数量
+   */
+  pageSize: number;
+}

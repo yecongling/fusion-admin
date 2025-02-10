@@ -1,6 +1,6 @@
 import * as AntdIcon from '@ant-design/icons';
 import { Pagination } from 'antd';
-import React from 'react';
+import React, { memo } from 'react';
 import { useEffect, useState } from 'react';
 
 // antd中所有的图标库
@@ -10,7 +10,7 @@ const iconList: any[] = Object.values(AntdIcon).filter(
 /**
  * 图标面板组件
  */
-const IconPanel: React.FC<IconPanelProps> = (props) => {
+const IconPanel: React.FC<IconPanelProps> = memo((props) => {
   const { onSelect } = props;
   // 当前选中的图标
   const [selectedIcon, setSelectedIcon] = useState<string>('');
@@ -60,7 +60,7 @@ const IconPanel: React.FC<IconPanelProps> = (props) => {
       />
     </>
   );
-};
+});
 export default IconPanel;
 
 /**

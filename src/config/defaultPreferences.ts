@@ -19,7 +19,7 @@ export const defaultPreferences: Preferences = {
     layout: "sidebar-nav",
     locale: "zh-CN",
     loginExpiredMode: "page",
-    name: "Fusion Admin",
+    name: "Fusion",
     preferencesButtonPosition: "auto",
     watermark: false,
   },

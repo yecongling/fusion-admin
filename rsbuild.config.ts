@@ -1,10 +1,10 @@
-import { defineConfig } from '@rsbuild/core';
-import { pluginReact } from '@rsbuild/plugin-react';
-import { pluginSass } from '@rsbuild/plugin-sass';
-import { pluginMockServer } from 'rspack-plugin-mock/rsbuild';
-import { pluginImageCompress } from '@rsbuild/plugin-image-compress';
-import { pluginHtmlMinifierTerser } from 'rsbuild-plugin-html-minifier-terser';
-import path from 'node:path';
+import { defineConfig } from "@rsbuild/core";
+import { pluginReact } from "@rsbuild/plugin-react";
+import { pluginSass } from "@rsbuild/plugin-sass";
+import { pluginMockServer } from "rspack-plugin-mock/rsbuild";
+import { pluginImageCompress } from "@rsbuild/plugin-image-compress";
+import { pluginHtmlMinifierTerser } from "rsbuild-plugin-html-minifier-terser";
+import path from "node:path";
 
 export default defineConfig({
   plugins: [
@@ -24,28 +24,28 @@ export default defineConfig({
     // mock 插件
     pluginMockServer({
       // 表示拦截以路径/api开头的
-      prefix: '/api',
+      prefix: "/api",
     }),
     // 启动图片压缩
     pluginImageCompress(),
     // 启动html压缩
-    pluginHtmlMinifierTerser()
+    pluginHtmlMinifierTerser(),
   ],
   // 配置html模板
   html: {
-    favicon: path.resolve(__dirname, './src/assets/images/favicon.ico'),
-    title: 'Fusion Admin',
+    favicon: path.resolve(__dirname, "./src/assets/images/favicon.ico"),
+    title: "Fusion",
     tags: [
       {
-        tag: 'html',
-        attrs: { lang: 'zh' },
+        tag: "html",
+        attrs: { lang: "zh" },
       },
     ],
   },
   // 配置路径别名
   source: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
+      "@": path.resolve(__dirname, "./src"),
     },
   },
   dev: {
@@ -57,7 +57,7 @@ export default defineConfig({
   // 构建优化相关
   performance: {
     chunkSplit: {
-      strategy: 'split-by-experience',
+      strategy: "split-by-experience",
       // 下面的部分单独分包
       forceSplitting: {
         axios: /node_modules[\\/]axios/,
@@ -66,20 +66,24 @@ export default defineConfig({
         redux: /node_modules[\\/]redux/,
         lodash: /node_modules[\\/]lodash/,
         echarts: /node_modules[\\/]echarts/,
+        zrender: /node_modules[\\/]zrender/,
         antdIcons: /node_modules[\\/]@ant-design\/icons/,
+        "rc-cp": /node_modules[\\/]rc-/,
       },
     },
     // 移除console.[method]语句
     removeConsole: true,
+    // 开启包文件分析
+    // bundleAnalyze: {},
   },
   // 服务相关
   server: {
     port: 8000,
     proxy: {
-      '/api': {
-        target: 'http://localhost:8090/fusion',
+      "/api": {
+        target: "http://localhost:8090/fusion",
         changeOrigin: true,
-        pathRewrite: (path) => path.replace(/^\/api/, ''),
+        pathRewrite: (path) => path.replace(/^\/api/, ""),
       },
     },
   },

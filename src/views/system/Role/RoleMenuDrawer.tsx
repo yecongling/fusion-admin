@@ -1,4 +1,4 @@
-import { assignRoleMenu, getRoleMenu } from '@/services/system/role/roleApi';
+import { assignRoleMenu, getRoleMenu } from '@/api/system/role/roleApi';
 import { getIcon } from '@/utils/utils';
 import {
   CloseOutlined,
@@ -77,7 +77,7 @@ const RoleMenuDrawer: React.FC<RoleMenuDrawerProps> = ({
    * @param e
    */
   const handleChecked: TreeProps['onCheck'] = (checkedKeysValue) => {
-    setChecked(checkedKeysValue as string[]);
+    setChecked((checkedKeysValue as any).checked);
   };
 
   return (
@@ -120,6 +120,7 @@ const RoleMenuDrawer: React.FC<RoleMenuDrawerProps> = ({
         }}
         treeData={treeData}
         checkedKeys={checked}
+        checkStrictly
         onCheck={handleChecked}
       />
     </Drawer>

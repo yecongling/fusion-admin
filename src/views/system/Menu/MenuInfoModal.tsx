@@ -1,6 +1,6 @@
 import { QuestionCircleFilled, SettingOutlined } from '@ant-design/icons';
 import DragModal from '@/components/modal/DragModal';
-import { getDirectory } from '@/services/system/menu/menuApi';
+import { getDirectory } from '@/api/system/menu/menuApi';
 import {
   Dropdown,
   Form,
@@ -70,8 +70,10 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
       .validateFields()
       .then(() => {
         // 清除所有错误
-
-        onOk(form.getFieldsValue());
+        // 处理数据（boolean）
+        const data = form.getFieldsValue();
+        data.status = data.status ? 1 : 0;
+        onOk(data);
       })
       .catch((errorInfo) => {
         // 滚动并聚焦到第一个错误字段
@@ -111,7 +113,7 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
         form={form}
         initialValues={{
           menuType: 1,
-          isRoute: true,
+          route: true,
           hidden: false,
           internalOrExternal: false,
           status: true,
@@ -197,7 +199,7 @@ const MenuInfoModal: React.FC<MenuInfoModalProps> = ({
         <Form.Item name="sortNo" label="排序">
           <InputNumber min={0} autoComplete="off" />
         </Form.Item>
-        <Form.Item name="isRoute" label="是否路由菜单">
+        <Form.Item name="route" label="是否路由菜单">
           <Switch checkedChildren="是" unCheckedChildren="否" />
         </Form.Item>
         <Form.Item name="hidden" label="隐藏路由">

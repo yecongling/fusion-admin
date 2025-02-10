@@ -7,10 +7,11 @@ import {
 } from '@ant-design/icons';
 import {
   addMenu,
+  deleteMenu,
   deleteMenuBatch,
   getAllMenus,
   updateMenu,
-} from '@/services/system/menu/menuApi';
+} from '@/api/system/menu/menuApi';
 import {
   App,
   Button,
@@ -145,7 +146,12 @@ const Menu: React.FC = () => {
             >
               修改
             </Button>
-            <Button size="small" variant="link" color="danger">
+            <Button
+              size="small"
+              variant="link"
+              color="danger"
+              onClick={() => delMenu(record.id)}
+            >
               删除
             </Button>
           </Space>
@@ -227,6 +233,24 @@ const Menu: React.FC = () => {
       onOk() {
         // 调用删除接口，删除成功后刷新页面数据
         deleteMenuBatch(selRows.map((item: any) => item.id)).then(() => {
+          queryMenuData();
+        });
+      },
+    });
+  };
+
+  /**
+   * 删除菜单
+   * @param id 菜单ID
+   */
+  const delMenu = (id: string) => {
+    modal.confirm({
+      title: '删除菜单',
+      icon: <ExclamationCircleFilled />,
+      content: '确定删除菜单吗？数据删除后将无法恢复！',
+      onOk() {
+        // 调用删除接口，删除成功后刷新页面数据
+        deleteMenu(id).then(() => {
           queryMenuData();
         });
       },

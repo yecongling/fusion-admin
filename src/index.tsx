@@ -6,7 +6,7 @@ import { persistor, store } from '@/stores/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Spin } from 'antd';
 import GlobalConfigProvider from './GlobalConfigProvider';
-import "./index.css";
+import './index.css';
 
 const container = document.getElementById('root');
 if (container) {
@@ -14,7 +14,9 @@ if (container) {
   root.render(
     <Provider store={store}>
       <PersistGate loading={<Spin />} persistor={persistor}>
-        <BrowserRouter>
+        <BrowserRouter
+          future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+        >
           <GlobalConfigProvider />
         </BrowserRouter>
       </PersistGate>

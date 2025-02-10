@@ -10,8 +10,8 @@ import {
 import styles from './login.module.scss';
 import filing from '@/assets/images/filing.png';
 import { useNavigate } from 'react-router-dom';
-import { getCaptcha, login } from '@/services/login/loginApi';
-import { getMenuListByRoleId } from '@/services/system/menu/menuApi';
+import { getCaptcha, login } from '@/api/login/loginApi';
+import { getMenuListByRoleId } from '@/api/system/menu/menuApi';
 import { useDispatch } from 'react-redux';
 import { setMenus } from '@/stores/store';
 import { HttpCodeEnum } from '@/enums/httpEnum';
@@ -76,6 +76,12 @@ const Login: React.FC = () => {
           // 刷新验证码
           getCode();
           break;
+        // 登录失败次数过多
+        case HttpCodeEnum.RC111:
+          antdUtils.message?.error({
+            content: <p>{message}</p>,
+          });
+          break;
         // 登录成功
         case HttpCodeEnum.SUCCESS:
           {
@@ -102,7 +108,7 @@ const Login: React.FC = () => {
             navigate(homePath);
             antdUtils.notification?.success({
               message: '登录成功',
-              description: '欢迎来到Fusion Admin!',
+              description: '欢迎来到Fusion!',
             });
           }
           break;
@@ -172,7 +178,7 @@ const Login: React.FC = () => {
                     color: '#999999',
                   }}
                 >
-                  Fusion Admin
+                  Fusion
                 </span>
               </p>
             </div>
