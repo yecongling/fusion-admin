@@ -76,6 +76,12 @@ const Login: React.FC = () => {
           // 刷新验证码
           getCode();
           break;
+        // 登录失败次数过多
+        case HttpCodeEnum.RC111:
+          antdUtils.message?.error({
+            content: <p>{message}</p>,
+          });
+          break;
         // 登录成功
         case HttpCodeEnum.SUCCESS:
           {
