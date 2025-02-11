@@ -20,6 +20,16 @@ export default defineConfig({
   build: {
     // 压缩css代码
     cssCodeSplit: true,
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+      mangle: {
+        toplevel: true,
+      }
+    },
     rollupOptions: {
       output: {
         chunkFileNames: 'static/js/[name]-[hash].js',
