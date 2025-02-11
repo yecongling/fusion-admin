@@ -20,6 +20,7 @@ export default defineConfig({
   build: {
     // 压缩css代码
     cssCodeSplit: true,
+    // js代码压缩
     minify: 'terser',
     terserOptions: {
       compress: {
@@ -38,8 +39,11 @@ export default defineConfig({
         manualChunks: {
           react: ['react', 'react-dom', 'react-router-dom'],
           antd: ['antd'],
+          // 拆分图标库
+          'ant-icons': ['@ant-design/icons'],
           echarts: ['echarts'],
           axios: ['axios'],
+          logicFlow: ['@logicflow/core','@logicflow/extension'],
         },
       },
     },

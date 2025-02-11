@@ -149,7 +149,7 @@ const Login: React.FC = () => {
         <div className={styles["login-box"]}>
           {/* 左边图案和标题 */}
           <div className={styles["login-left"]}>
-            <div className="logo mt-[60]">
+            <div className="logo mt-15 mb-2">
               <img
                 className="login-icon my-0 mx-auto"
                 width="70"
