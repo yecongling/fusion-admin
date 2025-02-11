@@ -9,7 +9,7 @@ import { useMenuStore } from '@/stores/store';
 import { Skeleton } from 'antd';
 
 // 默认的错误路由
-export const errorRoutes: RouteObject[] = [
+const errorRoutes: RouteObject[] = [
   {
     path: '*',
     component: () => <Navigate replace to="/404" />,
@@ -29,13 +29,13 @@ export const errorRoutes: RouteObject[] = [
 ];
 
 // 动态路由
-export const dynamicRoutes: RouteObject[] = [
+const dynamicRoutes: RouteObject[] = [
   {
     path: '/',
     component: React.lazy(
       () => import('@/layouts/index.tsx')
     ) as unknown as ReactNode,
-    children: errorRoutes,
+    children: [],
   },
   {
     path: '/login',
