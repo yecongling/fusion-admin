@@ -1,21 +1,20 @@
-import type React from 'react';
-import { useEffect, useRef, useState } from 'react';
-import { Button, Checkbox, Col, Form, Image, Input, Row } from 'antd';
-import logo from '@/assets/images/icon-512.png';
+import type React from "react";
+import { useEffect, useRef, useState } from "react";
+import { Button, Checkbox, Col, Form, Image, Input, Row } from "antd";
+import logo from "@/assets/images/icon-512.png";
 import {
   LockOutlined,
   SecurityScanOutlined,
   UserOutlined,
-} from '@ant-design/icons';
-import styles from './login.module.scss';
-import filing from '@/assets/images/filing.png';
-import { useNavigate } from 'react-router-dom';
-import { getCaptcha, login } from '@/api/login/loginApi';
-import { getMenuListByRoleId } from '@/api/system/menu/menuApi';
-import { useDispatch } from 'react-redux';
-import { setMenus } from '@/stores/store';
-import { HttpCodeEnum } from '@/enums/httpEnum';
-import { antdUtils } from '@/utils/antdUtil';
+} from "@ant-design/icons";
+import styles from "./login.module.scss";
+import filing from "@/assets/images/filing.png";
+import { useNavigate } from "react-router-dom";
+import { getCaptcha, login } from "@/api/login/loginApi";
+import { getMenuListByRoleId } from "@/api/system/menu/menuApi";
+import { HttpCodeEnum } from "@/enums/httpEnum";
+import { antdUtils } from "@/utils/antdUtil";
+import { useMenuStore } from "@/stores/store";
 
 /**
  * 登录模块
@@ -25,13 +24,13 @@ const Login: React.FC = () => {
   const [form] = Form.useForm();
   const inputRef = useRef(null);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const { setMenus } = useMenuStore();
   // 加载状态
   const [loading, setLoading] = useState<boolean>(false);
   // 验证码（后续更改从后端获取）
-  const [code, setCode] = useState<string>('');
+  const [code, setCode] = useState<string>("");
   // 验证码的校验key，获取验证码的时候返回，用于验证码的校验
-  const [checkKey, setCheckKey] = useState<string>('');
+  const [checkKey, setCheckKey] = useState<string>("");
 
   // 页面挂载请求后端获取验证码
   useEffect(() => {
@@ -56,23 +55,23 @@ const Login: React.FC = () => {
         // 用户名不存在或禁用
         case HttpCodeEnum.RC107:
         case HttpCodeEnum.RC102:
-          form.setFields([{ name: 'username', errors: [message] }]);
-          form.getFieldInstance('username').focus();
+          form.setFields([{ name: "username", errors: [message] }]);
+          form.getFieldInstance("username").focus();
           // 刷新验证码
           getCode();
           break;
         // 密码输入错误
         case HttpCodeEnum.RC108:
-          form.setFields([{ name: 'password', errors: [message] }]);
-          form.getFieldInstance('password').focus();
+          form.setFields([{ name: "password", errors: [message] }]);
+          form.getFieldInstance("password").focus();
           // 刷新验证码
           getCode();
           break;
         // 验证码错误或过期
         case HttpCodeEnum.RC300:
         case HttpCodeEnum.RC301:
-          form.setFields([{ name: 'captcha', errors: [message] }]);
-          form.getFieldInstance('captcha').focus();
+          form.setFields([{ name: "captcha", errors: [message] }]);
+          form.getFieldInstance("captcha").focus();
           // 刷新验证码
           getCode();
           break;
@@ -88,18 +87,18 @@ const Login: React.FC = () => {
             // 没有配置首页地址默认跳到第一个菜单
             const { token, roleId } = data;
             let { homePath } = data;
-            sessionStorage.setItem('token', token);
-            sessionStorage.setItem('isLogin', 'true');
-            sessionStorage.setItem('roleId', roleId);
+            sessionStorage.setItem("token", token);
+            sessionStorage.setItem("isLogin", "true");
+            sessionStorage.setItem("roleId", roleId);
             // 存储登录的用户名
-            sessionStorage.setItem('loginUser', values.username);
+            sessionStorage.setItem("loginUser", values.username);
             // 登录成功根据角色获取菜单
             const menu = await getMenuListByRoleId({ roleId });
-            dispatch(setMenus(menu));
+            setMenus(menu);
             // 判断是否配置了默认跳转的首页地址
             if (!homePath) {
               // 获取第一个是路由的地址
-              const firstRoute = menu.find((item: any) => item.route === '1');
+              const firstRoute = menu.find((item: any) => item.route === "1");
               if (firstRoute) {
                 homePath = firstRoute.path;
               }
@@ -107,15 +106,15 @@ const Login: React.FC = () => {
             // 跳转到首页
             navigate(homePath);
             antdUtils.notification?.success({
-              message: '登录成功',
-              description: '欢迎来到Fusion!',
+              message: "登录成功",
+              description: "欢迎来到Fusion!",
             });
           }
           break;
         default:
           // 默认按登录失败处理
           antdUtils.modal?.error({
-            title: '登录失败',
+            title: "登录失败",
             content: (
               <>
                 <p>错误状态码:{code}</p>
@@ -146,10 +145,10 @@ const Login: React.FC = () => {
   return (
     <>
       <div className={styles.dragArea} />
-      <div className={styles['login-container']}>
-        <div className={styles['login-box']}>
+      <div className={styles["login-container"]}>
+        <div className={styles["login-box"]}>
           {/* 左边图案和标题 */}
-          <div className={styles['login-left']}>
+          <div className={styles["login-left"]}>
             <div className="logo mt-[60]">
               <img
                 className="login-icon my-0 mx-auto"
@@ -159,23 +158,23 @@ const Login: React.FC = () => {
               />
             </div>
             <div className="title">
-              <p style={{ fontSize: '20px', margin: 0 }}>
+              <p style={{ fontSize: "20px", margin: 0 }}>
                 <span
                   style={{
                     fontFamily:
-                      '微软雅黑 Bold, 微软雅黑 Regular, 微软雅黑, sans-serif',
+                      "微软雅黑 Bold, 微软雅黑 Regular, 微软雅黑, sans-serif",
                     fontWeight: 700,
                   }}
                 >
                   融合管理平台
                 </span>
               </p>
-              <p style={{ fontSize: '14px', margin: 0 }}>
+              <p style={{ fontSize: "14px", margin: 0 }}>
                 <span
                   style={{
-                    fontFamily: '微软雅黑, sans-serif',
+                    fontFamily: "微软雅黑, sans-serif",
                     fontWeight: 400,
-                    color: '#999999',
+                    color: "#999999",
                   }}
                 >
                   Fusion
@@ -184,13 +183,13 @@ const Login: React.FC = () => {
             </div>
           </div>
           {/* 右边登陆表单 */}
-          <div className={styles['login-form']}>
+          <div className={styles["login-form"]}>
             <div className="login-title">
-              <p style={{ fontSize: '28px', textAlign: 'center', margin: 0 }}>
+              <p style={{ fontSize: "28px", textAlign: "center", margin: 0 }}>
                 <span
                   style={{
                     fontFamily:
-                      '微软雅黑 Bold, 微软雅黑 Regular, 微软雅黑, sans-serif',
+                      "微软雅黑 Bold, 微软雅黑 Regular, 微软雅黑, sans-serif",
                     fontWeight: 700,
                   }}
                 >
@@ -198,14 +197,14 @@ const Login: React.FC = () => {
                 </span>
               </p>
             </div>
-            <div className="form" style={{ marginTop: '40px' }}>
+            <div className="form" style={{ marginTop: "40px" }}>
               <Form
                 form={form}
                 name="login"
                 labelCol={{ span: 5 }}
                 initialValues={{
-                  username: 'admin',
-                  password: '123456qwe,.',
+                  username: "admin",
+                  password: "123456qwe,.",
                   remember: true,
                 }}
                 size="large"
@@ -214,7 +213,7 @@ const Login: React.FC = () => {
               >
                 <Form.Item
                   name="username"
-                  rules={[{ required: true, message: '请输入用户名' }]}
+                  rules={[{ required: true, message: "请输入用户名" }]}
                 >
                   <Input
                     size="large"
@@ -228,7 +227,7 @@ const Login: React.FC = () => {
                 </Form.Item>
                 <Form.Item
                   name="password"
-                  rules={[{ required: true, message: '请输入密码' }]}
+                  rules={[{ required: true, message: "请输入密码" }]}
                 >
                   <Input.Password
                     size="large"
@@ -244,7 +243,7 @@ const Login: React.FC = () => {
                       <Form.Item
                         name="captcha"
                         noStyle
-                        rules={[{ required: true, message: '请输入验证码' }]}
+                        rules={[{ required: true, message: "请输入验证码" }]}
                       >
                         <Input
                           size="large"
@@ -259,9 +258,9 @@ const Login: React.FC = () => {
                         size="large"
                         onClick={getCode}
                         style={{
-                          width: '100%',
-                          backgroundColor: '#f0f0f0',
-                          padding: '2px',
+                          width: "100%",
+                          backgroundColor: "#f0f0f0",
+                          padding: "2px",
                         }}
                       >
                         <Image
@@ -282,7 +281,7 @@ const Login: React.FC = () => {
                   <Button
                     loading={loading}
                     size="large"
-                    style={{ width: '100%' }}
+                    style={{ width: "100%" }}
                     type="primary"
                     htmlType="submit"
                   >
@@ -294,26 +293,26 @@ const Login: React.FC = () => {
           </div>
         </div>
       </div>
-      <div style={{ width: '440px', margin: '0 auto', padding: '20px 0' }}>
+      <div style={{ width: "440px", margin: "0 auto", padding: "20px 0" }}>
         <a
           target="_blank"
           rel="noreferrer"
           href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=51012202001944"
           style={{
-            display: 'inline-block',
-            textDecoration: 'none',
-            height: '20px',
-            lineHeight: '20px',
+            display: "inline-block",
+            textDecoration: "none",
+            height: "20px",
+            lineHeight: "20px",
           }}
         >
-          <img src={filing} style={{ float: 'left' }} alt="无图片" />
+          <img src={filing} style={{ float: "left" }} alt="无图片" />
           <p
             style={{
-              float: 'left',
-              height: '20px',
-              lineHeight: '20px',
-              margin: '0px 0px 0px 5px',
-              color: '#939393',
+              float: "left",
+              height: "20px",
+              lineHeight: "20px",
+              margin: "0px 0px 0px 5px",
+              color: "#939393",
             }}
           >
             川公网安备51012202001944
@@ -324,11 +323,11 @@ const Login: React.FC = () => {
           target="_blank"
           rel="noreferrer"
           style={{
-            position: 'absolute',
-            display: 'inline-block',
-            color: '#939393',
-            textDecoration: 'none',
-            marginLeft: '6px',
+            position: "absolute",
+            display: "inline-block",
+            color: "#939393",
+            textDecoration: "none",
+            marginLeft: "6px",
           }}
         >
           蜀ICP备2023022276号-2

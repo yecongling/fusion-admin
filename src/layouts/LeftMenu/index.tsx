@@ -14,8 +14,6 @@ import {
   ConfigProvider,
   Empty,
 } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
-import { type RootState, updatePreferences } from '@/stores/store.ts';
 import logo from '@/assets/images/icon-192.png';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
@@ -29,6 +27,7 @@ import {
 } from '@ant-design/icons';
 import type { RouteItem } from '@/types/route';
 import { getIcon, getOpenKeys, searchRoute } from '@/utils/utils';
+import { useMenuStore, usePreferencesStore } from '@/stores/store';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -36,12 +35,10 @@ type MenuItem = Required<MenuProps>['items'][number];
  * 左边的菜单栏
  */
 const LeftMenu: React.FC = memo(() => {
+  const { preferences, updatePreferences } = usePreferencesStore();
   // 从状态库中获取状态
-  const { sidebar, theme, navigation } = useSelector(
-    (state: RootState) => state.preferences,
-  );
-  const { menus } = useSelector((state: RootState) => state.menuState);
-  const dispatch = useDispatch();
+  const { sidebar, theme, navigation } = preferences;
+  const { menus } = useMenuStore();
   const { pathname } = useLocation();
   const navigate = useNavigate();
   // 定义一些状态变量
@@ -66,7 +63,7 @@ const LeftMenu: React.FC = memo(() => {
     key?: React.Key | null,
     icon?: React.ReactNode,
     children?: MenuItem[],
-    type?: 'group',
+    type?: 'group'
   ): MenuItem => {
     return {
       key,
@@ -87,7 +84,7 @@ const LeftMenu: React.FC = memo(() => {
       // 下面判断代码解释 *** !item?.children?.length   ==>   (!item.children || item.children.length === 0)
       if (!item?.children?.length) {
         newArr.push(
-          getItem(item.meta?.title, item.path, getIcon(item.meta?.icon)),
+          getItem(item.meta?.title, item.path, getIcon(item.meta?.icon))
         );
         continue;
       }
@@ -96,8 +93,8 @@ const LeftMenu: React.FC = memo(() => {
           item.meta?.title,
           item.path,
           getIcon(item.meta?.icon),
-          deepLoopFloat(item.children),
-        ),
+          deepLoopFloat(item.children)
+        )
       );
     }
     return newArr;
@@ -216,9 +213,7 @@ const LeftMenu: React.FC = memo(() => {
             }}
           >
             <Segmented
-              onChange={(value) =>
-                dispatch(updatePreferences('theme', 'mode', value))
-              }
+              onChange={(value) => updatePreferences('theme', 'mode', value)}
               vertical={collapsed}
               size="small"
               options={[
@@ -269,7 +264,7 @@ const LeftMenu: React.FC = memo(() => {
               )
             }
             onClick={() =>
-              dispatch(updatePreferences('sidebar', 'collapsed', !collapsed))
+              updatePreferences('sidebar', 'collapsed', !collapsed)
             }
           />
         </Space>

@@ -1,10 +1,9 @@
-import { Input, type InputRef } from 'antd';
-import favicon from '@/assets/images/icon-512.png';
-import { updatePreferences, type RootState } from '@/stores/store';
-import { useDispatch, useSelector } from 'react-redux';
-import type React from 'react';
-import { useEffect, useRef } from 'react';
-import style from './screenLock.module.scss';
+import { Input, type InputRef } from "antd";
+import favicon from "@/assets/images/icon-512.png";
+import type React from "react";
+import { useEffect, useRef } from "react";
+import style from "./screenLock.module.scss";
+import { usePreferencesStore } from "@/stores/store";
 
 /**
  * 锁屏操作
@@ -12,8 +11,8 @@ import style from './screenLock.module.scss';
  */
 const ScreenLock: React.FC = () => {
   // 状态
-  const { widget } = useSelector((state: RootState) => state.preferences);
-  const dispatch = useDispatch();
+  const { preferences, updatePreferences } = usePreferencesStore();
+  const { widget } = preferences;
   const { lockScreenStatus } = widget;
   const pwdRef = useRef<InputRef>(null);
 
@@ -31,11 +30,11 @@ const ScreenLock: React.FC = () => {
     console.log(e.target.value);
 
     // 如果密码验证正确，则解除锁屏
-    dispatch(updatePreferences('widget', 'lockScreenStatus', false));
+    updatePreferences("widget", "lockScreenStatus", false);
   };
 
   return lockScreenStatus ? (
-    <div className={style['screen-lock']}>
+    <div className={style["screen-lock"]}>
       <div className="screen-lock-content">
         <div className="screen-lock-title">
           <img src={favicon} alt="" width={100} />

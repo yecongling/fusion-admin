@@ -4,16 +4,15 @@ import {
   type SegmentedProps,
   Input,
   type InputRef,
-} from 'antd';
-import { useEffect, useRef, useState } from 'react';
-import './design.scss';
-import { PlusOutlined } from '@ant-design/icons';
-import { useSelector } from 'react-redux';
-import type { RootState } from '@/stores/store';
-import ProjectCard from './ProjectCard';
-import { projectService } from '@/api/project/design/designApi';
-import ProjectInfoModal from './ProjectInfoModal';
-import type { Project } from './types';
+} from "antd";
+import { useEffect, useRef, useState } from "react";
+import "./design.scss";
+import { PlusOutlined } from "@ant-design/icons";
+import ProjectCard from "./ProjectCard";
+import { projectService } from "@/api/project/design/designApi";
+import ProjectInfoModal from "./ProjectInfoModal";
+import type { Project } from "./types";
+import { usePreferencesStore } from "@/stores/store";
 
 const { Search } = Input;
 
@@ -22,29 +21,30 @@ const { Search } = Input;
  */
 const Design: React.FC = () => {
   // 选中的分类
-  const [type, setType] = useState<string>('');
-  const { theme } = useSelector((state: RootState) => state.preferences);
+  const [type, setType] = useState<string>("");
+  const { preferences } = usePreferencesStore();
+  const { theme } = preferences;
   // 新增弹窗
   const [openAddProject, setOpenAddProject] = useState<boolean>(false);
   const searchRef = useRef<InputRef>(null);
 
   // 分段控制器选项
-  const segmentedOptions: SegmentedProps['options'] = [
+  const segmentedOptions: SegmentedProps["options"] = [
     {
-      label: '全部',
-      value: '',
+      label: "全部",
+      value: "",
     },
     {
-      label: '集成项目',
-      value: '1',
+      label: "集成项目",
+      value: "1",
     },
     {
-      label: '接口项目',
-      value: '2',
+      label: "接口项目",
+      value: "2",
     },
     {
-      label: '三方项目',
-      value: '3',
+      label: "三方项目",
+      value: "3",
     },
   ];
 
@@ -155,7 +155,7 @@ const Design: React.FC = () => {
         <div className="flex flex-wrap mt-2">
           {/* 新建项目 */}
           <Card
-            styles={{ body: { padding: '0px' } }}
+            styles={{ body: { padding: "0px" } }}
             className="projectList addProject"
             onClick={addProject}
           >

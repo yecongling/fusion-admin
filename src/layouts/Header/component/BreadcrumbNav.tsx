@@ -1,11 +1,10 @@
-import type React from 'react';
-import { useEffect, useState } from 'react';
-import { Breadcrumb } from 'antd';
-import { Link, useLocation } from 'react-router-dom';
-import type { RouteItem } from '@/types/route';
-import { useSelector } from 'react-redux';
-import type { RootState } from '@/stores/store';
-import { getIcon } from '@/utils/utils';
+import type React from "react";
+import { useEffect, useState } from "react";
+import { Breadcrumb } from "antd";
+import { Link, useLocation } from "react-router-dom";
+import type { RouteItem } from "@/types/route";
+import { getIcon } from "@/utils/utils";
+import { useMenuStore, usePreferencesStore } from "@/stores/store";
 
 /**
  * 面包屑
@@ -15,17 +14,18 @@ const BreadcrumbNav: React.FC = () => {
   // 获取路由的地址，地址变化的时候去获取对应的菜单项，以此来拼接面包屑
   const location = useLocation();
   // 从后台获取的路由菜单
-  const menuState = useSelector((state: RootState) => state.menuState);
+  const menuState = useMenuStore();
   const { menus } = menuState;
   const [items, setItems] = useState<Record<string, any>[]>([]);
   // 从全局状态中获取配置是否开启面包屑、图标
-  const { breadcrumb } = useSelector((state: RootState) => state.preferences);
+  const { preferences } = usePreferencesStore();
+  const { breadcrumb } = preferences;
   useEffect(() => {
     // 将menu里面的内容和path进行对照获取
     const breadItems = patchBreadcrumb(
       menus,
       location.pathname,
-      breadcrumb.showIcon,
+      breadcrumb.showIcon
     );
     if (breadItems.length > 0) {
       setItems(breadItems);
@@ -39,7 +39,7 @@ const BreadcrumbNav: React.FC = () => {
       <Breadcrumb
         items={items}
         className="flex justify-between items-center"
-        style={{ marginLeft: '10px' }}
+        style={{ marginLeft: "10px" }}
       />
     </>
   );
@@ -55,7 +55,7 @@ export default BreadcrumbNav;
 function patchBreadcrumb(
   routerList: RouteItem[],
   pathname: string,
-  joinIcon: boolean,
+  joinIcon: boolean
 ): Record<string, any>[] {
   const result: Record<string, any>[] = [];
   if (routerList) {
@@ -65,13 +65,13 @@ function patchBreadcrumb(
         pathname === item.path ||
         (pathname.includes(item.path) &&
           pathname.length > item.path.length &&
-          pathname.substring(item.path.length, item.path.length + 1) === '/')
+          pathname.substring(item.path.length, item.path.length + 1) === "/")
       ) {
         const pth: Record<string, any> = {};
         pth.title = (
           <>
             {joinIcon && item.meta?.icon && getIcon(item.meta.icon)}
-            <span style={{ padding: '0 4px' }}>{item.meta?.title}</span>
+            <span style={{ padding: "0 4px" }}>{item.meta?.title}</span>
           </>
         );
         pth.key = item.path;

@@ -1,44 +1,63 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage";
-import { combineReducers } from "redux";
-import { menuSlice } from "./menuReducers";
-import { type Category, preferencesSlice } from "./preferencesReducers";
+import { persist, PersistOptions } from "zustand/middleware";
+import { create } from "zustand";
+import { Preferences } from "./storeState";
+import { defaultPreferences } from "@/config/defaultPreferences";
 
-// 组合reducer（这里还可以添加其他的reducer）
-const rootReducer = combineReducers({
-  menuState: menuSlice.reducer,
-  preferences: preferencesSlice.reducer,
-});
+// 定义category和key的类型
+export type Category = keyof Preferences;
+export type SettingKey<T extends Category> = keyof Preferences[T];
 
-// 持久化存储配置
-const persistConfig = {
-  key: "root",
-  storage,
-  blacklist: ["menuState"],
-};
+/**
+ * 定义状态对象
+ */
+interface MenuStore {
+  // 菜单状态
+  menus: any[];
+  setMenus: (menus: any[]) => void;
+}
 
-// 持久化reducer
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+interface PreferencesStore {
+  // 系统配置状态
+  preferences: Preferences;
+  // 更新全局状态
+  updatePreferences: (category: Category, key: any, value: any) => void;
+  // 重置全局状态
+  resetPreferences: () => void;
+}
 
-// 配置store
-export const store = configureStore({
-  reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({ serializableCheck: false }),
-});
+// 创建菜单store
+const useMenuStore = create<MenuStore>((set) => ({
+  // 菜单状态
+  menus: [],
+  setMenus: (menus: any[]) => set({ menus: menus }),
+}));
 
-// 定义RootState
-export type RootState = ReturnType<typeof rootReducer>;
-// 持久化store
-export const persistor = persistStore(store);
+// 创建全局设置store
+const usePreferencesStore = create<PreferencesStore>()(
+  persist(
+    (set) => ({
+      // 系统配置状态
+      preferences: defaultPreferences,
+      // 更新全局状态
+      updatePreferences: (category: Category, key: any, value: any) =>
+        set((state) => ({
+          preferences: {
+            ...state.preferences,
+            [category]: {
+              ...state.preferences[category],
+              [key]: value,
+            },
+          },
+        })),
+      // 重置全局状态
+      resetPreferences: () =>
+        set({ preferences: defaultPreferences }),
+    }),
+    {
+      name: "preferences",
+      getStorage: () => localStorage,
+    } as PersistOptions<PreferencesStore>
+  )
+);
 
-// 导出菜单的更新函数
-export const { setMenus } = menuSlice.actions;
-
-// 导出全局设置的更新函数
-export const { updateSetting, resetPreferences, setPreferences } = preferencesSlice.actions;
-
-// 自定义接受三个独立参数的action
-export const updatePreferences = (category: Category, key: any, value: any) =>
-  updateSetting({ category, key, value });
+export { useMenuStore, usePreferencesStore };

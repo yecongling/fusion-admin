@@ -1,5 +1,5 @@
-import type React from 'react';
-import { memo, useState } from 'react';
+import type React from "react";
+import { memo, useState } from "react";
 import {
   App,
   Button,
@@ -10,21 +10,20 @@ import {
   Space,
   Tabs,
   type TabsProps,
-} from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
-import { resetPreferences, type RootState } from '@/stores/store';
+} from "antd";
 import {
   ClearOutlined,
   CloseOutlined,
   CopyOutlined,
   RedoOutlined,
-} from '@ant-design/icons';
-import Block from './Block';
-import Theme from './Theme';
-import Layout from './Layout';
-import Shortcut from './Shortcut';
-import General from './Common/General';
-import Animation from './Common/Animation';
+} from "@ant-design/icons";
+import Block from "./Block";
+import Theme from "./Theme";
+import Layout from "./Layout";
+import Shortcut from "./Shortcut";
+import General from "./Common/General";
+import Animation from "./Common/Animation";
+import { usePreferencesStore } from "@/stores/store";
 
 /**
  * 系统设置界面组件的属性配置
@@ -37,48 +36,48 @@ export interface SettingProps {
 /* 系统配置界面 */
 const Setting: React.FC<SettingProps> = memo(({ open, setOpen }) => {
   // 从全局状态库中获取数据
-  const { theme } = useSelector((state: RootState) => state.preferences);
-  const dispatch = useDispatch();
+  const { preferences, resetPreferences } = usePreferencesStore();
+  const { theme } = preferences;
   const { colorPrimary } = theme;
-  const [value, setValue] = useState<ColorPickerProps['value']>(colorPrimary);
-  const [selectedkey, setSelectedKey] = useState<string>('theme');
+  const [value, setValue] = useState<ColorPickerProps["value"]>(colorPrimary);
+  const [selectedKey, setSelectedKey] = useState<string>("theme");
   const { modal, message } = App.useApp();
 
   // 分段器的值
   const segmentedItems = [
     {
-      label: '外观',
-      value: 'theme',
+      label: "外观",
+      value: "theme",
     },
     {
-      label: '布局',
-      value: 'layout',
+      label: "布局",
+      value: "layout",
     },
     {
-      label: '快捷键',
-      value: 'shortcut',
+      label: "快捷键",
+      value: "shortcut",
     },
     {
-      label: '通用',
-      value: 'common',
+      label: "通用",
+      value: "common",
     },
   ];
 
   // Tabs的选项
-  const tabsItems: TabsProps['items'] = [
+  const tabsItems: TabsProps["items"] = [
     {
-      key: 'theme',
-      label: '',
+      key: "theme",
+      label: "",
       children: <Theme />,
     },
     {
-      key: 'layout',
-      label: '',
+      key: "layout",
+      label: "",
       children: <Layout />,
     },
     {
-      key: 'shortcut',
-      label: '',
+      key: "shortcut",
+      label: "",
       children: (
         <Block title="全局">
           <Shortcut />
@@ -86,8 +85,8 @@ const Setting: React.FC<SettingProps> = memo(({ open, setOpen }) => {
       ),
     },
     {
-      key: 'common',
-      label: '',
+      key: "common",
+      label: "",
       children: (
         <>
           <Block title="通用">
@@ -106,11 +105,11 @@ const Setting: React.FC<SettingProps> = memo(({ open, setOpen }) => {
    */
   const resetPreference = () => {
     modal.confirm({
-      title: '重置偏好设置',
-      content: '重置所有偏好设置？重置后系统偏好设置将恢复为默认状态！',
+      title: "重置偏好设置",
+      content: "重置所有偏好设置？重置后系统偏好设置将恢复为默认状态！",
       onOk: () => {
-        dispatch(resetPreferences());
-        message.success('偏好设置已重置');
+        resetPreferences();
+        message.success("偏好设置已重置");
       },
     });
   };
@@ -121,14 +120,14 @@ const Setting: React.FC<SettingProps> = memo(({ open, setOpen }) => {
         title={
           <div
             className="title"
-            style={{ fontSize: '16px', fontWeight: 'normal' }}
+            style={{ fontSize: "16px", fontWeight: "normal" }}
           >
             <h2
               style={{
                 margin: 0,
-                textAlign: 'left',
-                fontSize: 'inherit',
-                fontWeight: '500',
+                textAlign: "left",
+                fontSize: "inherit",
+                fontWeight: "500",
               }}
             >
               偏好设置
@@ -136,10 +135,10 @@ const Setting: React.FC<SettingProps> = memo(({ open, setOpen }) => {
             <p
               className="subTitle"
               style={{
-                fontSize: '.75rem',
-                lineHeight: '1rem',
-                marginTop: '.25rem',
-                marginBottom: '0',
+                fontSize: ".75rem",
+                lineHeight: "1rem",
+                marginTop: ".25rem",
+                marginBottom: "0",
               }}
             >
               自定义偏好设置 & 实时预览
@@ -152,7 +151,7 @@ const Setting: React.FC<SettingProps> = memo(({ open, setOpen }) => {
             <CloseOutlined onClick={() => setOpen(false)} />
           </Space>
         }
-        styles={{ header: { padding: '12px 16px' }, body: { padding: '12px' } }}
+        styles={{ header: { padding: "12px 16px" }, body: { padding: "12px" } }}
         placement="right"
         open={open}
         closeIcon={false}
@@ -170,7 +169,7 @@ const Setting: React.FC<SettingProps> = memo(({ open, setOpen }) => {
       >
         {/* Segmented */}
         <ConfigProvider
-          theme={{ components: { Segmented: { trackPadding: '4px' } } }}
+          theme={{ components: { Segmented: { trackPadding: "4px" } } }}
         >
           <Segmented
             block
@@ -178,14 +177,14 @@ const Setting: React.FC<SettingProps> = memo(({ open, setOpen }) => {
             onChange={(key: string) => {
               setSelectedKey(key);
             }}
-            value={selectedkey}
+            value={selectedKey}
           />
         </ConfigProvider>
         {/* Tabs */}
         <Tabs
-          activeKey={selectedkey}
+          activeKey={selectedKey}
           items={tabsItems}
-          tabBarStyle={{ marginBottom: '8px' }}
+          tabBarStyle={{ marginBottom: "8px" }}
         />
       </Drawer>
     </>
