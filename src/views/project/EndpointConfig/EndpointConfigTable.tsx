@@ -189,7 +189,7 @@ const EndpointConfigTable: React.FC<EndpointConfigTableProps> = memo(
         />
       </div>
     );
-  },
+  }
 );
 export default EndpointConfigTable;
 

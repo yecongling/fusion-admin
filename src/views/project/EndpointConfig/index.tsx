@@ -33,7 +33,7 @@ const EndpointConfig: React.FC = () => {
 
   // 当前编辑的配置数据
   const [configData, setConfigData] = useState<Record<string, any> | null>(
-    null,
+    null
   );
   // 名称框
   const nameRef = useRef<InputRef>(null);
@@ -59,7 +59,7 @@ const EndpointConfig: React.FC = () => {
    * 配置数据发生变更
    * @param data 配置数据
    */
-  const onConfigDataChange = (data: any[]) => { };
+  const onConfigDataChange = (data: any[]) => {};
 
   /**
    * 保存数据
@@ -71,7 +71,7 @@ const EndpointConfig: React.FC = () => {
   /**
    * 删除数据
    */
-  const deleteData = () => { };
+  const deleteData = () => {};
 
   /**
    * 新增数据
@@ -103,7 +103,11 @@ const EndpointConfig: React.FC = () => {
             <Row style={{ flex: 1, minHeight: 0, overflow: 'auto' }}>
               <Col
                 span={24}
-                style={{ display: 'flex', flexDirection: 'column', minHeight: 0 }}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  minHeight: 0,
+                }}
               >
                 <Divider orientation="left">
                   <SettingOutlined style={{ marginRight: '8px' }} />
@@ -151,7 +155,7 @@ const EndpointConfig: React.FC = () => {
                 <Space>
                   <Button
                     icon={<PlusOutlined />}
-                    type='primary'
+                    type="primary"
                     onClick={() => setAction('add')}
                   >
                     新增
@@ -164,7 +168,7 @@ const EndpointConfig: React.FC = () => {
                   </Button>
                   <Button
                     icon={<SaveOutlined />}
-                    type='primary'
+                    type="primary"
                     disabled={action === 'view'}
                     onClick={() => setAction('view')}
                   >
@@ -172,12 +176,19 @@ const EndpointConfig: React.FC = () => {
                   </Button>
                   <Button
                     icon={<CloseOutlined />}
-                    disabled={action === "view"}
+                    disabled={action === 'view'}
                     onClick={() => setAction('view')}
                   >
                     取消
                   </Button>
-                  <Button icon={<DeleteOutlined />} danger disabled={configData === null || configData.node.type !== 'config'} onClick={() => { }}>
+                  <Button
+                    icon={<DeleteOutlined />}
+                    danger
+                    disabled={
+                      configData === null || configData.node.type !== 'config'
+                    }
+                    onClick={() => {}}
+                  >
                     删除
                   </Button>
                 </Space>

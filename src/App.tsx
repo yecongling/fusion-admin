@@ -1,19 +1,18 @@
-import { setMenus } from '@/stores/store';
 import { Spin, App as AntdApp, Skeleton } from 'antd';
 import type React from 'react';
 import { Suspense, useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Router } from '@/router/router';
 import { getMenuListByRoleId } from '@/api/system/menu/menuApi';
 import { antdUtils } from '@/utils/antdUtil';
+import { useMenuStore } from './stores/store';
 
 /**
  * 主应用
  */
 const App: React.FC = () => {
   // 触发更新的钩子函数
-  const dispatch = useDispatch();
+  const { setMenus } = useMenuStore();
   // 应用加载中
   const [loading, setLoading] = useState<boolean>(false);
   // 路由跳转
@@ -29,7 +28,7 @@ const App: React.FC = () => {
     const roleId = sessionStorage.getItem('roleId') || '';
     try {
       const menu = await getMenuListByRoleId({ roleId });
-      dispatch(setMenus(menu)); // 更新 Redux 状态
+      setMenus(menu); // 更新 状态
     } catch (e: unknown) {
       notification.error({
         message: '菜单加载失败',
@@ -39,7 +38,7 @@ const App: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  }, [dispatch]);
+  }, []);
 
   // 组件挂载完成后加载用户菜单
   useEffect(() => {

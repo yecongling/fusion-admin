@@ -5,34 +5,33 @@ import {
   MailOutlined,
   SearchOutlined,
   SettingOutlined,
-} from '@ant-design/icons';
-import { Badge, Dropdown, Input, Layout, Skeleton, Space, Tooltip } from 'antd';
-import React, { Suspense } from 'react';
-import { memo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+} from "@ant-design/icons";
+import { Badge, Dropdown, Input, Layout, Skeleton, Space, Tooltip } from "antd";
+import React, { Suspense } from "react";
+import { memo, useState } from "react";
 
-import MessageBox from './component/MessageBox';
-import FullScreen from './component/FullScreen';
-import BreadcrumbNav from './component/BreadcrumbNav';
-import UserDropdown from './component/UserDropdown';
-import { type RootState, updatePreferences } from '@/stores/store';
+import MessageBox from "./component/MessageBox";
+import FullScreen from "./component/FullScreen";
+import BreadcrumbNav from "./component/BreadcrumbNav";
+import UserDropdown from "./component/UserDropdown";
+import { usePreferencesStore } from "@/stores/store";
 
-const Setting = React.lazy(() => import('./component/Setting'));
+const Setting = React.lazy(() => import("./component/Setting"));
 
 /**
  * 顶部布局内容
  */
 const Header: React.FC = memo(() => {
-  const dispatch = useDispatch();
   const [openSetting, setOpenSetting] = useState<boolean>(false);
   // 从全局状态中获取配置是否开启面包屑、图标
-  const { breadcrumb } = useSelector((state: RootState) => state.preferences);
+  const { preferences, updatePreferences } = usePreferencesStore();
+  const { breadcrumb } = preferences;
 
   /**
    * 跳转到github
    */
   const routeGitHub = () => {
-    window.open('https://github.com/yecongling/fusion-admin', '_blank');
+    window.open("https://github.com/yecongling/fusion-admin", "_blank");
   };
 
   /**
@@ -48,7 +47,7 @@ const Header: React.FC = memo(() => {
       <Layout.Header
         className="ant-layout-header flex"
         style={{
-          borderBottom: ' 1px solid #e9edf0',
+          borderBottom: " 1px solid #e9edf0",
         }}
       >
         {/* 面包屑 */}
@@ -61,39 +60,39 @@ const Header: React.FC = memo(() => {
             variant="filled"
             placeholder="输入内容查询"
             suffix={
-              <SearchOutlined style={{ cursor: 'pointer', fontSize: '18px' }} />
+              <SearchOutlined style={{ cursor: "pointer", fontSize: "18px" }} />
             }
             onChange={(e) => searchMenu(e.target.value)}
           />
           <Tooltip placement="bottom" title="github">
             <GithubOutlined
-              style={{ cursor: 'pointer', fontSize: '18px' }}
+              style={{ cursor: "pointer", fontSize: "18px" }}
               onClick={routeGitHub}
             />
           </Tooltip>
           <Tooltip placement="bottom" title="锁屏">
             <LockOutlined
-              style={{ cursor: 'pointer', fontSize: '18px' }}
+              style={{ cursor: "pointer", fontSize: "18px" }}
               onClick={() => {
-                dispatch(updatePreferences('widget', 'lockScreenStatus', true));
+                updatePreferences("widget", "lockScreenStatus", true);
               }}
             />
           </Tooltip>
           {/* 邮件 */}
           <Badge count={5}>
-            <MailOutlined style={{ cursor: 'pointer', fontSize: '18px' }} />
+            <MailOutlined style={{ cursor: "pointer", fontSize: "18px" }} />
           </Badge>
           <Dropdown
             placement="bottomRight"
             dropdownRender={() => <MessageBox />}
           >
             <Badge count={5}>
-              <BellOutlined style={{ cursor: 'pointer', fontSize: '18px' }} />
+              <BellOutlined style={{ cursor: "pointer", fontSize: "18px" }} />
             </Badge>
           </Dropdown>
           <Tooltip placement="bottomRight" title="系统设置">
             <SettingOutlined
-              style={{ cursor: 'pointer', fontSize: '18px' }}
+              style={{ cursor: "pointer", fontSize: "18px" }}
               onClick={() => setOpenSetting(true)}
             />
           </Tooltip>

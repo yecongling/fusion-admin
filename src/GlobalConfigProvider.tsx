@@ -1,15 +1,15 @@
 import { ConfigProvider, App as AntdApp } from 'antd';
 import App from './App';
-import { useSelector } from 'react-redux';
-import type { RootState } from './stores/store';
 import zhCN from 'antd/locale/zh_CN';
 import 'dayjs/locale/zh-cn';
+import { usePreferencesStore } from './stores/store';
 /**
  * 全局配置组件（为了将antd的ConfigProvider和App嵌套，不然App中的antdUtil中的组件无法使用全局配置）
  */
 const GlobalConfigProvider = () => {
   // 获取数据的钩子函数
-  const { theme } = useSelector((state: RootState) => state.preferences);
+  const { preferences } = usePreferencesStore();
+  const { theme } = preferences;
   return (
     <ConfigProvider
       theme={{

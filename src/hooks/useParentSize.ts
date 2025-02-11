@@ -1,4 +1,4 @@
-import debounce from 'lodash/debounce';
+import debounce from 'lodash-es/debounce';
 import { type RefObject, useEffect, useMemo, useRef, useState } from 'react';
 
 // 直接抄airbnb的visx
