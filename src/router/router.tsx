@@ -1,6 +1,6 @@
 import { Navigate, useRoutes } from 'react-router-dom';
 import { LazyLoad } from './lazyLoad';
-import React, { type ReactNode, Suspense, useEffect, useState } from 'react';
+import React, { type ReactNode, Suspense, useMemo } from 'react';
 import type { RouteObject } from '@/types/route';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorFallback } from './ErrorBoundary';
@@ -10,10 +10,6 @@ import { Skeleton } from 'antd';
 
 // 默认的错误路由
 const errorRoutes: RouteObject[] = [
-  {
-    path: '*',
-    component: () => <Navigate replace to="/404" />,
-  },
   {
     path: '/500',
     component: LazyLoad('error/500.tsx').type,
@@ -25,6 +21,10 @@ const errorRoutes: RouteObject[] = [
   {
     path: '/403',
     component: LazyLoad('error/403.tsx').type,
+  },
+  {
+    path: '*',
+    component: () => <Navigate replace to="/404" />,
   },
 ];
 
@@ -77,11 +77,15 @@ const generateRouter = (routers: RouteObject[]) => {
 export const Router = () => {
   // 从store中获取
   const { menus } = useMenuStore();
-  const [route, setRoute] = useState([...dynamicRoutes]);
 
-  useEffect(() => {
-    route[0].children = [...handleRouter(menus), ...errorRoutes];
-    setRoute([...route]);
-  }, [menus]);
-  return useRoutes(generateRouter(route));
+  // 使用 useMemo 来避免重复计算路由
+  const routes = useMemo(() => {
+    // 将动态路由和错误路由合并到一起
+    const dynamicChildren = handleRouter(menus);
+    dynamicRoutes[0].children = [...dynamicChildren, ...errorRoutes];
+    return generateRouter(dynamicRoutes); // 假设 generateRouter 是生成最终路由配置的函数
+  }, [menus]); // 仅当 `menus` 变化时重新计算路由
+
+  // 使用 useRoutes 来处理路由
+  return useRoutes(routes);
 };
