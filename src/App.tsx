@@ -1,6 +1,6 @@
 import { Spin, App as AntdApp, Skeleton } from 'antd';
 import type React from 'react';
-import { Suspense, useCallback, useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Router } from '@/router/router';
 import { getMenuListByRoleId } from '@/api/system/menu/menuApi';
@@ -24,7 +24,8 @@ const App: React.FC = () => {
   /**
    * 查询用户的菜单信息
    */
-  const getMenuData = useCallback(async () => {
+  const getMenuData = async () => {
+    setLoading(true);
     const roleId = sessionStorage.getItem('roleId') || '';
     try {
       const menu = await getMenuListByRoleId({ roleId });
@@ -38,7 +39,7 @@ const App: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  };
 
   // 组件挂载完成后加载用户菜单
   useEffect(() => {
