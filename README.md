@@ -3,7 +3,8 @@
 # 框架技术： 
     react@latest  
     antd@latest 
-    @rsbuild/core 构建工具
+    vite 构建工具
+    zustand@latest 状态管理
     sass@latest
     react-router-dom@latest
     react-dom@latest
