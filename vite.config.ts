@@ -2,12 +2,24 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import tailwindcss from '@tailwindcss/vite';
 import path from 'path';
+import viteCompression from 'vite-plugin-compression';
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [
+    react(), 
+    tailwindcss(),
+    viteCompression({
+      verbose: true,
+      disable: false,
+      threshold: 10240,
+      algorithm: 'gzip',
+    }),
+  ],
   // 配置分包
   build: {
+    // 压缩css代码
+    cssCodeSplit: true,
     rollupOptions: {
       output: {
         chunkFileNames: 'static/js/[name]-[hash].js',
