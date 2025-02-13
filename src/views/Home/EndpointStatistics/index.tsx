@@ -6,32 +6,32 @@ const EndpointStatistics: React.FC = () => {
     <>
       <Row gutter={[24, 48]}>
         <Col span={8}>
-          <Card className={style.cardBg} bordered={false}>
+          <Card className={style.cardBg} variant="borderless">
             <p>端点统计</p>
           </Card>
         </Col>
         <Col span={8}>
-          <Card className={style.cardBg} bordered={false}>
+          <Card className={style.cardBg} variant="borderless">
             <p>端点统计</p>
           </Card>
         </Col>
         <Col span={8}>
-          <Card className={style.cardBg} bordered={false}>
+          <Card className={style.cardBg} variant="borderless">
             <p>端点统计</p>
           </Card>
         </Col>
         <Col span={8}>
-          <Card className={style.cardBg} bordered={false}>
+          <Card className={style.cardBg} variant="borderless">
             <p>端点统计</p>
           </Card>
         </Col>
         <Col span={8}>
-          <Card className={style.cardBg} bordered={false}>
+          <Card className={style.cardBg} variant="borderless">
             <p>端点统计</p>
           </Card>
         </Col>
         <Col span={8}>
-          <Card className={style.cardBg} bordered={false}>
+          <Card className={style.cardBg} variant="borderless">
             <p>端点统计</p>
           </Card>
         </Col>

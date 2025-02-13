@@ -97,7 +97,7 @@ const User: React.FC = () => {
       message.success('删除成功');
       getUserList({} as UserSearchParams);
     } catch (error) {
-      message.error('删除失败');
+      message.error('删除失败, 原因：' + error);
     }
   };
 
@@ -133,7 +133,7 @@ const User: React.FC = () => {
       message.success('状态更新成功');
       getUserList({} as UserSearchParams);
     } catch (error) {
-      message.error('状态更新失败');
+      message.error('状态更新失败' + error);
     }
   };
 
@@ -150,7 +150,7 @@ const User: React.FC = () => {
       setOpenEditModal(false);
       getUserList({} as UserSearchParams);
     } catch (error) {
-      message.error(currentRow?.id ? '更新失败' : '创建失败');
+      message.error((currentRow?.id ? '更新失败' : '创建失败')  + error);
     }
   };
 
